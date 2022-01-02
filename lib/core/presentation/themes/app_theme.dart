@@ -41,7 +41,7 @@ class AppTheme {
       fontWeight: FontWeight.bold,
     ),
     headline2: TextStyle(
-      fontSize: 22,
+      fontSize: 17,
       fontWeight: FontWeight.w600,
     ),
     headline3: TextStyle(
