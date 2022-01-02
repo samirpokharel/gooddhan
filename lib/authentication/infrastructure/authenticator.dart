@@ -78,16 +78,10 @@ class Authenticator {
   }
 
   Future<Either<AuthFailure, User>> loginAccount({
-    required String currency,
-    required String monthlyIncome,
     required String token,
   }) async {
     try {
-      final requestObj = {
-        "currency": currency,
-        "monthlyIncome": monthlyIncome,
-        "token": token,
-      };
+      final requestObj = {"token": token};
       final response = await _dio.post(
         "$baseUrl/user/login-account",
         data: json.encode(requestObj),
