@@ -18,8 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$AuthFailureTearOff {
   const _$AuthFailureTearOff();
 
-  _Searver server() {
-    return const _Searver();
+  _Searver server(int? status, [String? message]) {
+    return _Searver(
+      status,
+      message,
+    );
   }
 
   _Storage storage() {
@@ -34,19 +37,19 @@ const $AuthFailure = _$AuthFailureTearOff();
 mixin _$AuthFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() server,
+    required TResult Function(int? status, String? message) server,
     required TResult Function() storage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? server,
+    TResult Function(int? status, String? message)? server,
     TResult Function()? storage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? server,
+    TResult Function(int? status, String? message)? server,
     TResult Function()? storage,
     required TResult orElse(),
   }) =>
@@ -92,6 +95,7 @@ class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
 abstract class _$SearverCopyWith<$Res> {
   factory _$SearverCopyWith(_Searver value, $Res Function(_Searver) then) =
       __$SearverCopyWithImpl<$Res>;
+  $Res call({int? status, String? message});
 }
 
 /// @nodoc
@@ -102,54 +106,87 @@ class __$SearverCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
 
   @override
   _Searver get _value => super._value as _Searver;
+
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_Searver(
+      status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Searver extends _Searver {
-  const _$_Searver() : super._();
+  const _$_Searver(this.status, [this.message]) : super._();
+
+  @override
+  final int? status;
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'AuthFailure.server()';
+    return 'AuthFailure.server(status: $status, message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Searver);
+        (other.runtimeType == runtimeType &&
+            other is _Searver &&
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(message));
+
+  @JsonKey(ignore: true)
+  @override
+  _$SearverCopyWith<_Searver> get copyWith =>
+      __$SearverCopyWithImpl<_Searver>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() server,
+    required TResult Function(int? status, String? message) server,
     required TResult Function() storage,
   }) {
-    return server();
+    return server(status, message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? server,
+    TResult Function(int? status, String? message)? server,
     TResult Function()? storage,
   }) {
-    return server?.call();
+    return server?.call(status, message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? server,
+    TResult Function(int? status, String? message)? server,
     TResult Function()? storage,
     required TResult orElse(),
   }) {
     if (server != null) {
-      return server();
+      return server(status, message);
     }
     return orElse();
   }
@@ -187,8 +224,14 @@ class _$_Searver extends _Searver {
 }
 
 abstract class _Searver extends AuthFailure {
-  const factory _Searver() = _$_Searver;
+  const factory _Searver(int? status, [String? message]) = _$_Searver;
   const _Searver._() : super._();
+
+  int? get status;
+  String? get message;
+  @JsonKey(ignore: true)
+  _$SearverCopyWith<_Searver> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -229,7 +272,7 @@ class _$_Storage extends _Storage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() server,
+    required TResult Function(int? status, String? message) server,
     required TResult Function() storage,
   }) {
     return storage();
@@ -238,7 +281,7 @@ class _$_Storage extends _Storage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? server,
+    TResult Function(int? status, String? message)? server,
     TResult Function()? storage,
   }) {
     return storage?.call();
@@ -247,7 +290,7 @@ class _$_Storage extends _Storage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? server,
+    TResult Function(int? status, String? message)? server,
     TResult Function()? storage,
     required TResult orElse(),
   }) {
