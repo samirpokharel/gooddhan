@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:gooddhan/authentication/domain/auth_failure.dart';
 import 'package:gooddhan/core/domain/user.dart';
@@ -38,9 +39,17 @@ class Authenticator {
 
   Future<String?> getGoogleIdToken() async {
     final signInAccount = await _googleSignIn.signIn();
-    if (signInAccount == null) return null;
-    final googleSignInAuth = await signInAccount.authentication;
-    return googleSignInAuth.idToken;
+    // await signInAccount?.clearAuthCache();
+    // if (signInAccount == null) return null;
+    final googleSignInAuth = await signInAccount?.authentication;
+    debugPrint("Email: ${signInAccount?.email}");
+    debugPrint("Name: ${signInAccount?.displayName}");
+    debugPrint("Photourl: ${signInAccount?.photoUrl}");
+    debugPrint("Id: ${signInAccount?.id}");
+    debugPrint("Id-Token: ${googleSignInAuth?.idToken}");
+    debugPrint("Access-Token: ${googleSignInAuth?.accessToken}");
+
+    return googleSignInAuth?.idToken;
   }
 
   Future<Either<AuthFailure, User>> createAccount({

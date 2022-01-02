@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
 import 'package:gooddhan/core/shared/widgets/custom_google_button.dart';
 
@@ -36,7 +37,9 @@ class LoginAccountPage extends ConsumerWidget {
                   const SizedBox(height: 16 * 4),
                   CustomGoogleButton(
                     buttonText: "Login with google",
-                    onTap: () {},
+                    onTap: () async {
+                      await ref.read(authNotifierProvider.notifier).login();
+                    },
                   ),
                   const SizedBox(height: 20),
                   Row(

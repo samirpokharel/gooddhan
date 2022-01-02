@@ -1,6 +1,12 @@
+import 'dart:async';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/authentication/presentation/register.dart';
+import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
+import 'package:gooddhan/core/presentation/routes/app_router.gr.dart';
 import 'package:gooddhan/core/shared/widgets/custom_google_button.dart';
 
 class CreateAccountPage extends ConsumerWidget {
@@ -34,7 +40,20 @@ class CreateAccountPage extends ConsumerWidget {
                   const SizedBox(height: 50),
                   CustomGoogleButton(
                     buttonText: "Register with google",
-                    onTap: () {},
+                    onTap: () {
+                      ref
+                          .read(authNotifierProvider.notifier)
+                          .createGoogleAcountCred(
+                        (idToken) {
+                          if (idToken != null) {
+                            AutoRouter.of(context).push(
+                              RegisterRoute(idToken: idToken),
+                            );
+                          }
+                          return Future.value(idToken);
+                        },
+                      );
+                    },
                   ),
                   const SizedBox(height: 16),
                   Row(

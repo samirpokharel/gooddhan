@@ -26,10 +26,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
         : const AuthState.unauthenticated();
   }
 
-  Future<void> login(AuthCallback authCallback) async {
-    final idToken = await authCallback(await _authenticator.getGoogleIdToken());
-    if (idToken != null) {
-      _authenticator.loginAccount(token: idToken);
+  Future<void> login() async {
+    final token = await _authenticator.getGoogleIdToken();
+    print(token);
+    if (token != null) {
+      _authenticator.loginAccount(token: token);
     }
   }
 

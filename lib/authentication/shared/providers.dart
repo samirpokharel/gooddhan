@@ -16,7 +16,13 @@ final credentialStorageProvider = Provider<CredentialStorage>((ref) {
 });
 
 final googleSignInProvider = Provider<GoogleSignIn>((ref) {
-  return GoogleSignIn();
+  return GoogleSignIn(
+    signInOption: SignInOption.standard,
+    scopes: [
+      'email',
+      // 'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
 });
 final dioProvider = Provider<Dio>((ref) {
   return Dio();
