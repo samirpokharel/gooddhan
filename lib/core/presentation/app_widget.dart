@@ -46,4 +46,3 @@ class AppWidget extends ConsumerWidget {
     );
   }
 }
-//  keytool -genkey -v -keystore ~/gooddhankey.jks -keyalg RSA -keysize 2048 -validity 10000 -alias androiddebugkey
