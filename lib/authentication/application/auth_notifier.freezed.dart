@@ -31,9 +31,11 @@ class _$AuthStateTearOff {
     );
   }
 
-  _AuthAuthenticated authenticated({AuthStatus? status = AuthStatus.ideal}) {
+  _AuthAuthenticated authenticated(
+      {AuthStatus? status = AuthStatus.ideal, required User user}) {
     return _AuthAuthenticated(
       status: status,
+      user: user,
     );
   }
 
@@ -57,7 +59,7 @@ mixin _$AuthState {
   TResult when<TResult extends Object?>({
     required TResult Function(AuthStatus? status) initial,
     required TResult Function(AuthStatus? status) unauthenticated,
-    required TResult Function(AuthStatus? status) authenticated,
+    required TResult Function(AuthStatus? status, User user) authenticated,
     required TResult Function(AuthFailure failure, AuthStatus? status) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -65,7 +67,7 @@ mixin _$AuthState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -73,7 +75,7 @@ mixin _$AuthState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
     required TResult orElse(),
   }) =>
@@ -205,7 +207,7 @@ class _$_AuthInitial extends _AuthInitial {
   TResult when<TResult extends Object?>({
     required TResult Function(AuthStatus? status) initial,
     required TResult Function(AuthStatus? status) unauthenticated,
-    required TResult Function(AuthStatus? status) authenticated,
+    required TResult Function(AuthStatus? status, User user) authenticated,
     required TResult Function(AuthFailure failure, AuthStatus? status) failure,
   }) {
     return initial(status);
@@ -216,7 +218,7 @@ class _$_AuthInitial extends _AuthInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
   }) {
     return initial?.call(status);
@@ -227,7 +229,7 @@ class _$_AuthInitial extends _AuthInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
     required TResult orElse(),
   }) {
@@ -358,7 +360,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated {
   TResult when<TResult extends Object?>({
     required TResult Function(AuthStatus? status) initial,
     required TResult Function(AuthStatus? status) unauthenticated,
-    required TResult Function(AuthStatus? status) authenticated,
+    required TResult Function(AuthStatus? status, User user) authenticated,
     required TResult Function(AuthFailure failure, AuthStatus? status) failure,
   }) {
     return unauthenticated(status);
@@ -369,7 +371,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
   }) {
     return unauthenticated?.call(status);
@@ -380,7 +382,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
     required TResult orElse(),
   }) {
@@ -448,7 +450,9 @@ abstract class _$AuthAuthenticatedCopyWith<$Res>
           _AuthAuthenticated value, $Res Function(_AuthAuthenticated) then) =
       __$AuthAuthenticatedCopyWithImpl<$Res>;
   @override
-  $Res call({AuthStatus? status});
+  $Res call({AuthStatus? status, User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -465,28 +469,44 @@ class __$AuthAuthenticatedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? user = freezed,
   }) {
     return _then(_AuthAuthenticated(
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AuthStatus?,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_AuthAuthenticated extends _AuthAuthenticated {
-  const _$_AuthAuthenticated({this.status = AuthStatus.ideal}) : super._();
+  const _$_AuthAuthenticated(
+      {this.status = AuthStatus.ideal, required this.user})
+      : super._();
 
   @JsonKey()
   @override
   final AuthStatus? status;
+  @override
+  final User user;
 
   @override
   String toString() {
-    return 'AuthState.authenticated(status: $status)';
+    return 'AuthState.authenticated(status: $status, user: $user)';
   }
 
   @override
@@ -494,12 +514,15 @@ class _$_AuthAuthenticated extends _AuthAuthenticated {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AuthAuthenticated &&
-            const DeepCollectionEquality().equals(other.status, status));
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(status));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(user));
 
   @JsonKey(ignore: true)
   @override
@@ -511,10 +534,10 @@ class _$_AuthAuthenticated extends _AuthAuthenticated {
   TResult when<TResult extends Object?>({
     required TResult Function(AuthStatus? status) initial,
     required TResult Function(AuthStatus? status) unauthenticated,
-    required TResult Function(AuthStatus? status) authenticated,
+    required TResult Function(AuthStatus? status, User user) authenticated,
     required TResult Function(AuthFailure failure, AuthStatus? status) failure,
   }) {
-    return authenticated(status);
+    return authenticated(status, user);
   }
 
   @override
@@ -522,10 +545,10 @@ class _$_AuthAuthenticated extends _AuthAuthenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
   }) {
-    return authenticated?.call(status);
+    return authenticated?.call(status, user);
   }
 
   @override
@@ -533,12 +556,12 @@ class _$_AuthAuthenticated extends _AuthAuthenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated(status);
+      return authenticated(status, user);
     }
     return orElse();
   }
@@ -582,11 +605,13 @@ class _$_AuthAuthenticated extends _AuthAuthenticated {
 }
 
 abstract class _AuthAuthenticated extends AuthState {
-  const factory _AuthAuthenticated({AuthStatus? status}) = _$_AuthAuthenticated;
+  const factory _AuthAuthenticated({AuthStatus? status, required User user}) =
+      _$_AuthAuthenticated;
   const _AuthAuthenticated._() : super._();
 
   @override
   AuthStatus? get status;
+  User get user;
   @override
   @JsonKey(ignore: true)
   _$AuthAuthenticatedCopyWith<_AuthAuthenticated> get copyWith =>
@@ -681,7 +706,7 @@ class _$_AuthFailed extends _AuthFailed {
   TResult when<TResult extends Object?>({
     required TResult Function(AuthStatus? status) initial,
     required TResult Function(AuthStatus? status) unauthenticated,
-    required TResult Function(AuthStatus? status) authenticated,
+    required TResult Function(AuthStatus? status, User user) authenticated,
     required TResult Function(AuthFailure failure, AuthStatus? status) failure,
   }) {
     return failure(this.failure, status);
@@ -692,7 +717,7 @@ class _$_AuthFailed extends _AuthFailed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
   }) {
     return failure?.call(this.failure, status);
@@ -703,7 +728,7 @@ class _$_AuthFailed extends _AuthFailed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AuthStatus? status)? initial,
     TResult Function(AuthStatus? status)? unauthenticated,
-    TResult Function(AuthStatus? status)? authenticated,
+    TResult Function(AuthStatus? status, User user)? authenticated,
     TResult Function(AuthFailure failure, AuthStatus? status)? failure,
     required TResult orElse(),
   }) {

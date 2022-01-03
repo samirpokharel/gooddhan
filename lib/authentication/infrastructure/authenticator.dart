@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:gooddhan/authentication/domain/auth_failure.dart';
+import 'package:gooddhan/authentication/infrastructure/User_local_storage.dart';
 import 'package:gooddhan/core/domain/user.dart';
 import 'package:gooddhan/core/shared/constant.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,6 +13,7 @@ import 'Credential_storage/credential_storage.dart';
 
 class Authenticator {
   final CredentialStorage _credentialStorage;
+  final UserLocalStorage _userLocalStorage;
   final GoogleSignIn _googleSignIn;
   final Dio _dio;
 
@@ -19,7 +21,9 @@ class Authenticator {
     required CredentialStorage credentialStorage,
     required Dio dio,
     required GoogleSignIn googleSignIn,
+    required UserLocalStorage userLocalStorage,
   })  : _credentialStorage = credentialStorage,
+        _userLocalStorage = userLocalStorage,
         _dio = dio,
         _googleSignIn = googleSignIn;
 
@@ -30,6 +34,11 @@ class Authenticator {
     } on PlatformException {
       return null;
     }
+  }
+
+  Future<User> getSignedUser() async {
+    final storedUser = await _userLocalStorage.getUser();
+    return storedUser;
   }
 
   Future<bool> get isSigned {
@@ -61,6 +70,7 @@ class Authenticator {
       final responseData = response.data as Map<String, dynamic>;
       await _credentialStorage.save(responseData["token"]);
       User user = User.fromJson(responseData["user"]);
+      await _userLocalStorage.upserUser(user);
       return right(user);
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
@@ -91,6 +101,7 @@ class Authenticator {
       final responseData = response.data as Map<String, dynamic>;
       await _credentialStorage.save(responseData["token"]);
       User user = User.fromJson(responseData["user"]);
+      await _userLocalStorage.upserUser(user);
       return right(user);
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
@@ -110,6 +121,7 @@ class Authenticator {
   Future<Either<AuthFailure, Unit>> signOut() async {
     try {
       await _credentialStorage.clear();
+      await _userLocalStorage.clear();
       return right(unit);
     } on PlatformException {
       return left(const AuthFailure.storage());

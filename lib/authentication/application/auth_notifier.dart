@@ -19,6 +19,7 @@ class AuthState with _$AuthState {
   }) = _AuthUnauthenticated;
   const factory AuthState.authenticated({
     @Default(AuthStatus.ideal) AuthStatus? status,
+    required User user,
   }) = _AuthAuthenticated;
   const factory AuthState.failure(
     AuthFailure failure, {
@@ -33,8 +34,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier(this._authenticator) : super(const AuthState.initial());
 
   Future<void> checkAndUpdateAuthStatus() async {
+    final user = await _authenticator.getSignedUser();
     state = (await _authenticator.isSigned)
-        ? const AuthState.authenticated()
+        ? AuthState.authenticated(user: user)
         : const AuthState.unauthenticated();
   }
 
@@ -46,7 +48,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final successOrFaild = await _authenticator.loginAccount(token: token);
       return successOrFaild.fold(
         (l) => state = AuthState.failure(l, status: AuthStatus.ideal),
-        (r) => state = const AuthState.authenticated(status: AuthStatus.ideal),
+        (r) =>
+            state = AuthState.authenticated(status: AuthStatus.ideal, user: r),
       );
     } else {
       state = const AuthState.unauthenticated(status: AuthStatus.ideal);
@@ -73,7 +76,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
       return failureOrSuccess.fold(
         (l) => state = AuthState.failure(l, status: AuthStatus.ideal),
-        (r) => state = const AuthState.authenticated(status: AuthStatus.ideal),
+        (r) => state = AuthState.authenticated(
+          status: AuthStatus.ideal,
+          user: r,
+        ),
       );
     }
     state = const AuthState.unauthenticated(status: AuthStatus.ideal);
