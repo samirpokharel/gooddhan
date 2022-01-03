@@ -46,10 +46,10 @@ class AppRouter extends _i5.RootStackRouter {
           opaque: true,
           barrierDismissible: false);
     },
-    DashboardRoute.name: (routeData) {
+    NavigationRoute.name: (routeData) {
       return _i5.CustomPage<dynamic>(
           routeData: routeData,
-          child: const _i4.DashboardPage(),
+          child: const _i4.NavigationPage(),
           opaque: true,
           barrierDismissible: false);
     }
@@ -60,7 +60,7 @@ class AppRouter extends _i5.RootStackRouter {
         _i5.RouteConfig(SplashRoute.name, path: '/'),
         _i5.RouteConfig(AuthSwitcherRoute.name, path: '/auth'),
         _i5.RouteConfig(RegisterRoute.name, path: '/register'),
-        _i5.RouteConfig(DashboardRoute.name, path: '/dashboard')
+        _i5.RouteConfig(NavigationRoute.name, path: '/dashboard')
       ];
 }
 
@@ -105,9 +105,9 @@ class RegisterRouteArgs {
 }
 
 /// generated route for
-/// [_i4.DashboardPage]
-class DashboardRoute extends _i5.PageRouteInfo<void> {
-  const DashboardRoute() : super(DashboardRoute.name, path: '/dashboard');
+/// [_i4.NavigationPage]
+class NavigationRoute extends _i5.PageRouteInfo<void> {
+  const NavigationRoute() : super(NavigationRoute.name, path: '/dashboard');
 
-  static const String name = 'DashboardRoute';
+  static const String name = 'NavigationRoute';
 }

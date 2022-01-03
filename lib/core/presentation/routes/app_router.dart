@@ -9,7 +9,7 @@ import 'package:gooddhan/splash/presentation/splash_page.dart';
     AutoRoute(page: SplashPage, initial: true),
     AutoRoute(page: AuthSwitcherPage, path: "/auth"),
     AutoRoute(page: RegisterPage, path: "/register"),
-    AutoRoute(page: DashboardPage, path: "/dashboard"),
+    AutoRoute(page: NavigationPage, path: "/dashboard"),
   ],
   replaceInRouteName: "Page,Route",
 )

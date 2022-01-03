@@ -26,7 +26,7 @@ class AppWidget extends ConsumerWidget {
           orElse: () {},
           authenticated: (_) async {
             appRouter.pushAndPopUntil(
-              const DashboardRoute(),
+              const NavigationRoute(),
               predicate: (route) => false,
             );
           },
