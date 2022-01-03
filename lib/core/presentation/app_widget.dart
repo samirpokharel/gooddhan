@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/authentication/application/auth_notifier.dart';
@@ -9,6 +10,12 @@ import 'package:gooddhan/core/shared/providers.dart';
 
 final initializationProvider = FutureProvider<Unit>((ref) async {
   await ref.read(sembastProvider).init();
+  ref.read(dioProvider)
+    ..options = BaseOptions(
+      validateStatus: (status) =>
+          status != null && status >= 200 && status < 400,
+    )
+    ..interceptors.add(ref.read(authInterceptorProvider));
   final authNotifier = ref.read(authNotifierProvider.notifier);
   await authNotifier.checkAndUpdateAuthStatus();
   return unit;
@@ -24,6 +31,7 @@ class AppWidget extends ConsumerWidget {
     ref.listen<AuthState>(
       authNotifierProvider,
       (previous, next) {
+        print(next);
         next.maybeMap(
           orElse: () {},
           authenticated: (_) async {

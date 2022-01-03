@@ -15,7 +15,7 @@ import 'package:flutter/material.dart' as _i6;
 
 import '../../../authentication/presentation/Auth_switcher.dart' as _i2;
 import '../../../authentication/presentation/register.dart' as _i3;
-import '../../../dashboard/presentation/dashboard.dart' as _i4;
+import '../../../dashboard/navigation/presentation/dashboard.dart' as _i4;
 import '../../../splash/presentation/splash_page.dart' as _i1;
 
 class AppRouter extends _i5.RootStackRouter {
@@ -57,17 +57,19 @@ class AppRouter extends _i5.RootStackRouter {
 
   @override
   List<_i5.RouteConfig> get routes => [
-        _i5.RouteConfig(SplashRoute.name, path: '/'),
+        _i5.RouteConfig('/#redirect',
+            path: '/', redirectTo: '/auth', fullMatch: true),
+        _i5.RouteConfig(SplashRoute.name, path: '/splash-page'),
         _i5.RouteConfig(AuthSwitcherRoute.name, path: '/auth'),
         _i5.RouteConfig(RegisterRoute.name, path: '/register'),
-        _i5.RouteConfig(NavigationRoute.name, path: '/dashboard')
+        _i5.RouteConfig(NavigationRoute.name, path: '/nav')
       ];
 }
 
 /// generated route for
 /// [_i1.SplashPage]
 class SplashRoute extends _i5.PageRouteInfo<void> {
-  const SplashRoute() : super(SplashRoute.name, path: '/');
+  const SplashRoute() : super(SplashRoute.name, path: '/splash-page');
 
   static const String name = 'SplashRoute';
 }
@@ -107,7 +109,7 @@ class RegisterRouteArgs {
 /// generated route for
 /// [_i4.NavigationPage]
 class NavigationRoute extends _i5.PageRouteInfo<void> {
-  const NavigationRoute() : super(NavigationRoute.name, path: '/dashboard');
+  const NavigationRoute() : super(NavigationRoute.name, path: '/nav');
 
   static const String name = 'NavigationRoute';
 }
