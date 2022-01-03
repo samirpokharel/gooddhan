@@ -18,16 +18,15 @@ class CreateAccountPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    void registerWithGoogleAccount() {
+    void registerWithGoogleAccount() async {
       final authNotifier = ref.read(authNotifierProvider.notifier);
-      authNotifier.createGoogleAcountCred(
+      return authNotifier.createGoogleAcountCred(
         (idToken) {
           if (idToken != null) {
             AutoRouter.of(context).push(
               RegisterRoute(idToken: idToken),
             );
           }
-          return Future.value(idToken);
         },
       );
     }

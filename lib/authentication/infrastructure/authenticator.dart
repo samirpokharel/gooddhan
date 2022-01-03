@@ -66,15 +66,15 @@ class Authenticator {
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
         print(e.response?.data["error"]);
-
         return left(
           AuthFailure.server(
             e.response?.statusCode,
             e.response?.data["error"],
           ),
         );
+      } else {
+        return left(const AuthFailure.storage());
       }
-      return left(const AuthFailure.storage());
     } on PlatformException {
       return left(const AuthFailure.storage());
     }
@@ -84,7 +84,6 @@ class Authenticator {
     required String token,
   }) async {
     try {
-      debugPrint(token);
       final requestObj = {"token": token};
       final response = await _dio.post(
         "$baseUrl/user/login-account",
@@ -96,7 +95,6 @@ class Authenticator {
       return right(user);
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
-        print(e.response?.data["error"]);
         return left(
           AuthFailure.server(
             e.response?.statusCode,
