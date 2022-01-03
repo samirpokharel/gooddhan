@@ -5,8 +5,10 @@ import 'package:gooddhan/authentication/application/auth_notifier.dart';
 import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/presentation/routes/app_router.gr.dart';
 import 'package:gooddhan/core/presentation/themes/app_theme.dart';
+import 'package:gooddhan/core/shared/providers.dart';
 
 final initializationProvider = FutureProvider<Unit>((ref) async {
+  await ref.read(sembastProvider).init();
   final authNotifier = ref.read(authNotifierProvider.notifier);
   await authNotifier.checkAndUpdateAuthStatus();
   return unit;
