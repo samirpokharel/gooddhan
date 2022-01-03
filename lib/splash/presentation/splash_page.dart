@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
-import 'package:gooddhan/core/shared/widgets/custom_value_tile.dart';
-import 'package:gooddhan/currency/presentation/currency_picker.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends ConsumerWidget {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 48),
@@ -18,16 +17,6 @@ class SplashPage extends StatelessWidget {
               Image.asset("assets/images/logo.png"),
               const SizedBox(height: 30),
               Text("Gooddhan", style: context.headline2),
-              CustomValueTile(
-                onTap: () async {
-                  final currency = await showCurrencyPicker(
-                    context: context,
-                  );
-                  debugPrint(currency?.name);
-                },
-                title: "Select Currency",
-                value: "NRS",
-              ),
             ],
           ),
         ),
