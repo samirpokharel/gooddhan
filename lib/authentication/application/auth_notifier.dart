@@ -28,9 +28,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> login() async {
     final token = await _authenticator.getGoogleIdToken();
-    print(token);
     if (token != null) {
-      _authenticator.loginAccount(token: token);
+      final successOrFaild = await _authenticator.loginAccount(token: token);
+      successOrFaild.fold(
+        (l) => state = const AuthState.unauthenticated(),
+        (r) => state = const AuthState.authenticated(),
+      );
+    } else {
+      state = const AuthState.unauthenticated();
     }
   }
 
@@ -49,7 +54,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       token: token,
     );
     state = failureOrSuccess.fold(
-      (l) => const AuthState.failure(),
+      (l) => const AuthState.unauthenticated(),
       (r) => const AuthState.authenticated(),
     );
   }
