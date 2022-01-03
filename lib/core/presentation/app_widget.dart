@@ -24,8 +24,11 @@ class AppWidget extends ConsumerWidget {
       (previous, next) {
         next.maybeMap(
           orElse: () {},
-          authenticated: (_) {
-            debugPrint("wow successfully login!!!");
+          authenticated: (_) async {
+            appRouter.pushAndPopUntil(
+              const DashboardRoute(),
+              predicate: (route) => false,
+            );
           },
           unauthenticated: (_) {
             appRouter.pushAndPopUntil(

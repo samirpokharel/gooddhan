@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "858480744077",
+    "project_id": "gooddhan",
+    "storage_bucket": "gooddhan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858480744077:android:c7c862344fb534056534c4",
+        "android_client_info": {
+          "package_name": "sameer.gooddhanapp.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858480744077-as8vbtst1o2a6fbhcevk0h4aktboncrc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sameer.gooddhanapp.com",
+            "certificate_hash": "23ce38963aabede93e67595c970b983589225d41"
+          }
+        },
+        {
+          "client_id": "858480744077-4joi8jpb11petc6pubs1mspcpogtvhvq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx82YS8fji2--bcOdcZp-9rqjuaklrCEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858480744077-4joi8jpb11petc6pubs1mspcpogtvhvq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

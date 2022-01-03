@@ -39,17 +39,9 @@ class Authenticator {
 
   Future<String?> getGoogleIdToken() async {
     final signInAccount = await _googleSignIn.signIn();
-    // await signInAccount?.clearAuthCache();
-    // if (signInAccount == null) return null;
-    final googleSignInAuth = await signInAccount?.authentication;
-    debugPrint("Email: ${signInAccount?.email}");
-    debugPrint("Name: ${signInAccount?.displayName}");
-    debugPrint("Photourl: ${signInAccount?.photoUrl}");
-    debugPrint("Id: ${signInAccount?.id}");
-    debugPrint("Id-Token: ${googleSignInAuth?.idToken}");
-    debugPrint("Access-Token: ${googleSignInAuth?.accessToken}");
-
-    return googleSignInAuth?.idToken;
+    if (signInAccount == null) return null;
+    final googleSignInAuth = await signInAccount.authentication;
+    return googleSignInAuth.idToken;
   }
 
   Future<Either<AuthFailure, User>> createAccount({
@@ -73,10 +65,12 @@ class Authenticator {
       return right(user);
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
+        print(e.response?.data["error"]);
+
         return left(
           AuthFailure.server(
             e.response?.statusCode,
-            e.response?.data.error,
+            e.response?.data["error"],
           ),
         );
       }
@@ -90,6 +84,7 @@ class Authenticator {
     required String token,
   }) async {
     try {
+      debugPrint(token);
       final requestObj = {"token": token};
       final response = await _dio.post(
         "$baseUrl/user/login-account",
@@ -101,10 +96,11 @@ class Authenticator {
       return right(user);
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
+        print(e.response?.data["error"]);
         return left(
           AuthFailure.server(
             e.response?.statusCode,
-            e.response?.data.error,
+            e.response?.data["error"],
           ),
         );
       }
