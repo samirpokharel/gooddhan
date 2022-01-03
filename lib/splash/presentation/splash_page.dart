@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
+import 'package:gooddhan/core/shared/constant.dart';
 
 class SplashPage extends ConsumerWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class SplashPage extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/images/logo.png"),
+              Image.asset(logoPath),
               const SizedBox(height: 30),
               Text("Gooddhan", style: context.headline2),
             ],

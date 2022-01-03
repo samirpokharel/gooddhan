@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:gooddhan/authentication/domain/auth_failure.dart';
 import 'package:gooddhan/core/domain/user.dart';

@@ -46,11 +46,7 @@ class CustomValueTile extends StatelessWidget {
       children: [
         Text(value ?? ""),
         const SizedBox(width: 10),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: primaryColor,
-          size: 17,
-        )
+        Icon(Icons.arrow_forward_ios, color: primaryColor, size: 17)
       ],
     );
   }
