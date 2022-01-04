@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/core/presentation/routes/app_router.gr.dart';
 import 'package:gooddhan/core/presentation/themes/app_icons.dart';
 import 'package:gooddhan/core/shared/widgets/custom_conformation_sheet.dart';
 import 'package:gooddhan/core/shared/widgets/custom_profile_card.dart';
@@ -65,7 +67,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     color: Colors.cyan,
                     icon: Icons.category,
                     title: "Category",
-                    onPressed: () {},
+                    onPressed: () {
+                      AutoRouter.of(context).push(const CategoriesRoute());
+                    },
                   ),
                   const Divider(thickness: .7),
                   ProfileMenuCard(
