@@ -19,7 +19,7 @@ class AuthInterceptor extends Interceptor {
       ..headers.addAll(
         credential == null ? {} : {'Authorization': 'Bearer $credential'},
       );
-    debugPrint(modifiedOptions.headers.toString());
+    debugPrint(modifiedOptions.data.toString());
     handler.next(modifiedOptions);
   }
 
@@ -34,7 +34,7 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     debugPrint("___On Error___");
-    debugPrint("Error: ${err.message}");
+    debugPrint("Error: ${err.response?.data}");
     super.onError(err, handler);
   }
 }
