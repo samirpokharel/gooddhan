@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:gooddhan/authentication/infrastructure/authenticator.dart';
 
 class AuthInterceptor extends Interceptor {
@@ -8,13 +9,32 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    debugPrint("____On Request___");
     final credential = await _authenticator.getSignedCredentials();
+
     final modifiedOptions = options
       ..headers.addAll(
-        credential == null ? {} : {'Authorization': 'bearer $credential'},
+        credential == null ? {} : {'Authorization': 'Bearer $credential'},
       );
+    debugPrint(modifiedOptions.headers.toString());
     handler.next(modifiedOptions);
-    super.onRequest(options, handler);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    debugPrint("___On Reponse___");
+    debugPrint("Response:${response.statusCode} ${response.data}");
+    // print("data: ${response.headers}");
+    super.onResponse(response, handler);
+  }
+
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    debugPrint("___On Error___");
+    debugPrint("Error: ${err.message}");
+    super.onError(err, handler);
   }
 }
