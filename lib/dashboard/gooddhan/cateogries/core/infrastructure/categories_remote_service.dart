@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gooddhan/core/infrastructure/dio_extension.dart';
 import 'package:gooddhan/core/infrastructure/network_exception.dart';
 import 'package:gooddhan/core/infrastructure/remote_response.dart';
@@ -8,9 +13,10 @@ import 'package:gooddhan/dashboard/gooddhan/core/infrastructure/gooddhan_headers
 
 abstract class CategoriesRemoteService {
   final Dio _dio;
+  final Connectivity _connectivity;
   final GooddhanHeaderCache _headerCache;
 
-  CategoriesRemoteService(this._dio, this._headerCache);
+  CategoriesRemoteService(this._dio, this._connectivity, this._headerCache);
 
   Future<RemoteResponse<List<CategoryDTO>>> getPage({
     required Uri requestUri,
@@ -18,7 +24,13 @@ abstract class CategoriesRemoteService {
   }) async {
     print(requestUri.toString());
     final previousHeader = await _headerCache.getHeaders(requestUri);
+
     try {
+      final connectivityResult = await _connectivity.checkConnectivity();
+
+      if (connectivityResult == ConnectivityResult.none) {
+        return const RemoteResponse.noConnection();
+      }
       final response = await _dio.getUri(
         requestUri,
         options: Options(
@@ -41,17 +53,52 @@ abstract class CategoriesRemoteService {
           totalpage: headers.totalPage ?? 1,
         );
       } else {
-        throw RestApiException(response.statusCode);
+        throw RestApiException(
+          response.statusCode,
+          message: response.data["error"],
+        );
       }
     } on DioError catch (e) {
-      print(e.response?.data);
       if (e.isNoConnectionError) {
         return const RemoteResponse.noConnection();
       } else if (e.response != null) {
-        throw RestApiException(e.response?.statusCode);
+        throw RestApiException(
+          e.response?.statusCode,
+          message: e.response?.data["error"],
+        );
       } else {
         rethrow;
       }
+    }
+  }
+
+  Future<CategoryDTO> createCategory({
+    required Uri requestUri,
+    required String categoryName,
+  }) async {
+    try {
+      final response = await _dio.postUri(
+        requestUri,
+        data: json.encode({"categoryName": categoryName}),
+      );
+      if (response.statusCode == 200) {
+        return CategoryDTO.fromJson(response.data["data"]);
+      } else {
+        throw RestApiException(
+          response.statusCode,
+          message: response.data["error"],
+        );
+      }
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RestApiException(
+          e.response?.statusCode,
+          message: e.response?.data["error"],
+        );
+      } else if (e.isNoConnectionError) {
+        throw RestApiException(null, message: "No internet Connection");
+      }
+      rethrow;
     }
   }
 }
