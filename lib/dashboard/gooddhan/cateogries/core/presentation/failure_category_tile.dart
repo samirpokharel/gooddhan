@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/paginated_category_list_view.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/gooddhan_failure.dart';
 
 class FailureCategoryTile extends ConsumerWidget {
@@ -12,18 +13,25 @@ class FailureCategoryTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTileTheme(
-      textColor: Theme.of(context).colorScheme.onError,
-      iconColor: Theme.of(context).colorScheme.onError,
+      textColor: Theme.of(context).errorColor,
+      iconColor: Theme.of(context).errorColor,
       child: Card(
         margin: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 8,
         ),
-        color: Theme.of(context).errorColor,
+        color: Colors.red[100],
         child: ListTile(
-          title: const Text('An error ocurred, please retry'),
+          title: const Text(
+            'An error ocurred, please retry',
+            style: TextStyle(
+              fontSize: 13,
+            ),
+          ),
           subtitle: Text(
-            failure.map(api: (_) => 'API returned ${_.statusCode}'),
+            failure.map(
+              api: (_) => _.message ?? 'API returned ${_.statusCode}',
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -34,9 +42,9 @@ class FailureCategoryTile extends ConsumerWidget {
           trailing: IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              // context
-              //     .findAncestorWidgetOfExactType<PaginatedReposListView>()
-              //     ?.getNextPage(ref);
+              context
+                  .findAncestorWidgetOfExactType<PaginatedCategoriesListView>()
+                  ?.getNextPage(ref);
             },
           ),
         ),

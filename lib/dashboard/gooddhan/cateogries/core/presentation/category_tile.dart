@@ -16,7 +16,7 @@ class CategoryItemTile extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       child: Row(
         children: [
           getIconFromCategory(category),
