@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/authentication/application/auth_notifier.dart';
 import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
+import 'package:gooddhan/core/shared/clear_foucs.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/core/shared/widgets/custom_state_button.dart';
@@ -69,12 +70,12 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
           orElse: () {},
           failure: (failure) {
             failure.failure.when(
-              server: (_, __) => showErrorToast(
+              server: (_, __) => showFlashToast(
                 context,
                 message: __,
                 dismissDuration: const Duration(seconds: 5),
               ),
-              storage: () => showErrorToast(
+              storage: () => showFlashToast(
                 context,
                 dismissDuration: const Duration(seconds: 5),
               ),
@@ -83,8 +84,7 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
         );
       },
     );
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+    return ClearFocus(
       child: Scaffold(
         body: Form(
           key: _formKey,
