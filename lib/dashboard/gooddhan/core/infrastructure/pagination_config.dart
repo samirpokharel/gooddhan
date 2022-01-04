@@ -1,3 +1,3 @@
 class PaginationConfig {
-  static const int itermsPerPage = 15;
+  static const int itermsPerPage = 9;
 }

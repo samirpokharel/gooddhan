@@ -4,6 +4,7 @@ import 'package:gooddhan/core/infrastructure/network_exception.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/infrastructure/extensions.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/gooddhan_failure.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/infrastructure/category_dio.dart';
 
 import 'list_categories_local_service.dart';
 import 'list_categories_remote_service.dart';
@@ -45,6 +46,16 @@ class ListCategoriesRepository {
       );
     } on RestApiException catch (e) {
       return left(GooddhanFailure.api(e.errorCode));
+    }
+  }
+
+  Future<Either<GooddhanFailure, CategoryDTO>> createCategory(
+    String categoryName,
+  ) async {
+    try {
+      return right(await _remoteService.createNewCategory(categoryName));
+    } on RestApiException catch (e) {
+      return left(GooddhanFailure.api(e.errorCode, e.message));
     }
   }
 }

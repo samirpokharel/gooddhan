@@ -16,6 +16,7 @@ final listCategoriesRemoteServiceProvider =
     Provider<ListCategoryRemoteService>((ref) {
   return ListCategoryRemoteService(
     ref.watch(dioProvider),
+    ref.watch(connectivityProvider),
     ref.watch(githuHeaderCacheProvider),
   );
 });
