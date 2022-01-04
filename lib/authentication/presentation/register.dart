@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/authentication/application/auth_notifier.dart';
 import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
-import 'package:gooddhan/core/presentation/routes/app_router.gr.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/core/shared/widgets/custom_state_button.dart';
 import 'package:gooddhan/core/shared/widgets/custom_value_tile.dart';
@@ -66,7 +64,8 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
     }
     Fluttertoast.showToast(
       msg: message,
-      backgroundColor: Colors.red[200],
+      backgroundColor: Colors.red[100],
+      textColor: Colors.red,
       toastLength: Toast.LENGTH_LONG,
     );
   }
