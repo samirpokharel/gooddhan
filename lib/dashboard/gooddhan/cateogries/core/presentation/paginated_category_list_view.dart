@@ -1,6 +1,8 @@
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/application/paginated_category_notifier.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/failure_category_tile.dart';
@@ -9,8 +11,8 @@ import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/applicati
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
 
 class PaginatedCategoriesListView extends StatefulWidget {
-  final StateNotifierProvider<ListCategoryNotifer, PaginatedCategoryState>
-      paginatedCategoriesNotifierProvider;
+  final AutoDisposeStateNotifierProvider<ListCategoryNotifer,
+      PaginatedCategoryState> paginatedCategoriesNotifierProvider;
 
   final void Function(WidgetRef ref) getNextPage;
   final void Function() onRefresh;
@@ -49,10 +51,11 @@ class _PaginatedCategoriesListViewState
                 if (!_.categories.isFresh &&
                     !hasAlreadyShownNoConnectionToast) {
                   hasAlreadyShownNoConnectionToast = true;
-                  // showNoConnectionToast(
-                  //   "You're not online. Some information may be outdated.",
-                  //   context,
-                  // );
+                  showErrorToast(
+                    context,
+                    message: "You're not online. Some information "
+                        "may be outdated.",
+                  );
                 }
                 return canLoadNextPage = _.isNextPageAvilabel;
               },

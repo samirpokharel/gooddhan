@@ -4,13 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/authentication/application/auth_notifier.dart';
 import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
+import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/core/shared/widgets/custom_state_button.dart';
 import 'package:gooddhan/core/shared/widgets/custom_value_tile.dart';
 import 'package:gooddhan/currency/domain/currency.dart';
 import 'package:gooddhan/currency/presentation/currency_picker.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/paginated_category_list_view.dart';
 
 class RegisterPage extends ConsumerStatefulWidget {
   final String idToken;
@@ -58,18 +59,6 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
     );
   }
 
-  void showErrorBanner({String? message = "Something went wrong"}) {
-    if (message!.startsWith("Dublicate field")) {
-      message = "This Email is already used";
-    }
-    Fluttertoast.showToast(
-      msg: message,
-      backgroundColor: Colors.red[100],
-      textColor: Colors.red,
-      toastLength: Toast.LENGTH_LONG,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final authNotifer = ref.watch(authNotifierProvider);
@@ -80,8 +69,15 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
           orElse: () {},
           failure: (failure) {
             failure.failure.when(
-              server: (_, __) => showErrorBanner(message: __),
-              storage: () => showErrorBanner(),
+              server: (_, __) => showErrorToast(
+                context,
+                message: __,
+                dismissDuration: const Duration(seconds: 5),
+              ),
+              storage: () => showErrorToast(
+                context,
+                dismissDuration: const Duration(seconds: 5),
+              ),
             );
           },
         );
