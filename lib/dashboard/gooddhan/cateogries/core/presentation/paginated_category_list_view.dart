@@ -11,8 +11,8 @@ import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/applicati
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
 
 class PaginatedCategoriesListView extends StatefulWidget {
-  final AutoDisposeStateNotifierProvider<ListCategoryNotifer,
-      PaginatedCategoryState> paginatedCategoriesNotifierProvider;
+  final StateNotifierProvider<ListCategoryNotifer, PaginatedCategoryState>
+      paginatedCategoriesNotifierProvider;
 
   final void Function(WidgetRef ref) getNextPage;
   final void Function() onRefresh;
@@ -51,10 +51,11 @@ class _PaginatedCategoriesListViewState
                 if (!_.categories.isFresh &&
                     !hasAlreadyShownNoConnectionToast) {
                   hasAlreadyShownNoConnectionToast = true;
-                  showErrorToast(
+                  showFlashToast(
                     context,
-                    message: "You're not online. Some information "
+                    message: "You're offile. Some data"
                         "may be outdated.",
+                    flavouer: ToastFlavouer.warn,
                   );
                 }
                 return canLoadNextPage = _.isNextPageAvilabel;
@@ -98,6 +99,8 @@ class _PaginatedListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      primary: false,
+      shrinkWrap: true,
       itemCount: state.map(
         initial: (_) => 0,
         loadInProgress: (_) => _.categories.entity.length + _.itemsPerPage,
