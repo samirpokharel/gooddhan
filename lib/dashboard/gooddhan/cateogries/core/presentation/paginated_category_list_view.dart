@@ -120,7 +120,7 @@ class _PaginatedListView extends StatelessWidget {
             if (index < _.categories.entity.length) {
               return CategoryItemTile(category: _.categories.entity[index]);
             } else {
-              return FailureRepoTile(failure: _.gooddhanFailure);
+              return FailureCategoryTile(failure: _.gooddhanFailure);
             }
           },
         );

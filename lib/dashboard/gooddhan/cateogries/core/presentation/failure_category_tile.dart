@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/gooddhan_failure.dart';
 
-class FailureRepoTile extends ConsumerWidget {
+class FailureCategoryTile extends ConsumerWidget {
   final GooddhanFailure failure;
-  const FailureRepoTile({
+  const FailureCategoryTile({
     Key? key,
     required this.failure,
   }) : super(key: key);
