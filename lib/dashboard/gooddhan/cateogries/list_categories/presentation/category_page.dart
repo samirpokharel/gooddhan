@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/paginated_category_list_view.dart';
@@ -28,7 +29,23 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
   Widget build(BuildContext context) {
     final notifier = ref.read(listCategoryNotifierProvider.notifier);
     return Scaffold(
-      appBar: AppBar(title: const Text("Sameer")),
+      appBar: AppBar(
+        title: const Text("Categories"),
+        bottom: PreferredSize(
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: TextFormField(
+              textInputAction: TextInputAction.search,
+              onChanged: (val) {},
+              decoration: const InputDecoration(
+                prefixIcon: Icon(CupertinoIcons.search),
+                hintText: "Search...",
+              ),
+            ),
+          ),
+          preferredSize: const Size.fromHeight(60),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: PaginatedCategoriesListView(
