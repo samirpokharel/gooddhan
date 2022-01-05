@@ -24,7 +24,7 @@ class ListCategoryNotifer extends PaginatedCategoryNotifier {
       (l) => PaginatedCategoryState.failed(state.categories, l),
       (r) => PaginatedCategoryState.success(
         Fresh.yes([...state.categories.entity, r.toDomain()]),
-        isNextPageAvilabel: true,
+        isNextPageAvilabel: false,
       ),
     );
   }
@@ -41,7 +41,7 @@ class ListCategoryNotifer extends PaginatedCategoryNotifier {
               (element) => element.id == id,
             ),
         ),
-        isNextPageAvilabel: true,
+        isNextPageAvilabel: false,
       ),
     );
   }
