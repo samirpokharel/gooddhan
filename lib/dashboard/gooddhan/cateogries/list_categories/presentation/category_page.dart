@@ -6,7 +6,7 @@ import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/paginated_category_list_view.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/shared/providers.dart';
-import 'package:gooddhan/dashboard/gooddhan/core/domain/PaginatedState.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/paginated_state.dart';
 
 const String noResultMessage =
     "That's about everything we could find in your starred repos right now.";
@@ -42,26 +42,13 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
     if (_categoryNameController.text.isEmpty) return;
     final notifier = ref.watch(listCategoryNotifierProvider.notifier);
     FocusScope.of(context).unfocus();
-    notifier.createCategory(_categoryNameController.text).whenComplete(() {
-      _categoryNameController.clear();
-      notifier.state.maybeWhen(
-        orElse: () {},
-        success: (_, __) {
-          showFlashToast(
-            context,
-            message: "Category Created successfully",
-            flavouer: ToastFlavouer.success,
-            dismissDuration: const Duration(seconds: 3),
-          );
-        },
-      );
-    });
+    notifier.createCategory(_categoryNameController.text);
   }
 
   @override
   Widget build(BuildContext context) {
     final notifier = ref.read(listCategoryNotifierProvider.notifier);
-    ref.listen<PaginatedCategoryState>(
+    ref.listen<PaginatedState>(
       listCategoryNotifierProvider,
       (_, next) {
         next.maybeMap(
@@ -103,7 +90,7 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
             isLoading: ref.watch(listCategoryNotifierProvider).when(
                   initial: (_) => false,
                   loadInProgress: (_, __) => true,
-                  success: (_, __) => false,
+                  success: (_, __, ___) => false,
                   failed: (_, __) => false,
                 ),
             child: Scaffold(

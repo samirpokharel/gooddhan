@@ -7,7 +7,7 @@ import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/shared/providers.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/application/list_categories_notifier.dart';
-import 'package:gooddhan/dashboard/gooddhan/core/domain/PaginatedState.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/paginated_state.dart';
 
 import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
@@ -133,7 +133,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
               isLoading: ref.watch(listCategoryNotifierProvider).when(
                     initial: (_) => false,
                     loadInProgress: (_, __) => true,
-                    success: (_, __) => false,
+                    success: (_, __, ___) => false,
                     failed: (_, __) => false,
                   ),
               child: Scaffold(
@@ -160,8 +160,8 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
 }
 
 class PaginatedCategoriesPickerListView extends StatefulWidget {
-  final AutoDisposeStateNotifierProvider<ListCategoryNotifer,
-      PaginatedCategoryState> paginatedCategoriesNotifierProvider;
+  final AutoDisposeStateNotifierProvider<ListCategoryNotifer, PaginatedState>
+      paginatedCategoriesNotifierProvider;
 
   final void Function() getNextPage;
   final void Function(Category category)? onSelectCategory;
@@ -195,15 +195,14 @@ class _PaginatedCategoriesPickerListViewState
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, chield) {
-        ref.listen<PaginatedCategoryState>(
+        ref.listen<PaginatedState>(
           widget.paginatedCategoriesNotifierProvider,
           (previous, state) {
             state.map(
               initial: (_) => canLoadNextPage = true,
               loadInProgress: (_) => canLoadNextPage = false,
               success: (_) {
-                if (!_.categories.isFresh &&
-                    !hasAlreadyShownNoConnectionToast) {
+                if (!_.items.isFresh && !hasAlreadyShownNoConnectionToast) {
                   hasAlreadyShownNoConnectionToast = true;
                   showFlashToast(
                     context,
@@ -227,13 +226,13 @@ class _PaginatedCategoriesPickerListViewState
           canLoadNextPage: canLoadNextPage,
           getNextPage: () => widget.getNextPage(),
           child: state.maybeWhen(
-            success: (categories, _) => categories.entity.isEmpty,
+            success: (categories, _, __) => categories.entity.isEmpty,
             orElse: () => false,
           )
               ? SingleChildScrollView(
                   child: NoData(onRefresh: () => widget.onRefresh()),
                 )
-              : PaginatedListView(
+              : PaginatedListView<Category>(
                   state: state,
                   initialItem: (_) => CategoryItemTile(category: _),
                   succesItem: (category) => GestureDetector(
