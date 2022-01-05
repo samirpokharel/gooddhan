@@ -31,4 +31,10 @@ class ListCategoryRemoteService extends CategoriesRemoteService {
       requestUri: Uri.parse("$baseUrl/categories"),
     );
   }
+
+  Future<void> deleteSingleCategory(String id) {
+    return super.deleteCategory(
+      requestUri: Uri.parse("$baseUrl/categories/$id"),
+    );
+  }
 }

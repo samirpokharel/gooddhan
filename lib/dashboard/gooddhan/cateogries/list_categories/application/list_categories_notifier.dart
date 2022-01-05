@@ -5,9 +5,7 @@ import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/infrastru
 class ListCategoryNotifer extends PaginatedCategoryNotifier {
   final ListCategoriesRepository _repository;
 
-  ListCategoryNotifer(this._repository) {
-    getFirstCategoryListPage();
-  }
+  ListCategoryNotifer(this._repository);
 
   Future<void> getFirstCategoryListPage() async {
     super.resetPage();
@@ -25,6 +23,23 @@ class ListCategoryNotifer extends PaginatedCategoryNotifier {
       (l) => PaginatedCategoryState.failed(state.categories, l),
       (r) => PaginatedCategoryState.success(
         Fresh.yes([...state.categories.entity, r.toDomain()]),
+        isNextPageAvilabel: true,
+      ),
+    );
+  }
+
+  Future<void> deleteCategory(String id) async {
+    state = PaginatedCategoryState.loadInProgress(state.categories, 0);
+    final failureOrCategory = await _repository.deleteCategory(id);
+    state = failureOrCategory.fold(
+      (l) => PaginatedCategoryState.failed(state.categories, l),
+      (r) => PaginatedCategoryState.success(
+        Fresh.yes(
+          state.categories.entity
+            ..removeWhere(
+              (element) => element.id == id,
+            ),
+        ),
         isNextPageAvilabel: true,
       ),
     );
