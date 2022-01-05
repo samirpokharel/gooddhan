@@ -6,6 +6,8 @@ import 'package:gooddhan/core/presentation/themes/app_icons.dart';
 import 'package:gooddhan/core/shared/widgets/custom_conformation_sheet.dart';
 import 'package:gooddhan/core/shared/widgets/custom_profile_card.dart';
 import 'package:gooddhan/core/shared/widgets/custom_profile_menu_card.dart';
+import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/presentation/category_picker.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
 import 'package:gooddhan/dashboard/profile/application/profile_notifier.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
@@ -67,7 +69,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     color: Colors.cyan,
                     icon: Icons.category,
                     title: "Category",
-                    onPressed: () {
+                    onPressed: () async {
                       AutoRouter.of(context).push(const CategoriesRoute());
                     },
                   ),

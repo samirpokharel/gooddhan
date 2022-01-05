@@ -44,7 +44,7 @@ class FailureListTile extends ConsumerWidget {
             onPressed: () {
               context
                   .findAncestorWidgetOfExactType<PaginatedCategoriesListView>()
-                  ?.getNextPage(ref);
+                  ?.getNextPage();
             },
           ),
         ),

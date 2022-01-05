@@ -111,7 +111,7 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
               body: PaginatedCategoriesListView(
                 paginatedCategoriesNotifierProvider:
                     listCategoryNotifierProvider,
-                getNextPage: (ref) => notifier.getNextCategoryListPage(),
+                getNextPage: () => notifier.getNextCategoryListPage(),
                 onRefresh: () => notifier.getFirstCategoryListPage(),
                 noResultMessage: noResultMessage,
               ),
