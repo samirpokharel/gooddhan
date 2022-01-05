@@ -21,9 +21,9 @@ void showFlashToast(
   ToastFlavouer flavouer = ToastFlavouer.error,
   bool barrierDismissible = false,
 }) {
-  if (message!.startsWith("Dublicate field")) {
-    message = "This Email is already used";
-  }
+  // if (message!.startsWith("Dublicate field")) {
+  //   message = "This Email is already used";
+  // }
   showFlash(
     context: context,
     builder: (context, _) {

@@ -104,7 +104,8 @@ class Authenticator {
       await _userLocalStorage.upserUser(user);
       return right(user);
     } on DioError catch (e) {
-      if (e.type == DioErrorType.response) {
+      if (e.response != null) {
+        print(e.response?.data);
         return left(
           AuthFailure.server(
             e.response?.statusCode,
@@ -112,7 +113,7 @@ class Authenticator {
           ),
         );
       }
-      return left(const AuthFailure.storage());
+      rethrow;
     } on PlatformException {
       return left(const AuthFailure.storage());
     }
