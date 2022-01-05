@@ -4,7 +4,7 @@ import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/applicati
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/infrastrucuture/list_categories_local_service.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/infrastrucuture/list_categories_remote_service.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/infrastrucuture/list_categories_repository.dart';
-import 'package:gooddhan/dashboard/gooddhan/core/domain/PaginatedState.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/paginated_state.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/infrastructure/gooddhan_header_cache.dart';
 
 final githuHeaderCacheProvider = Provider<GooddhanHeaderCache>((ref) {
@@ -33,7 +33,8 @@ final listCategoriesRepositoryProvider =
   );
 });
 
-final listCategoryNotifierProvider = StateNotifierProvider.autoDispose<
-    ListCategoryNotifer, PaginatedCategoryState>((ref) {
+final listCategoryNotifierProvider =
+    StateNotifierProvider.autoDispose<ListCategoryNotifer, PaginatedState>(
+        (ref) {
   return ListCategoryNotifer(ref.watch(listCategoriesRepositoryProvider));
 });
