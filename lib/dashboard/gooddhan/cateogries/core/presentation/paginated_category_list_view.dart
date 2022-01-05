@@ -9,15 +9,15 @@ import 'package:gooddhan/core/shared/widgets/custom_conformation_sheet.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_list_item.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/application/list_categories_notifier.dart';
-import 'package:gooddhan/dashboard/gooddhan/core/domain/PaginatedState.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/paginated_state.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/paginated_list_view.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/pagination_wrapper.dart';
 
 class PaginatedCategoriesListView extends StatefulWidget {
-  final AutoDisposeStateNotifierProvider<ListCategoryNotifer,
-      PaginatedCategoryState> paginatedCategoriesNotifierProvider;
+  final AutoDisposeStateNotifierProvider<ListCategoryNotifer, PaginatedState>
+      paginatedCategoriesNotifierProvider;
 
   final void Function() getNextPage;
   final void Function(Category category)? onSelectCategory;
@@ -48,21 +48,34 @@ class _PaginatedCategoriesListViewState
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, chield) {
-        ref.listen<PaginatedCategoryState>(
+        ref.listen<PaginatedState>(
           widget.paginatedCategoriesNotifierProvider,
           (previous, state) {
             state.map(
               initial: (_) => canLoadNextPage = true,
               loadInProgress: (_) => canLoadNextPage = false,
               success: (_) {
-                if (!_.categories.isFresh &&
-                    !hasAlreadyShownNoConnectionToast) {
+                if (!_.items.isFresh && !hasAlreadyShownNoConnectionToast) {
                   hasAlreadyShownNoConnectionToast = true;
                   showFlashToast(
                     context,
                     message: "You're offile. Some data"
                         "may be outdated.",
                     flavouer: ToastFlavouer.warn,
+                  );
+                } else if (_.successType == SuccessType.created) {
+                  showFlashToast(
+                    context,
+                    message: "Category successfully Created",
+                    flavouer: ToastFlavouer.success,
+                    dismissDuration: const Duration(seconds: 3),
+                  );
+                } else if (_.successType == SuccessType.deleted) {
+                  showFlashToast(
+                    context,
+                    message: "Category Successfully deleted",
+                    flavouer: ToastFlavouer.success,
+                    dismissDuration: const Duration(seconds: 3),
                   );
                 }
                 return canLoadNextPage = _.isNextPageAvilabel;
@@ -80,13 +93,13 @@ class _PaginatedCategoriesListViewState
           canLoadNextPage: canLoadNextPage,
           getNextPage: () => widget.getNextPage(),
           child: state.maybeWhen(
-            success: (categories, _) => categories.entity.isEmpty,
+            success: (categories, _, __) => categories.entity.isEmpty,
             orElse: () => false,
           )
               ? SingleChildScrollView(
                   child: NoData(onRefresh: () => widget.onRefresh()),
                 )
-              : PaginatedListView(
+              : PaginatedListView<Category>(
                   state: state,
                   initialItem: (_) => CategoryItemTile(category: _),
                   succesItem: (_) => CategoryListItem(
