@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'PaginatedState.dart';
+part of 'paginated_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,67 +15,72 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$PaginatedCategoryStateTearOff {
-  const _$PaginatedCategoryStateTearOff();
+class _$PaginatedStateTearOff {
+  const _$PaginatedStateTearOff();
 
-  _Initial<T> initial<T>(T categories) {
+  _Initial<T> initial<T>(T items) {
     return _Initial<T>(
-      categories,
+      items,
     );
   }
 
-  _LoadInProgress<T> loadInProgress<T>(T categories, int itemsPerPage) {
+  _LoadInProgress<T> loadInProgress<T>(T items, int itemsPerPage) {
     return _LoadInProgress<T>(
-      categories,
+      items,
       itemsPerPage,
     );
   }
 
-  _Success<T> success<T>(T categories, {required bool isNextPageAvilabel}) {
+  _Success<T> success<T>(T items,
+      {required bool isNextPageAvilabel, required SuccessType successType}) {
     return _Success<T>(
-      categories,
+      items,
       isNextPageAvilabel: isNextPageAvilabel,
+      successType: successType,
     );
   }
 
-  _Failed<T> failed<T>(T categories, GooddhanFailure gooddhanFailure) {
+  _Failed<T> failed<T>(T items, GooddhanFailure gooddhanFailure) {
     return _Failed<T>(
-      categories,
+      items,
       gooddhanFailure,
     );
   }
 }
 
 /// @nodoc
-const $PaginatedCategoryState = _$PaginatedCategoryStateTearOff();
+const $PaginatedState = _$PaginatedStateTearOff();
 
 /// @nodoc
-mixin _$PaginatedCategoryState<T> {
-  T get categories => throw _privateConstructorUsedError;
+mixin _$PaginatedState<T> {
+  T get items => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T categories) initial,
-    required TResult Function(T categories, int itemsPerPage) loadInProgress,
-    required TResult Function(T categories, bool isNextPageAvilabel) success,
-    required TResult Function(T categories, GooddhanFailure gooddhanFailure)
-        failed,
+    required TResult Function(T items) initial,
+    required TResult Function(T items, int itemsPerPage) loadInProgress,
+    required TResult Function(
+            T items, bool isNextPageAvilabel, SuccessType successType)
+        success,
+    required TResult Function(T items, GooddhanFailure gooddhanFailure) failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -106,35 +111,35 @@ mixin _$PaginatedCategoryState<T> {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $PaginatedCategoryStateCopyWith<T, PaginatedCategoryState<T>> get copyWith =>
+  $PaginatedStateCopyWith<T, PaginatedState<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PaginatedCategoryStateCopyWith<T, $Res> {
-  factory $PaginatedCategoryStateCopyWith(PaginatedCategoryState<T> value,
-          $Res Function(PaginatedCategoryState<T>) then) =
-      _$PaginatedCategoryStateCopyWithImpl<T, $Res>;
-  $Res call({T categories});
+abstract class $PaginatedStateCopyWith<T, $Res> {
+  factory $PaginatedStateCopyWith(
+          PaginatedState<T> value, $Res Function(PaginatedState<T>) then) =
+      _$PaginatedStateCopyWithImpl<T, $Res>;
+  $Res call({T items});
 }
 
 /// @nodoc
-class _$PaginatedCategoryStateCopyWithImpl<T, $Res>
-    implements $PaginatedCategoryStateCopyWith<T, $Res> {
-  _$PaginatedCategoryStateCopyWithImpl(this._value, this._then);
+class _$PaginatedStateCopyWithImpl<T, $Res>
+    implements $PaginatedStateCopyWith<T, $Res> {
+  _$PaginatedStateCopyWithImpl(this._value, this._then);
 
-  final PaginatedCategoryState<T> _value;
+  final PaginatedState<T> _value;
   // ignore: unused_field
-  final $Res Function(PaginatedCategoryState<T>) _then;
+  final $Res Function(PaginatedState<T>) _then;
 
   @override
   $Res call({
-    Object? categories = freezed,
+    Object? items = freezed,
   }) {
     return _then(_value.copyWith(
-      categories: categories == freezed
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      items: items == freezed
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
               as T,
     ));
   }
@@ -142,17 +147,17 @@ class _$PaginatedCategoryStateCopyWithImpl<T, $Res>
 
 /// @nodoc
 abstract class _$InitialCopyWith<T, $Res>
-    implements $PaginatedCategoryStateCopyWith<T, $Res> {
+    implements $PaginatedStateCopyWith<T, $Res> {
   factory _$InitialCopyWith(
           _Initial<T> value, $Res Function(_Initial<T>) then) =
       __$InitialCopyWithImpl<T, $Res>;
   @override
-  $Res call({T categories});
+  $Res call({T items});
 }
 
 /// @nodoc
 class __$InitialCopyWithImpl<T, $Res>
-    extends _$PaginatedCategoryStateCopyWithImpl<T, $Res>
+    extends _$PaginatedStateCopyWithImpl<T, $Res>
     implements _$InitialCopyWith<T, $Res> {
   __$InitialCopyWithImpl(_Initial<T> _value, $Res Function(_Initial<T>) _then)
       : super(_value, (v) => _then(v as _Initial<T>));
@@ -162,12 +167,12 @@ class __$InitialCopyWithImpl<T, $Res>
 
   @override
   $Res call({
-    Object? categories = freezed,
+    Object? items = freezed,
   }) {
     return _then(_Initial<T>(
-      categories == freezed
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      items == freezed
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
               as T,
     ));
   }
@@ -176,14 +181,14 @@ class __$InitialCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$_Initial<T> extends _Initial<T> {
-  const _$_Initial(this.categories) : super._();
+  const _$_Initial(this.items) : super._();
 
   @override
-  final T categories;
+  final T items;
 
   @override
   String toString() {
-    return 'PaginatedCategoryState<$T>.initial(categories: $categories)';
+    return 'PaginatedState<$T>.initial(items: $items)';
   }
 
   @override
@@ -191,13 +196,12 @@ class _$_Initial<T> extends _Initial<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Initial<T> &&
-            const DeepCollectionEquality()
-                .equals(other.categories, categories));
+            const DeepCollectionEquality().equals(other.items, items));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(categories));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(items));
 
   @JsonKey(ignore: true)
   @override
@@ -207,37 +211,40 @@ class _$_Initial<T> extends _Initial<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T categories) initial,
-    required TResult Function(T categories, int itemsPerPage) loadInProgress,
-    required TResult Function(T categories, bool isNextPageAvilabel) success,
-    required TResult Function(T categories, GooddhanFailure gooddhanFailure)
-        failed,
+    required TResult Function(T items) initial,
+    required TResult Function(T items, int itemsPerPage) loadInProgress,
+    required TResult Function(
+            T items, bool isNextPageAvilabel, SuccessType successType)
+        success,
+    required TResult Function(T items, GooddhanFailure gooddhanFailure) failed,
   }) {
-    return initial(categories);
+    return initial(items);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
   }) {
-    return initial?.call(categories);
+    return initial?.call(items);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(categories);
+      return initial(items);
     }
     return orElse();
   }
@@ -280,12 +287,12 @@ class _$_Initial<T> extends _Initial<T> {
   }
 }
 
-abstract class _Initial<T> extends PaginatedCategoryState<T> {
-  const factory _Initial(T categories) = _$_Initial<T>;
+abstract class _Initial<T> extends PaginatedState<T> {
+  const factory _Initial(T items) = _$_Initial<T>;
   const _Initial._() : super._();
 
   @override
-  T get categories;
+  T get items;
   @override
   @JsonKey(ignore: true)
   _$InitialCopyWith<T, _Initial<T>> get copyWith =>
@@ -294,17 +301,17 @@ abstract class _Initial<T> extends PaginatedCategoryState<T> {
 
 /// @nodoc
 abstract class _$LoadInProgressCopyWith<T, $Res>
-    implements $PaginatedCategoryStateCopyWith<T, $Res> {
+    implements $PaginatedStateCopyWith<T, $Res> {
   factory _$LoadInProgressCopyWith(
           _LoadInProgress<T> value, $Res Function(_LoadInProgress<T>) then) =
       __$LoadInProgressCopyWithImpl<T, $Res>;
   @override
-  $Res call({T categories, int itemsPerPage});
+  $Res call({T items, int itemsPerPage});
 }
 
 /// @nodoc
 class __$LoadInProgressCopyWithImpl<T, $Res>
-    extends _$PaginatedCategoryStateCopyWithImpl<T, $Res>
+    extends _$PaginatedStateCopyWithImpl<T, $Res>
     implements _$LoadInProgressCopyWith<T, $Res> {
   __$LoadInProgressCopyWithImpl(
       _LoadInProgress<T> _value, $Res Function(_LoadInProgress<T>) _then)
@@ -315,13 +322,13 @@ class __$LoadInProgressCopyWithImpl<T, $Res>
 
   @override
   $Res call({
-    Object? categories = freezed,
+    Object? items = freezed,
     Object? itemsPerPage = freezed,
   }) {
     return _then(_LoadInProgress<T>(
-      categories == freezed
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      items == freezed
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
               as T,
       itemsPerPage == freezed
           ? _value.itemsPerPage
@@ -334,16 +341,16 @@ class __$LoadInProgressCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$_LoadInProgress<T> extends _LoadInProgress<T> {
-  const _$_LoadInProgress(this.categories, this.itemsPerPage) : super._();
+  const _$_LoadInProgress(this.items, this.itemsPerPage) : super._();
 
   @override
-  final T categories;
+  final T items;
   @override
   final int itemsPerPage;
 
   @override
   String toString() {
-    return 'PaginatedCategoryState<$T>.loadInProgress(categories: $categories, itemsPerPage: $itemsPerPage)';
+    return 'PaginatedState<$T>.loadInProgress(items: $items, itemsPerPage: $itemsPerPage)';
   }
 
   @override
@@ -351,8 +358,7 @@ class _$_LoadInProgress<T> extends _LoadInProgress<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LoadInProgress<T> &&
-            const DeepCollectionEquality()
-                .equals(other.categories, categories) &&
+            const DeepCollectionEquality().equals(other.items, items) &&
             const DeepCollectionEquality()
                 .equals(other.itemsPerPage, itemsPerPage));
   }
@@ -360,7 +366,7 @@ class _$_LoadInProgress<T> extends _LoadInProgress<T> {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(items),
       const DeepCollectionEquality().hash(itemsPerPage));
 
   @JsonKey(ignore: true)
@@ -371,37 +377,40 @@ class _$_LoadInProgress<T> extends _LoadInProgress<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T categories) initial,
-    required TResult Function(T categories, int itemsPerPage) loadInProgress,
-    required TResult Function(T categories, bool isNextPageAvilabel) success,
-    required TResult Function(T categories, GooddhanFailure gooddhanFailure)
-        failed,
+    required TResult Function(T items) initial,
+    required TResult Function(T items, int itemsPerPage) loadInProgress,
+    required TResult Function(
+            T items, bool isNextPageAvilabel, SuccessType successType)
+        success,
+    required TResult Function(T items, GooddhanFailure gooddhanFailure) failed,
   }) {
-    return loadInProgress(categories, itemsPerPage);
+    return loadInProgress(items, itemsPerPage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
   }) {
-    return loadInProgress?.call(categories, itemsPerPage);
+    return loadInProgress?.call(items, itemsPerPage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
-      return loadInProgress(categories, itemsPerPage);
+      return loadInProgress(items, itemsPerPage);
     }
     return orElse();
   }
@@ -444,13 +453,13 @@ class _$_LoadInProgress<T> extends _LoadInProgress<T> {
   }
 }
 
-abstract class _LoadInProgress<T> extends PaginatedCategoryState<T> {
-  const factory _LoadInProgress(T categories, int itemsPerPage) =
+abstract class _LoadInProgress<T> extends PaginatedState<T> {
+  const factory _LoadInProgress(T items, int itemsPerPage) =
       _$_LoadInProgress<T>;
   const _LoadInProgress._() : super._();
 
   @override
-  T get categories;
+  T get items;
   int get itemsPerPage;
   @override
   @JsonKey(ignore: true)
@@ -460,17 +469,17 @@ abstract class _LoadInProgress<T> extends PaginatedCategoryState<T> {
 
 /// @nodoc
 abstract class _$SuccessCopyWith<T, $Res>
-    implements $PaginatedCategoryStateCopyWith<T, $Res> {
+    implements $PaginatedStateCopyWith<T, $Res> {
   factory _$SuccessCopyWith(
           _Success<T> value, $Res Function(_Success<T>) then) =
       __$SuccessCopyWithImpl<T, $Res>;
   @override
-  $Res call({T categories, bool isNextPageAvilabel});
+  $Res call({T items, bool isNextPageAvilabel, SuccessType successType});
 }
 
 /// @nodoc
 class __$SuccessCopyWithImpl<T, $Res>
-    extends _$PaginatedCategoryStateCopyWithImpl<T, $Res>
+    extends _$PaginatedStateCopyWithImpl<T, $Res>
     implements _$SuccessCopyWith<T, $Res> {
   __$SuccessCopyWithImpl(_Success<T> _value, $Res Function(_Success<T>) _then)
       : super(_value, (v) => _then(v as _Success<T>));
@@ -480,18 +489,23 @@ class __$SuccessCopyWithImpl<T, $Res>
 
   @override
   $Res call({
-    Object? categories = freezed,
+    Object? items = freezed,
     Object? isNextPageAvilabel = freezed,
+    Object? successType = freezed,
   }) {
     return _then(_Success<T>(
-      categories == freezed
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      items == freezed
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
               as T,
       isNextPageAvilabel: isNextPageAvilabel == freezed
           ? _value.isNextPageAvilabel
           : isNextPageAvilabel // ignore: cast_nullable_to_non_nullable
               as bool,
+      successType: successType == freezed
+          ? _value.successType
+          : successType // ignore: cast_nullable_to_non_nullable
+              as SuccessType,
     ));
   }
 }
@@ -499,17 +513,20 @@ class __$SuccessCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$_Success<T> extends _Success<T> {
-  const _$_Success(this.categories, {required this.isNextPageAvilabel})
+  const _$_Success(this.items,
+      {required this.isNextPageAvilabel, required this.successType})
       : super._();
 
   @override
-  final T categories;
+  final T items;
   @override
   final bool isNextPageAvilabel;
+  @override
+  final SuccessType successType;
 
   @override
   String toString() {
-    return 'PaginatedCategoryState<$T>.success(categories: $categories, isNextPageAvilabel: $isNextPageAvilabel)';
+    return 'PaginatedState<$T>.success(items: $items, isNextPageAvilabel: $isNextPageAvilabel, successType: $successType)';
   }
 
   @override
@@ -517,17 +534,19 @@ class _$_Success<T> extends _Success<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Success<T> &&
+            const DeepCollectionEquality().equals(other.items, items) &&
             const DeepCollectionEquality()
-                .equals(other.categories, categories) &&
+                .equals(other.isNextPageAvilabel, isNextPageAvilabel) &&
             const DeepCollectionEquality()
-                .equals(other.isNextPageAvilabel, isNextPageAvilabel));
+                .equals(other.successType, successType));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(categories),
-      const DeepCollectionEquality().hash(isNextPageAvilabel));
+      const DeepCollectionEquality().hash(items),
+      const DeepCollectionEquality().hash(isNextPageAvilabel),
+      const DeepCollectionEquality().hash(successType));
 
   @JsonKey(ignore: true)
   @override
@@ -537,37 +556,40 @@ class _$_Success<T> extends _Success<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T categories) initial,
-    required TResult Function(T categories, int itemsPerPage) loadInProgress,
-    required TResult Function(T categories, bool isNextPageAvilabel) success,
-    required TResult Function(T categories, GooddhanFailure gooddhanFailure)
-        failed,
+    required TResult Function(T items) initial,
+    required TResult Function(T items, int itemsPerPage) loadInProgress,
+    required TResult Function(
+            T items, bool isNextPageAvilabel, SuccessType successType)
+        success,
+    required TResult Function(T items, GooddhanFailure gooddhanFailure) failed,
   }) {
-    return success(categories, isNextPageAvilabel);
+    return success(items, isNextPageAvilabel, successType);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
   }) {
-    return success?.call(categories, isNextPageAvilabel);
+    return success?.call(items, isNextPageAvilabel, successType);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(categories, isNextPageAvilabel);
+      return success(items, isNextPageAvilabel, successType);
     }
     return orElse();
   }
@@ -610,14 +632,16 @@ class _$_Success<T> extends _Success<T> {
   }
 }
 
-abstract class _Success<T> extends PaginatedCategoryState<T> {
-  const factory _Success(T categories, {required bool isNextPageAvilabel}) =
-      _$_Success<T>;
+abstract class _Success<T> extends PaginatedState<T> {
+  const factory _Success(T items,
+      {required bool isNextPageAvilabel,
+      required SuccessType successType}) = _$_Success<T>;
   const _Success._() : super._();
 
   @override
-  T get categories;
+  T get items;
   bool get isNextPageAvilabel;
+  SuccessType get successType;
   @override
   @JsonKey(ignore: true)
   _$SuccessCopyWith<T, _Success<T>> get copyWith =>
@@ -626,18 +650,18 @@ abstract class _Success<T> extends PaginatedCategoryState<T> {
 
 /// @nodoc
 abstract class _$FailedCopyWith<T, $Res>
-    implements $PaginatedCategoryStateCopyWith<T, $Res> {
+    implements $PaginatedStateCopyWith<T, $Res> {
   factory _$FailedCopyWith(_Failed<T> value, $Res Function(_Failed<T>) then) =
       __$FailedCopyWithImpl<T, $Res>;
   @override
-  $Res call({T categories, GooddhanFailure gooddhanFailure});
+  $Res call({T items, GooddhanFailure gooddhanFailure});
 
   $GooddhanFailureCopyWith<$Res> get gooddhanFailure;
 }
 
 /// @nodoc
 class __$FailedCopyWithImpl<T, $Res>
-    extends _$PaginatedCategoryStateCopyWithImpl<T, $Res>
+    extends _$PaginatedStateCopyWithImpl<T, $Res>
     implements _$FailedCopyWith<T, $Res> {
   __$FailedCopyWithImpl(_Failed<T> _value, $Res Function(_Failed<T>) _then)
       : super(_value, (v) => _then(v as _Failed<T>));
@@ -647,13 +671,13 @@ class __$FailedCopyWithImpl<T, $Res>
 
   @override
   $Res call({
-    Object? categories = freezed,
+    Object? items = freezed,
     Object? gooddhanFailure = freezed,
   }) {
     return _then(_Failed<T>(
-      categories == freezed
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      items == freezed
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
               as T,
       gooddhanFailure == freezed
           ? _value.gooddhanFailure
@@ -673,16 +697,16 @@ class __$FailedCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$_Failed<T> extends _Failed<T> {
-  const _$_Failed(this.categories, this.gooddhanFailure) : super._();
+  const _$_Failed(this.items, this.gooddhanFailure) : super._();
 
   @override
-  final T categories;
+  final T items;
   @override
   final GooddhanFailure gooddhanFailure;
 
   @override
   String toString() {
-    return 'PaginatedCategoryState<$T>.failed(categories: $categories, gooddhanFailure: $gooddhanFailure)';
+    return 'PaginatedState<$T>.failed(items: $items, gooddhanFailure: $gooddhanFailure)';
   }
 
   @override
@@ -690,8 +714,7 @@ class _$_Failed<T> extends _Failed<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Failed<T> &&
-            const DeepCollectionEquality()
-                .equals(other.categories, categories) &&
+            const DeepCollectionEquality().equals(other.items, items) &&
             const DeepCollectionEquality()
                 .equals(other.gooddhanFailure, gooddhanFailure));
   }
@@ -699,7 +722,7 @@ class _$_Failed<T> extends _Failed<T> {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(items),
       const DeepCollectionEquality().hash(gooddhanFailure));
 
   @JsonKey(ignore: true)
@@ -710,37 +733,40 @@ class _$_Failed<T> extends _Failed<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T categories) initial,
-    required TResult Function(T categories, int itemsPerPage) loadInProgress,
-    required TResult Function(T categories, bool isNextPageAvilabel) success,
-    required TResult Function(T categories, GooddhanFailure gooddhanFailure)
-        failed,
+    required TResult Function(T items) initial,
+    required TResult Function(T items, int itemsPerPage) loadInProgress,
+    required TResult Function(
+            T items, bool isNextPageAvilabel, SuccessType successType)
+        success,
+    required TResult Function(T items, GooddhanFailure gooddhanFailure) failed,
   }) {
-    return failed(categories, gooddhanFailure);
+    return failed(items, gooddhanFailure);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
   }) {
-    return failed?.call(categories, gooddhanFailure);
+    return failed?.call(items, gooddhanFailure);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T categories)? initial,
-    TResult Function(T categories, int itemsPerPage)? loadInProgress,
-    TResult Function(T categories, bool isNextPageAvilabel)? success,
-    TResult Function(T categories, GooddhanFailure gooddhanFailure)? failed,
+    TResult Function(T items)? initial,
+    TResult Function(T items, int itemsPerPage)? loadInProgress,
+    TResult Function(T items, bool isNextPageAvilabel, SuccessType successType)?
+        success,
+    TResult Function(T items, GooddhanFailure gooddhanFailure)? failed,
     required TResult orElse(),
   }) {
     if (failed != null) {
-      return failed(categories, gooddhanFailure);
+      return failed(items, gooddhanFailure);
     }
     return orElse();
   }
@@ -783,13 +809,13 @@ class _$_Failed<T> extends _Failed<T> {
   }
 }
 
-abstract class _Failed<T> extends PaginatedCategoryState<T> {
-  const factory _Failed(T categories, GooddhanFailure gooddhanFailure) =
+abstract class _Failed<T> extends PaginatedState<T> {
+  const factory _Failed(T items, GooddhanFailure gooddhanFailure) =
       _$_Failed<T>;
   const _Failed._() : super._();
 
   @override
-  T get categories;
+  T get items;
   GooddhanFailure get gooddhanFailure;
   @override
   @JsonKey(ignore: true)
