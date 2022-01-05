@@ -52,7 +52,7 @@ class AppWidget extends ConsumerWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: "Gooddhan",
-      theme: AppTheme.dark(),
+      theme: AppTheme.light(),
       routeInformationParser: appRouter.defaultRouteParser(),
       routerDelegate: appRouter.delegate(),
     );

@@ -12,6 +12,10 @@ class Currency with _$Currency {
     required String symbol,
     required String flag,
   }) = _Currency;
+
+  factory Currency.fromCode(String code) {
+    return currencies.firstWhere((element) => element.code == code);
+  }
 }
 
 List<Currency> currencies = [

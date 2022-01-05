@@ -12,14 +12,15 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    debugPrint("____On Request___");
+    debugPrint("Request: ${options.method}:${options.uri}");
+
     final credential = await _authenticator.getSignedCredentials();
 
     final modifiedOptions = options
       ..headers.addAll(
         credential == null ? {} : {'Authorization': 'Bearer $credential'},
       );
-    debugPrint(modifiedOptions.data.toString());
+    debugPrint(modifiedOptions.headers.toString());
     handler.next(modifiedOptions);
   }
 
