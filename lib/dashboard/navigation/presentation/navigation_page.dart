@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/presentation/themes/app_icons.dart';
+import 'package:gooddhan/dashboard/gooddhan/expenses/expense_list/presentation/expenses_page.dart';
 import 'package:gooddhan/dashboard/profile/presentation/profile_page.dart';
 
 import 'application/bottom_nav_bar_notifier.dart';
@@ -13,7 +14,7 @@ final Map<BottomNavItem, List<IconData>> _items = {
 };
 final Map<BottomNavItem, Widget> _screens = {
   BottomNavItem.home: Container(),
-  BottomNavItem.expenses: Container(),
+  BottomNavItem.expenses: const ExpensesPage(),
   BottomNavItem.report: Container(),
   BottomNavItem.profile: const ProfilePage(),
 };
