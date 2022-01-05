@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/shared/clear_foucs.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
+import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
+import 'package:gooddhan/dashboard/gooddhan/cateogries/core/application/paginated_category_notifier.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/paginated_category_list_view.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/shared/providers.dart';
 
@@ -29,11 +31,11 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
   void initState() {
     super.initState();
     _categoryNameController = TextEditingController();
-    // Future.microtask(() {
-    //   ref
-    //       .read(listCategoryNotifierProvider.notifier)
-    //       .getFirstCategoryListPage();
-    // });
+    Future.microtask(() {
+      ref
+          .read(listCategoryNotifierProvider.notifier)
+          .getFirstCategoryListPage();
+    });
   }
 
   void createCategory() {
@@ -44,14 +46,6 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
       _categoryNameController.clear();
       notifier.state.maybeWhen(
         orElse: () {},
-        failed: (_, __) {
-          showFlashToast(
-            context,
-            message: "Category Create Failed",
-            flavouer: ToastFlavouer.error,
-            dismissDuration: const Duration(seconds: 3),
-          );
-        },
         success: (_, __) {
           showFlashToast(
             context,
@@ -67,6 +61,21 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final notifier = ref.read(listCategoryNotifierProvider.notifier);
+    ref.listen<PaginatedCategoryState>(
+      listCategoryNotifierProvider,
+      (_, next) {
+        next.maybeMap(
+          failed: (_) {
+            showFlashToast(
+              context,
+              message: _.gooddhanFailure.message,
+              dismissDuration: const Duration(seconds: 5),
+            );
+          },
+          orElse: () {},
+        );
+      },
+    );
     return RefreshIndicator(
       onRefresh: () async {
         notifier.getFirstCategoryListPage();
@@ -90,44 +99,53 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
               preferredSize: const Size.fromHeight(60),
             ),
           ),
-          body: Scaffold(
-            primary: true,
-            body: PaginatedCategoriesListView(
-              paginatedCategoriesNotifierProvider: listCategoryNotifierProvider,
-              getNextPage: (ref) => notifier.getNextCategoryListPage(),
-              onRefresh: () => notifier.getFirstCategoryListPage(),
-              noResultMessage: noResultMessage,
-            ),
-            bottomNavigationBar: BottomAppBar(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _categoryNameController,
-                        decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(24),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
+          body: CustomLoadingWraper(
+            isLoading: ref.watch(listCategoryNotifierProvider).when(
+                  initial: (_) => false,
+                  loadInProgress: (_, __) => true,
+                  success: (_, __) => false,
+                  failed: (_, __) => false,
+                ),
+            child: Scaffold(
+              primary: true,
+              body: PaginatedCategoriesListView(
+                paginatedCategoriesNotifierProvider:
+                    listCategoryNotifierProvider,
+                getNextPage: (ref) => notifier.getNextCategoryListPage(),
+                onRefresh: () => notifier.getFirstCategoryListPage(),
+                noResultMessage: noResultMessage,
+              ),
+              bottomNavigationBar: BottomAppBar(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _categoryNameController,
+                          decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            hintText: "💡 Category Name...",
+                            suffixIcon: ElevatedButton(
+                              onPressed: createCategory,
+                              child: const Icon(Icons.add),
                             ),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
-                          hintText: "💡 Category Name...",
-                          suffixIcon: ElevatedButton(
-                            onPressed: createCategory,
-                            child: const Icon(Icons.add),
-                          ),
+                          keyboardType: TextInputType.streetAddress,
                         ),
-                        keyboardType: TextInputType.streetAddress,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

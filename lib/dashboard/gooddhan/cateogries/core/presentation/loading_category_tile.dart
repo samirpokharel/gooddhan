@@ -10,6 +10,7 @@ class LoadingRepoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade400,
+      period: const Duration(milliseconds: 500),
       highlightColor: Colors.grey.shade300,
       child: ListTile(
         title: Align(

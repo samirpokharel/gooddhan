@@ -34,7 +34,7 @@ final listCategoriesRepositoryProvider =
   );
 });
 
-final listCategoryNotifierProvider =
-    StateNotifierProvider<ListCategoryNotifer, PaginatedCategoryState>((ref) {
+final listCategoryNotifierProvider = StateNotifierProvider.autoDispose<
+    ListCategoryNotifer, PaginatedCategoryState>((ref) {
   return ListCategoryNotifer(ref.watch(listCategoriesRepositoryProvider));
 });
