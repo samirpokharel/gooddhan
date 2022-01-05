@@ -22,6 +22,7 @@ class _$ExpenseTearOff {
       {required String title,
       required String id,
       required Category category,
+      required Currency currency,
       required num amount,
       required DateTime createdAt,
       required DateTime updatedAt}) {
@@ -29,6 +30,7 @@ class _$ExpenseTearOff {
       title: title,
       id: id,
       category: category,
+      currency: currency,
       amount: amount,
       createdAt: createdAt,
       updatedAt: updatedAt,
@@ -44,6 +46,7 @@ mixin _$Expense {
   String get title => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   Category get category => throw _privateConstructorUsedError;
+  Currency get currency => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
@@ -60,11 +63,13 @@ abstract class $ExpenseCopyWith<$Res> {
       {String title,
       String id,
       Category category,
+      Currency currency,
       num amount,
       DateTime createdAt,
       DateTime updatedAt});
 
   $CategoryCopyWith<$Res> get category;
+  $CurrencyCopyWith<$Res> get currency;
 }
 
 /// @nodoc
@@ -80,6 +85,7 @@ class _$ExpenseCopyWithImpl<$Res> implements $ExpenseCopyWith<$Res> {
     Object? title = freezed,
     Object? id = freezed,
     Object? category = freezed,
+    Object? currency = freezed,
     Object? amount = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -97,6 +103,10 @@ class _$ExpenseCopyWithImpl<$Res> implements $ExpenseCopyWith<$Res> {
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
+      currency: currency == freezed
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -118,6 +128,13 @@ class _$ExpenseCopyWithImpl<$Res> implements $ExpenseCopyWith<$Res> {
       return _then(_value.copyWith(category: value));
     });
   }
+
+  @override
+  $CurrencyCopyWith<$Res> get currency {
+    return $CurrencyCopyWith<$Res>(_value.currency, (value) {
+      return _then(_value.copyWith(currency: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -129,12 +146,15 @@ abstract class _$ExpenseCopyWith<$Res> implements $ExpenseCopyWith<$Res> {
       {String title,
       String id,
       Category category,
+      Currency currency,
       num amount,
       DateTime createdAt,
       DateTime updatedAt});
 
   @override
   $CategoryCopyWith<$Res> get category;
+  @override
+  $CurrencyCopyWith<$Res> get currency;
 }
 
 /// @nodoc
@@ -151,6 +171,7 @@ class __$ExpenseCopyWithImpl<$Res> extends _$ExpenseCopyWithImpl<$Res>
     Object? title = freezed,
     Object? id = freezed,
     Object? category = freezed,
+    Object? currency = freezed,
     Object? amount = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -168,6 +189,10 @@ class __$ExpenseCopyWithImpl<$Res> extends _$ExpenseCopyWithImpl<$Res>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
+      currency: currency == freezed
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -191,6 +216,7 @@ class _$_Expense extends _Expense {
       {required this.title,
       required this.id,
       required this.category,
+      required this.currency,
       required this.amount,
       required this.createdAt,
       required this.updatedAt})
@@ -203,6 +229,8 @@ class _$_Expense extends _Expense {
   @override
   final Category category;
   @override
+  final Currency currency;
+  @override
   final num amount;
   @override
   final DateTime createdAt;
@@ -211,7 +239,7 @@ class _$_Expense extends _Expense {
 
   @override
   String toString() {
-    return 'Expense(title: $title, id: $id, category: $category, amount: $amount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Expense(title: $title, id: $id, category: $category, currency: $currency, amount: $amount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -222,6 +250,7 @@ class _$_Expense extends _Expense {
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.category, category) &&
+            const DeepCollectionEquality().equals(other.currency, currency) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
@@ -233,6 +262,7 @@ class _$_Expense extends _Expense {
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(category),
+      const DeepCollectionEquality().hash(currency),
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt));
@@ -248,6 +278,7 @@ abstract class _Expense extends Expense {
       {required String title,
       required String id,
       required Category category,
+      required Currency currency,
       required num amount,
       required DateTime createdAt,
       required DateTime updatedAt}) = _$_Expense;
@@ -259,6 +290,8 @@ abstract class _Expense extends Expense {
   String get id;
   @override
   Category get category;
+  @override
+  Currency get currency;
   @override
   num get amount;
   @override

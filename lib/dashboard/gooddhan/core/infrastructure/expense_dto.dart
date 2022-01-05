@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:gooddhan/currency/domain/currency.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/expense.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/infrastructure/category_dio.dart';
 
@@ -12,6 +13,7 @@ class ExpenseDTO with _$ExpenseDTO {
     @JsonKey(name: "_id") required String id,
     required String title,
     required CategoryDTO category,
+    required String currency,
     required num amount,
     required DateTime createdAt,
     required DateTime updatedAt,
@@ -26,6 +28,7 @@ class ExpenseDTO with _$ExpenseDTO {
       amount: _.amount,
       category: CategoryDTO.fromDomain(_.category),
       createdAt: _.createdAt,
+      currency: _.currency.code,
       updatedAt: _.updatedAt,
       title: _.title,
     );
@@ -36,6 +39,7 @@ class ExpenseDTO with _$ExpenseDTO {
       title: title,
       category: category.toDomain(),
       amount: amount,
+      currency: Currency.fromCode(currency),
       createdAt: createdAt,
       updatedAt: updatedAt,
     );

@@ -26,6 +26,7 @@ class _$ExpenseDTOTearOff {
       {@JsonKey(name: "_id") required String id,
       required String title,
       required CategoryDTO category,
+      required String currency,
       required num amount,
       required DateTime createdAt,
       required DateTime updatedAt}) {
@@ -33,6 +34,7 @@ class _$ExpenseDTOTearOff {
       id: id,
       title: title,
       category: category,
+      currency: currency,
       amount: amount,
       createdAt: createdAt,
       updatedAt: updatedAt,
@@ -53,6 +55,7 @@ mixin _$ExpenseDTO {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   CategoryDTO get category => throw _privateConstructorUsedError;
+  String get currency => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
@@ -72,6 +75,7 @@ abstract class $ExpenseDTOCopyWith<$Res> {
       {@JsonKey(name: "_id") String id,
       String title,
       CategoryDTO category,
+      String currency,
       num amount,
       DateTime createdAt,
       DateTime updatedAt});
@@ -92,6 +96,7 @@ class _$ExpenseDTOCopyWithImpl<$Res> implements $ExpenseDTOCopyWith<$Res> {
     Object? id = freezed,
     Object? title = freezed,
     Object? category = freezed,
+    Object? currency = freezed,
     Object? amount = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -109,6 +114,10 @@ class _$ExpenseDTOCopyWithImpl<$Res> implements $ExpenseDTOCopyWith<$Res> {
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryDTO,
+      currency: currency == freezed
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -142,6 +151,7 @@ abstract class _$ExpenseDTOCopyWith<$Res> implements $ExpenseDTOCopyWith<$Res> {
       {@JsonKey(name: "_id") String id,
       String title,
       CategoryDTO category,
+      String currency,
       num amount,
       DateTime createdAt,
       DateTime updatedAt});
@@ -165,6 +175,7 @@ class __$ExpenseDTOCopyWithImpl<$Res> extends _$ExpenseDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? title = freezed,
     Object? category = freezed,
+    Object? currency = freezed,
     Object? amount = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -182,6 +193,10 @@ class __$ExpenseDTOCopyWithImpl<$Res> extends _$ExpenseDTOCopyWithImpl<$Res>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryDTO,
+      currency: currency == freezed
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -205,6 +220,7 @@ class _$_ExpenseDTO extends _ExpenseDTO {
       {@JsonKey(name: "_id") required this.id,
       required this.title,
       required this.category,
+      required this.currency,
       required this.amount,
       required this.createdAt,
       required this.updatedAt})
@@ -221,6 +237,8 @@ class _$_ExpenseDTO extends _ExpenseDTO {
   @override
   final CategoryDTO category;
   @override
+  final String currency;
+  @override
   final num amount;
   @override
   final DateTime createdAt;
@@ -229,7 +247,7 @@ class _$_ExpenseDTO extends _ExpenseDTO {
 
   @override
   String toString() {
-    return 'ExpenseDTO(id: $id, title: $title, category: $category, amount: $amount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ExpenseDTO(id: $id, title: $title, category: $category, currency: $currency, amount: $amount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -240,6 +258,7 @@ class _$_ExpenseDTO extends _ExpenseDTO {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.category, category) &&
+            const DeepCollectionEquality().equals(other.currency, currency) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
@@ -251,6 +270,7 @@ class _$_ExpenseDTO extends _ExpenseDTO {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(category),
+      const DeepCollectionEquality().hash(currency),
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt));
@@ -271,6 +291,7 @@ abstract class _ExpenseDTO extends ExpenseDTO {
       {@JsonKey(name: "_id") required String id,
       required String title,
       required CategoryDTO category,
+      required String currency,
       required num amount,
       required DateTime createdAt,
       required DateTime updatedAt}) = _$_ExpenseDTO;
@@ -286,6 +307,8 @@ abstract class _ExpenseDTO extends ExpenseDTO {
   String get title;
   @override
   CategoryDTO get category;
+  @override
+  String get currency;
   @override
   num get amount;
   @override
