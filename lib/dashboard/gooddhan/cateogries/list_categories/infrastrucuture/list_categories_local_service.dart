@@ -34,6 +34,10 @@ class ListCategoriesLocalService {
     return pageJson.map((json) => CategoryDTO.fromJson(json.value)).toList();
   }
 
+  Future<void> clearData() async {
+    await _store.drop(_sembastDatabase.instance);
+  }
+
   /// Return total page contain in local sembast database
   /// totalPage = (numberOfItems / itemInOnePage).ceil()
   Future<int> getLocalPageCount() async {

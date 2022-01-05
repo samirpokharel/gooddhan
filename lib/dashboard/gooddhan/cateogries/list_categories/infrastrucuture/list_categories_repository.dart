@@ -36,6 +36,7 @@ class ListCategoriesRepository {
             );
           },
           withNewData: (data, totalPage) async {
+            await _localService.clearData();
             await _localService.upsertPage(data, page);
             return Fresh.yes(
               data.toDomain(),
@@ -54,6 +55,17 @@ class ListCategoriesRepository {
   ) async {
     try {
       return right(await _remoteService.createNewCategory(categoryName));
+    } on RestApiException catch (e) {
+      return left(GooddhanFailure.api(e.errorCode, e.message));
+    }
+  }
+
+  Future<Either<GooddhanFailure, Unit>> deleteCategory(
+    String id,
+  ) async {
+    try {
+      await _remoteService.deleteSingleCategory(id);
+      return right(unit);
     } on RestApiException catch (e) {
       return left(GooddhanFailure.api(e.errorCode, e.message));
     }

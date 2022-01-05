@@ -37,7 +37,6 @@ abstract class CategoriesRemoteService {
           headers: {"If-None-Match": previousHeader?.etag ?? ""},
         ),
       );
-      print(response.data);
       if (response.statusCode == 304) {
         return RemoteResponse.notModified(
           totalPage: previousHeader?.totalPage ?? 0,
@@ -89,6 +88,24 @@ abstract class CategoriesRemoteService {
           message: response.data["error"],
         );
       }
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RestApiException(
+          e.response?.statusCode,
+          message: e.response?.data["error"],
+        );
+      } else if (e.isNoConnectionError) {
+        throw RestApiException(null, message: "No internet Connection");
+      }
+      rethrow;
+    }
+  }
+
+  Future<void> deleteCategory({
+    required Uri requestUri,
+  }) async {
+    try {
+      await _dio.deleteUri(requestUri);
     } on DioError catch (e) {
       if (e.response != null) {
         throw RestApiException(
