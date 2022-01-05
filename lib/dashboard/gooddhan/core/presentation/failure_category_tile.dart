@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/paginated_category_list_view.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/gooddhan_failure.dart';
 
-class FailureCategoryTile extends ConsumerWidget {
+class FailureListTile extends ConsumerWidget {
   final GooddhanFailure failure;
-  const FailureCategoryTile({
+  const FailureListTile({
     Key? key,
     required this.failure,
   }) : super(key: key);

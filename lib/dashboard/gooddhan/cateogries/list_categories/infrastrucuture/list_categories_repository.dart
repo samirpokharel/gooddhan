@@ -36,7 +36,7 @@ class ListCategoriesRepository {
             );
           },
           withNewData: (data, totalPage) async {
-            await _localService.clearData();
+            // await _localService.clearData();
             await _localService.upsertPage(data, page);
             return Fresh.yes(
               data.toDomain(),

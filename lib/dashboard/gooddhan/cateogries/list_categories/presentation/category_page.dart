@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/shared/clear_foucs.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
-import 'package:gooddhan/dashboard/gooddhan/cateogries/core/application/paginated_category_notifier.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/paginated_category_list_view.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/shared/providers.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/PaginatedState.dart';
 
 const String noResultMessage =
     "That's about everything we could find in your starred repos right now.";

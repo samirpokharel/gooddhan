@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:gooddhan/core/infrastructure/dio_extension.dart';
 import 'package:gooddhan/core/infrastructure/network_exception.dart';
 import 'package:gooddhan/core/infrastructure/remote_response.dart';
@@ -22,7 +20,6 @@ abstract class CategoriesRemoteService {
     required Uri requestUri,
     required List<dynamic> Function(dynamic json) jsonDataSelector,
   }) async {
-    print(requestUri.toString());
     final previousHeader = await _headerCache.getHeaders(requestUri);
 
     try {

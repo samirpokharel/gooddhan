@@ -1,18 +1,17 @@
-import 'package:flash/flash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
-import 'package:gooddhan/core/shared/widgets/custom_conformation_sheet.dart';
-import 'package:gooddhan/dashboard/gooddhan/cateogries/core/application/paginated_category_notifier.dart';
-import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
-import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/failure_category_tile.dart';
-import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/loading_category_tile.dart';
-import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/application/list_categories_notifier.dart';
-import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
-import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+import 'package:gooddhan/core/shared/widgets/custom_conformation_sheet.dart';
+import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
+import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/application/list_categories_notifier.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/PaginatedState.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/presentation/loading_category_tile.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
 
 class PaginatedCategoriesListView extends StatefulWidget {
   final AutoDisposeStateNotifierProvider<ListCategoryNotifer,
@@ -133,7 +132,7 @@ class _PaginatedListView extends StatelessWidget {
                 ),
               );
             } else {
-              return const LoadingRepoTile();
+              return const LoadingListTile();
             }
           },
           success: (_) => CategoryListItem(
