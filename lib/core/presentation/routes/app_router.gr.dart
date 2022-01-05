@@ -10,31 +10,35 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i6;
-import 'package:flutter/material.dart' as _i7;
+import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:flutter/cupertino.dart' as _i9;
+import 'package:flutter/material.dart' as _i8;
 
 import '../../../authentication/presentation/Auth_switcher.dart' as _i2;
 import '../../../authentication/presentation/register.dart' as _i3;
 import '../../../dashboard/gooddhan/cateogries/list_categories/presentation/category_page.dart'
     as _i5;
+import '../../../dashboard/gooddhan/core/domain/expense.dart' as _i10;
+import '../../../dashboard/gooddhan/expenses/expense_list/presentation/create_expense_page.dart'
+    as _i6;
 import '../../../dashboard/navigation/presentation/navigation_page.dart' as _i4;
 import '../../../splash/presentation/splash_page.dart' as _i1;
 
-class AppRouter extends _i6.RootStackRouter {
-  AppRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
+class AppRouter extends _i7.RootStackRouter {
+  AppRouter([_i8.GlobalKey<_i8.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i6.PageFactory> pagesMap = {
+  final Map<String, _i7.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
+      return _i7.CustomPage<dynamic>(
           routeData: routeData,
           child: const _i1.SplashPage(),
           opaque: true,
           barrierDismissible: false);
     },
     AuthSwitcherRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
+      return _i7.CustomPage<dynamic>(
           routeData: routeData,
           child: const _i2.AuthSwitcherPage(),
           opaque: true,
@@ -42,40 +46,50 @@ class AppRouter extends _i6.RootStackRouter {
     },
     RegisterRoute.name: (routeData) {
       final args = routeData.argsAs<RegisterRouteArgs>();
-      return _i6.CustomPage<dynamic>(
+      return _i7.CustomPage<dynamic>(
           routeData: routeData,
           child: _i3.RegisterPage(key: args.key, idToken: args.idToken),
           opaque: true,
           barrierDismissible: false);
     },
     NavigationRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
+      return _i7.CustomPage<dynamic>(
           routeData: routeData,
           child: const _i4.NavigationPage(),
           opaque: true,
           barrierDismissible: false);
     },
     CategoriesRoute.name: (routeData) {
-      return _i6.CupertinoPageX<dynamic>(
+      return _i7.CupertinoPageX<dynamic>(
           routeData: routeData, child: const _i5.CategoriesPage());
+    },
+    CreateExpenseRoute.name: (routeData) {
+      final args = routeData.argsAs<CreateExpenseRouteArgs>();
+      return _i7.CupertinoPageX<dynamic>(
+          routeData: routeData,
+          child: _i6.CreateExpensePage(
+              key: args.key,
+              isUpdate: args.isUpdate,
+              previousExpense: args.previousExpense));
     }
   };
 
   @override
-  List<_i6.RouteConfig> get routes => [
-        _i6.RouteConfig('/#redirect',
+  List<_i7.RouteConfig> get routes => [
+        _i7.RouteConfig('/#redirect',
             path: '/', redirectTo: '/auth', fullMatch: true),
-        _i6.RouteConfig(SplashRoute.name, path: '/splash-page'),
-        _i6.RouteConfig(AuthSwitcherRoute.name, path: '/auth'),
-        _i6.RouteConfig(RegisterRoute.name, path: '/register'),
-        _i6.RouteConfig(NavigationRoute.name, path: '/nav'),
-        _i6.RouteConfig(CategoriesRoute.name, path: '/category')
+        _i7.RouteConfig(SplashRoute.name, path: '/splash-page'),
+        _i7.RouteConfig(AuthSwitcherRoute.name, path: '/auth'),
+        _i7.RouteConfig(RegisterRoute.name, path: '/register'),
+        _i7.RouteConfig(NavigationRoute.name, path: '/nav'),
+        _i7.RouteConfig(CategoriesRoute.name, path: '/category'),
+        _i7.RouteConfig(CreateExpenseRoute.name, path: '/create-expense')
       ];
 }
 
 /// generated route for
 /// [_i1.SplashPage]
-class SplashRoute extends _i6.PageRouteInfo<void> {
+class SplashRoute extends _i7.PageRouteInfo<void> {
   const SplashRoute() : super(SplashRoute.name, path: '/splash-page');
 
   static const String name = 'SplashRoute';
@@ -83,7 +97,7 @@ class SplashRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.AuthSwitcherPage]
-class AuthSwitcherRoute extends _i6.PageRouteInfo<void> {
+class AuthSwitcherRoute extends _i7.PageRouteInfo<void> {
   const AuthSwitcherRoute() : super(AuthSwitcherRoute.name, path: '/auth');
 
   static const String name = 'AuthSwitcherRoute';
@@ -91,8 +105,8 @@ class AuthSwitcherRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.RegisterPage]
-class RegisterRoute extends _i6.PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({_i7.Key? key, required String idToken})
+class RegisterRoute extends _i7.PageRouteInfo<RegisterRouteArgs> {
+  RegisterRoute({_i9.Key? key, required String idToken})
       : super(RegisterRoute.name,
             path: '/register',
             args: RegisterRouteArgs(key: key, idToken: idToken));
@@ -103,7 +117,7 @@ class RegisterRoute extends _i6.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key, required this.idToken});
 
-  final _i7.Key? key;
+  final _i9.Key? key;
 
   final String idToken;
 
@@ -115,7 +129,7 @@ class RegisterRouteArgs {
 
 /// generated route for
 /// [_i4.NavigationPage]
-class NavigationRoute extends _i6.PageRouteInfo<void> {
+class NavigationRoute extends _i7.PageRouteInfo<void> {
   const NavigationRoute() : super(NavigationRoute.name, path: '/nav');
 
   static const String name = 'NavigationRoute';
@@ -123,8 +137,41 @@ class NavigationRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.CategoriesPage]
-class CategoriesRoute extends _i6.PageRouteInfo<void> {
+class CategoriesRoute extends _i7.PageRouteInfo<void> {
   const CategoriesRoute() : super(CategoriesRoute.name, path: '/category');
 
   static const String name = 'CategoriesRoute';
+}
+
+/// generated route for
+/// [_i6.CreateExpensePage]
+class CreateExpenseRoute extends _i7.PageRouteInfo<CreateExpenseRouteArgs> {
+  CreateExpenseRoute(
+      {_i9.Key? key,
+      required bool isUpdate,
+      required _i10.Expense? previousExpense})
+      : super(CreateExpenseRoute.name,
+            path: '/create-expense',
+            args: CreateExpenseRouteArgs(
+                key: key,
+                isUpdate: isUpdate,
+                previousExpense: previousExpense));
+
+  static const String name = 'CreateExpenseRoute';
+}
+
+class CreateExpenseRouteArgs {
+  const CreateExpenseRouteArgs(
+      {this.key, required this.isUpdate, required this.previousExpense});
+
+  final _i9.Key? key;
+
+  final bool isUpdate;
+
+  final _i10.Expense? previousExpense;
+
+  @override
+  String toString() {
+    return 'CreateExpenseRouteArgs{key: $key, isUpdate: $isUpdate, previousExpense: $previousExpense}';
+  }
 }
