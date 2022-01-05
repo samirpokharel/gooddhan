@@ -1,18 +1,22 @@
 import 'package:flash/flash.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
+import 'package:gooddhan/core/shared/widgets/custom_conformation_sheet.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/application/paginated_category_notifier.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/failure_category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/loading_category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/application/list_categories_notifier.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class PaginatedCategoriesListView extends StatefulWidget {
-  final StateNotifierProvider<ListCategoryNotifer, PaginatedCategoryState>
-      paginatedCategoriesNotifierProvider;
+  final AutoDisposeStateNotifierProvider<ListCategoryNotifer,
+      PaginatedCategoryState> paginatedCategoriesNotifierProvider;
 
   final void Function(WidgetRef ref) getNextPage;
   final void Function() onRefresh;
@@ -65,11 +69,16 @@ class _PaginatedCategoriesListViewState
           },
         );
         final state = ref.watch(widget.paginatedCategoriesNotifierProvider);
+        final notifier = ref.watch(
+          widget.paginatedCategoriesNotifierProvider.notifier,
+        );
+
         return NotificationListener<ScrollNotification>(
           onNotification: (notifications) {
             final metrics = notifications.metrics;
             final limit =
                 metrics.maxScrollExtent - metrics.viewportDimension / 3;
+
             if (canLoadNextPage && metrics.pixels >= limit) {
               canLoadNextPage = false;
               widget.getNextPage(ref);
@@ -80,8 +89,9 @@ class _PaginatedCategoriesListViewState
             success: (categories, _) => categories.entity.isEmpty,
             orElse: () => false,
           )
-              ? NoData(onRefresh: () => widget.onRefresh())
-              : _PaginatedListView(state: state),
+              ? SingleChildScrollView(
+                  child: NoData(onRefresh: () => widget.onRefresh()))
+              : _PaginatedListView(notifier: notifier, state: state),
         );
       },
     );
@@ -91,9 +101,11 @@ class _PaginatedCategoriesListViewState
 class _PaginatedListView extends StatelessWidget {
   const _PaginatedListView({
     Key? key,
+    required this.notifier,
     required this.state,
   }) : super(key: key);
 
+  final ListCategoryNotifer notifier;
   final PaginatedCategoryState state;
 
   @override
@@ -105,7 +117,7 @@ class _PaginatedListView extends StatelessWidget {
         initial: (_) => 0,
         loadInProgress: (_) => _.categories.entity.length + _.itemsPerPage,
         success: (_) => _.categories.entity.length,
-        failed: (_) => _.categories.entity.length + 1,
+        failed: (_) => _.categories.entity.length,
       ),
       itemBuilder: (context, index) {
         return state.map(
@@ -114,23 +126,80 @@ class _PaginatedListView extends StatelessWidget {
           ),
           loadInProgress: (_) {
             if (index < _.categories.entity.length) {
-              return CategoryItemTile(category: _.categories.entity[index]);
+              return CategoryListItem(
+                category: _.categories.entity[index],
+                deleteCategory: () => notifier.deleteCategory(
+                  _.categories.entity[index].id,
+                ),
+              );
             } else {
               return const LoadingRepoTile();
             }
           },
-          success: (_) => CategoryItemTile(
+          success: (_) => CategoryListItem(
             category: _.categories.entity[index],
+            deleteCategory: () => notifier.deleteCategory(
+              _.categories.entity[index].id,
+            ),
           ),
           failed: (_) {
-            if (index < _.categories.entity.length) {
-              return CategoryItemTile(category: _.categories.entity[index]);
-            } else {
-              return FailureCategoryTile(failure: _.gooddhanFailure);
-            }
+            return CategoryListItem(
+              category: _.categories.entity[index],
+              deleteCategory: () => notifier.deleteCategory(
+                _.categories.entity[index].id,
+              ),
+            );
           },
         );
       },
+    );
+  }
+}
+
+class CategoryListItem extends StatelessWidget {
+  const CategoryListItem({
+    Key? key,
+    required this.category,
+    required this.deleteCategory,
+  }) : super(key: key);
+
+  final Category category;
+  final Function deleteCategory;
+
+  @override
+  Widget build(BuildContext context) {
+    return Slidable(
+      key: UniqueKey(),
+      startActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        dismissible: DismissiblePane(
+          closeOnCancel: true,
+          onDismissed: () => deleteCategory(),
+          confirmDismiss: () async {
+            return await showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return ConformationSheet(
+                  leadTitle: "Remove Category ?",
+                  summary: "Are you sure wanna Remove this category",
+                  onNo: () => Navigator.of(context).pop(false),
+                  onYes: () => Navigator.of(context).pop(true),
+                );
+              },
+            );
+          },
+        ),
+        children: [
+          SlidableAction(
+            onPressed: (context) {},
+            backgroundColor: Colors.red[100]!,
+            foregroundColor: Colors.red,
+            icon: CupertinoIcons.delete,
+            label: 'Remove',
+          ),
+        ],
+      ),
+      child: CategoryItemTile(category: category),
     );
   }
 }
