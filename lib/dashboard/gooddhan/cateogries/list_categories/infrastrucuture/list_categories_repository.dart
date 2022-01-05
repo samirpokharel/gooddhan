@@ -36,7 +36,6 @@ class ListCategoriesRepository {
             );
           },
           withNewData: (data, totalPage) async {
-            // await _localService.clearData();
             await _localService.upsertPage(data, page);
             return Fresh.yes(
               data.toDomain(),
@@ -54,6 +53,7 @@ class ListCategoriesRepository {
     String categoryName,
   ) async {
     try {
+      await _localService.clearData();
       return right(await _remoteService.createNewCategory(categoryName));
     } on RestApiException catch (e) {
       return left(GooddhanFailure.api(e.errorCode, e.message));
