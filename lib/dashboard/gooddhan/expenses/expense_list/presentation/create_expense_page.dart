@@ -27,7 +27,7 @@ class CreateExpensePage extends ConsumerStatefulWidget {
 class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
   late TextEditingController _expenseAmountController;
   late TextEditingController _summaryController;
-  Category? _selectedCategory;
+  List<Category> _selectedCategories = [];
 
   late GlobalKey<FormState> _formKey;
 
@@ -42,7 +42,7 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
       _summaryController = TextEditingController(
         text: expense.title,
       );
-      _selectedCategory = (expense.category);
+      _selectedCategories = [(expense.category)];
     } else {
       _expenseAmountController = TextEditingController();
       _summaryController = TextEditingController();
@@ -54,11 +54,11 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
   void selectCategory() async {
     final categories = await showCategoryPicker(
       context: context,
-      initialCategory: _selectedCategory,
+      initialCategories: _selectedCategories,
     );
     if (categories != null) {
       setState(() {
-        _selectedCategory = categories[0];
+        _selectedCategories = categories;
       });
     }
   }
@@ -67,12 +67,12 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
     final notifier = ref.watch(listExpensesNotifierProvider.notifier);
 
     if (_expenseAmountController.text.isNotEmpty &&
-        _selectedCategory != null &&
+        _selectedCategories.isNotEmpty &&
         _summaryController.text.isNotEmpty) {
       if (widget.isUpdate && widget.previousExpense != null) {
         Navigator.pop(context);
         await notifier.updateExpense(
-          categoryId: _selectedCategory!.id,
+          categoryId: _selectedCategories[0].id,
           amount: num.parse(_expenseAmountController.text.trim()),
           title: _summaryController.text.trim(),
           expenseId: widget.previousExpense!.id,
@@ -80,7 +80,7 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
       } else {
         Navigator.pop(context);
         await notifier.createExpense(
-          _selectedCategory!.id,
+          _selectedCategories[0].id,
           num.parse(_expenseAmountController.text),
           _summaryController.text,
         );
@@ -92,7 +92,7 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
   void dispose() {
     _expenseAmountController.dispose();
     _summaryController.dispose();
-    _selectedCategory = null;
+    _selectedCategories = [];
     _formKey.currentState?.dispose();
     super.dispose();
   }
@@ -137,7 +137,7 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
                   CustomValueTile(
                     onTap: () => selectCategory(),
                     title: "Choose Category",
-                    value: "${_selectedCategory != null ? 1 : 0} selected",
+                    value: "${_selectedCategories.length} selected",
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
