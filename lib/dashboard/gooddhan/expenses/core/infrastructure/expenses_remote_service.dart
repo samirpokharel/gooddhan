@@ -105,6 +105,42 @@ abstract class ExpensesRemoteService {
     }
   }
 
+  Future<ExpenseDTO> updateExpense({
+    required Uri requestUri,
+    required String categoryId,
+    required String title,
+    required num amount,
+  }) async {
+    try {
+      final response = await _dio.putUri(
+        requestUri,
+        data: json.encode({
+          "category": categoryId,
+          "title": title,
+          "amount": amount,
+        }),
+      );
+      if (response.statusCode == 200) {
+        return ExpenseDTO.fromJson(response.data["data"]);
+      } else {
+        throw RestApiException(
+          response.statusCode,
+          message: response.data["error"],
+        );
+      }
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RestApiException(
+          e.response?.statusCode,
+          message: e.response?.data["error"],
+        );
+      } else if (e.isNoConnectionError) {
+        throw RestApiException(null, message: "No internet Connection");
+      }
+      rethrow;
+    }
+  }
+
   Future<void> deleteExpense({
     required Uri requestUri,
   }) async {

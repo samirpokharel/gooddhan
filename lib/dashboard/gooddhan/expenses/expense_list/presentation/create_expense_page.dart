@@ -69,7 +69,14 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
     if (_expenseAmountController.text.isNotEmpty &&
         _selectedCategory != null &&
         _summaryController.text.isNotEmpty) {
-      if (widget.isUpdate) {
+      if (widget.isUpdate && widget.previousExpense != null) {
+        Navigator.pop(context);
+        await notifier.updateExpense(
+          categoryId: _selectedCategory!.id,
+          amount: num.parse(_expenseAmountController.text.trim()),
+          title: _summaryController.text.trim(),
+          expenseId: widget.previousExpense!.id,
+        );
       } else {
         Navigator.pop(context);
         await notifier.createExpense(

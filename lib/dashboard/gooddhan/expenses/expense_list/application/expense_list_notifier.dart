@@ -35,6 +35,36 @@ class ListExpenseNotifer extends PaginatedExpensesNotifier {
     );
   }
 
+  Future<void> updateExpense({
+    required String categoryId,
+    required num amount,
+    required String title,
+    required String expenseId,
+  }) async {
+    state = PaginatedState.loadInProgress(state.items, 0);
+    final failureOrExpense = await _repository.updateSingleExpense(
+      amount: amount,
+      categoryId: categoryId,
+      title: title,
+      expenseId: expenseId,
+    );
+    state = failureOrExpense.fold(
+      (l) => PaginatedState.failed(state.items, l),
+      (r) {
+        final expenseSelect = state.items.entity.firstWhere(
+          (element) => element.id == r.toDomain().id,
+        );
+        final copy = [...state.items.entity];
+        copy[copy.indexOf(expenseSelect)] = r.toDomain();
+        return PaginatedState.success(
+          Fresh.yes(copy),
+          isNextPageAvilabel: false,
+          successType: SuccessType.created,
+        );
+      },
+    );
+  }
+
   Future<void> deleteExpense(String id) async {
     state = PaginatedState.loadInProgress(state.items, 0);
     final failureOrCategory = await _repository.deleteExpense(id);

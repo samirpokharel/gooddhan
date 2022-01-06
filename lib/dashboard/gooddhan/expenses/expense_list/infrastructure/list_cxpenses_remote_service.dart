@@ -36,6 +36,20 @@ class ListExpenseRemoteService extends ExpensesRemoteService {
     );
   }
 
+  Future<ExpenseDTO> updateSingleExpense({
+    required String categoryId,
+    required num amount,
+    required String title,
+    required String expenseId,
+  }) {
+    return super.updateExpense(
+      amount: amount,
+      categoryId: categoryId,
+      title: title,
+      requestUri: Uri.parse("$baseUrl/expenses/$expenseId"),
+    );
+  }
+
   Future<void> deleteSingleExpense(String id) {
     return super.deleteExpense(
       requestUri: Uri.parse("$baseUrl/expenses/$id"),

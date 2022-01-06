@@ -65,6 +65,27 @@ class ListExpensesRepository {
     }
   }
 
+  Future<Either<GooddhanFailure, ExpenseDTO>> updateSingleExpense({
+    required String categoryId,
+    required num amount,
+    required String title,
+    required String expenseId,
+  }) async {
+    try {
+      await _localService.clearData();
+      return right(
+        await _remoteService.updateSingleExpense(
+          amount: amount,
+          categoryId: categoryId,
+          title: title,
+          expenseId: expenseId,
+        ),
+      );
+    } on RestApiException catch (e) {
+      return left(GooddhanFailure.api(e.errorCode, e.message));
+    }
+  }
+
   Future<Either<GooddhanFailure, Unit>> deleteExpense(
     String id,
   ) async {
