@@ -1,9 +1,13 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/core/presentation/routes/app_router.gr.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_check_box.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
+import 'package:gooddhan/core/shared/widgets/custom_state_button.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/shared/providers.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/application/list_categories_notifier.dart';
@@ -18,28 +22,29 @@ enum SelectableType { single, multiple }
 
 Future<List<Category>?> showCategoryPicker({
   required BuildContext context,
-  Category? initialCategory,
   bool rootNavigator = true,
+  List<Category> initialCategories = const [],
   SelectableType selectableType = SelectableType.single,
 }) async {
-  final categories = await Navigator.of(context).push<List<Category>>(
-    CupertinoPageRoute(
-      fullscreenDialog: true,
-      builder: (_) => _CategoryPicker(
-        initialCategory: initialCategory,
+  final categories = await showModalBottomSheet<List<Category>>(
+    context: context,
+    isScrollControlled: true,
+    builder: (context) {
+      return _CategoryPicker(
+        initialCategories: initialCategories,
         selectableType: selectableType,
-      ),
-    ),
+      );
+    },
   );
   return categories;
 }
 
 class _CategoryPicker extends ConsumerStatefulWidget {
-  final Category? initialCategory;
+  final List<Category> initialCategories;
   final SelectableType selectableType;
   const _CategoryPicker({
     Key? key,
-    this.initialCategory,
+    this.initialCategories = const [],
     this.selectableType = SelectableType.single,
   }) : super(key: key);
 
@@ -48,12 +53,12 @@ class _CategoryPicker extends ConsumerStatefulWidget {
 }
 
 class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
-  final List<Category> _selectedCategories = [];
+  List<Category> _selectedCategories = [];
 
   @override
   void initState() {
-    if (widget.initialCategory != null) {
-      _selectedCategories.add(widget.initialCategory!);
+    if (widget.initialCategories.isNotEmpty) {
+      _selectedCategories.addAll(widget.initialCategories);
     }
     Future.microtask(() {
       ref
@@ -92,67 +97,78 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+    TextTheme textTheme = Theme.of(context).textTheme;
+    Color primaryColor = Theme.of(context).primaryColor;
+
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.80,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
       child: Scaffold(
         appBar: AppBar(
-          bottom: PreferredSize(
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: TextFormField(
-                textInputAction: TextInputAction.search,
-                onChanged: onTermChange,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(CupertinoIcons.search),
-                  hintText: "Search...",
-                ),
-              ),
-            ),
-            preferredSize: const Size.fromHeight(60),
-          ),
           leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context, null);
+            },
             icon: const Icon(Icons.close),
+          ),
+          title: Row(
+            children: [
+              Text(
+                "Filter Expenses",
+                style: textTheme.headline2,
+              ),
+              const Spacer(),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.link),
+              onPressed: () {
+                AutoRouter.of(context).push(const CategoriesRoute());
+              },
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              Consumer(
+                builder: (context, ref, _) {
+                  final notifier =
+                      ref.watch(listCategoryNotifierProvider.notifier);
+                  return PaginatedCategoriesPickerListView(
+                    paginatedCategoriesNotifierProvider:
+                        listCategoryNotifierProvider,
+                    getNextPage: () => notifier.getNextCategoryListPage(),
+                    selectedCategories: _selectedCategories,
+                    onRefresh: () => notifier.getFirstCategoryListPage(),
+                    noResultMessage: "No category Found",
+                    onSelectCategory: (category) => checkCategory(
+                      category,
+                      widget.selectableType,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.only(top: 10),
+          child: ElevatedButton(
             onPressed: () {
               Navigator.pop(context, _selectedCategories);
             },
+            child: const Text("Done"),
           ),
-          title: const Text("Select Category"),
-          actions: [
-            IconButton(
-              icon: const Icon(CupertinoIcons.check_mark),
-              onPressed: () {
-                Navigator.pop(context, _selectedCategories);
-              },
-            ),
-          ],
-        ),
-        body: Consumer(
-          builder: (context, ref, _) {
-            final notifier = ref.watch(listCategoryNotifierProvider.notifier);
-            return CustomLoadingWraper(
-              isLoading: ref.watch(listCategoryNotifierProvider).when(
-                    initial: (_) => false,
-                    loadInProgress: (_, __) => true,
-                    success: (_, __, ___) => false,
-                    failed: (_, __) => false,
-                  ),
-              child: Scaffold(
-                primary: true,
-                body: PaginatedCategoriesPickerListView(
-                  paginatedCategoriesNotifierProvider:
-                      listCategoryNotifierProvider,
-                  getNextPage: () => notifier.getNextCategoryListPage(),
-                  selectedCategories: _selectedCategories,
-                  onRefresh: () => notifier.getFirstCategoryListPage(),
-                  noResultMessage: "No category Found",
-                  onSelectCategory: (category) => checkCategory(
-                    category,
-                    widget.selectableType,
-                  ),
-                ),
-              ),
-            );
-          },
         ),
       ),
     );
