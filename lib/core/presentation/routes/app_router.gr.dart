@@ -11,14 +11,13 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/cupertino.dart' as _i9;
 import 'package:flutter/material.dart' as _i8;
 
 import '../../../authentication/presentation/Auth_switcher.dart' as _i2;
 import '../../../authentication/presentation/register.dart' as _i3;
 import '../../../dashboard/gooddhan/cateogries/list_categories/presentation/category_page.dart'
     as _i5;
-import '../../../dashboard/gooddhan/core/domain/expense.dart' as _i10;
+import '../../../dashboard/gooddhan/core/domain/expense.dart' as _i9;
 import '../../../dashboard/gooddhan/expenses/expense_list/presentation/create_expense_page.dart'
     as _i6;
 import '../../../dashboard/navigation/presentation/navigation_page.dart' as _i4;
@@ -106,7 +105,7 @@ class AuthSwitcherRoute extends _i7.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.RegisterPage]
 class RegisterRoute extends _i7.PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({_i9.Key? key, required String idToken})
+  RegisterRoute({_i8.Key? key, required String idToken})
       : super(RegisterRoute.name,
             path: '/register',
             args: RegisterRouteArgs(key: key, idToken: idToken));
@@ -117,7 +116,7 @@ class RegisterRoute extends _i7.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key, required this.idToken});
 
-  final _i9.Key? key;
+  final _i8.Key? key;
 
   final String idToken;
 
@@ -147,9 +146,9 @@ class CategoriesRoute extends _i7.PageRouteInfo<void> {
 /// [_i6.CreateExpensePage]
 class CreateExpenseRoute extends _i7.PageRouteInfo<CreateExpenseRouteArgs> {
   CreateExpenseRoute(
-      {_i9.Key? key,
+      {_i8.Key? key,
       required bool isUpdate,
-      required _i10.Expense? previousExpense})
+      required _i9.Expense? previousExpense})
       : super(CreateExpenseRoute.name,
             path: '/create-expense',
             args: CreateExpenseRouteArgs(
@@ -164,11 +163,11 @@ class CreateExpenseRouteArgs {
   const CreateExpenseRouteArgs(
       {this.key, required this.isUpdate, required this.previousExpense});
 
-  final _i9.Key? key;
+  final _i8.Key? key;
 
   final bool isUpdate;
 
-  final _i10.Expense? previousExpense;
+  final _i9.Expense? previousExpense;
 
   @override
   String toString() {
