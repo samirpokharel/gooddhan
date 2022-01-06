@@ -37,7 +37,7 @@ void showFlashToast(
 
       return Flash.bar(
         controller: _,
-        backgroundColor: color[50],
+        backgroundColor: color.withOpacity(.2),
         margin: const EdgeInsets.only(
           bottom: 30,
           left: 10,

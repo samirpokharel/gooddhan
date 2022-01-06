@@ -8,10 +8,11 @@ class LoadingListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Shimmer.fromColors(
-      baseColor: Colors.grey.shade400,
+      baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade400,
       period: const Duration(milliseconds: 500),
-      highlightColor: Colors.grey.shade300,
+      highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
       child: ListTile(
         title: Align(
           alignment: Alignment.centerLeft,

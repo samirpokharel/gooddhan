@@ -25,23 +25,23 @@ class ExpenseListItem extends StatelessWidget {
       key: UniqueKey(),
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
-        dismissible: DismissiblePane(
-          closeOnCancel: true,
-          onDismissed: () => onDeleteExpense(),
-          confirmDismiss: () async {
-            return await showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return ConformationSheet(
-                  leadTitle: "Remove Expense ?",
-                  summary: "Are you sure wanna Remove this expense",
-                  onNo: () => Navigator.of(context).pop(false),
-                  onYes: () => Navigator.of(context).pop(true),
-                );
-              },
-            );
-          },
-        ),
+        // dismissible: DismissiblePane(
+        //   closeOnCancel: true,
+        //   onDismissed: () => onDeleteExpense(),
+        //   confirmDismiss: () async {
+        //     return await showModalBottomSheet(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConformationSheet(
+        //           leadTitle: "Remove Expense ?",
+        //           summary: "Are you sure wanna Remove this expense",
+        //           onNo: () => Navigator.of(context).pop(false),
+        //           onYes: () => Navigator.of(context).pop(true),
+        //         );
+        //       },
+        //     );
+        //   },
+        // ),
         children: [
           SlidableAction(
             onPressed: (context) {
@@ -60,14 +60,14 @@ class ExpenseListItem extends StatelessWidget {
                 },
               );
             },
-            backgroundColor: Colors.red[100]!,
+            backgroundColor: Colors.red.withOpacity(.2),
             foregroundColor: Colors.red,
             icon: CupertinoIcons.delete,
             label: 'Remove',
           ),
           SlidableAction(
             onPressed: (context) => onUpdate(),
-            backgroundColor: Colors.green[100]!,
+            backgroundColor: Colors.green.withOpacity(.2),
             foregroundColor: Colors.green,
             icon: Icons.edit,
             label: 'Update',

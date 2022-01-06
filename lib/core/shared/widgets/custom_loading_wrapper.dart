@@ -18,7 +18,8 @@ class CustomLoadingWraper extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: Colors.white.withOpacity(.4),
+            color:
+                Theme.of(context).appBarTheme.backgroundColor!.withOpacity(.4),
             child: Column(
               children: const [LinearProgressIndicator()],
             ),
