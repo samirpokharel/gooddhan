@@ -33,9 +33,10 @@ class PaginatedExpensesNotifier
       (r) {
         _page++;
         return PaginatedState.success(
-            r.copyWith(entity: [...state.items.entity, ...r.entity]),
-            isNextPageAvilabel: r.isNextPageAvailable ?? false,
-            successType: SuccessType.fetched);
+          r.copyWith(entity: [...state.items.entity, ...r.entity]),
+          isNextPageAvilabel: r.isNextPageAvailable ?? false,
+          successType: SuccessType.fetched,
+        );
       },
     );
   }

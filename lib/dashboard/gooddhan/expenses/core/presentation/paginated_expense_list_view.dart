@@ -79,6 +79,13 @@ class _PaginatedExpensesListViewState extends State<PaginatedExpensesListView> {
                     flavouer: ToastFlavouer.success,
                     dismissDuration: const Duration(seconds: 3),
                   );
+                } else if (_.successType == SuccessType.updated) {
+                  showFlashToast(
+                    context,
+                    message: "Expense Successfully Updated",
+                    flavouer: ToastFlavouer.success,
+                    dismissDuration: const Duration(seconds: 3),
+                  );
                 }
                 return canLoadNextPage = _.isNextPageAvilabel;
               },
