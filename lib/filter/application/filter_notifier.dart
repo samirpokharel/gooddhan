@@ -62,6 +62,7 @@ class FilterNotifier extends StateNotifier<Filter> {
         );
       } else {
         state = state.copyWith(
+          fetchingDates: fetchingDates,
           dateRange: null,
         );
       }

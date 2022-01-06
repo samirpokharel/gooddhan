@@ -4,6 +4,7 @@ import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/presentat
 import 'package:gooddhan/filter/application/filter_notifier.dart';
 import 'package:gooddhan/filter/domain/filter.dart';
 import 'package:gooddhan/core/shared/widgets/custom_value_tile.dart';
+import 'package:intl/intl.dart';
 
 class FilterSheet extends ConsumerWidget {
   final Function(Filter filter) onApplyFilter;
@@ -19,6 +20,12 @@ class FilterSheet extends ConsumerWidget {
 
     final filterNotifier = ref.watch(filterNotifierProvider.notifier);
     final filterState = ref.watch(filterNotifierProvider);
+
+    DateFormat _standartDateFormat = DateFormat.yMMMd('en_US');
+
+    String formatDate(DateTime date) {
+      return _standartDateFormat.format(date);
+    }
 
     return Container(
       height: MediaQuery.of(context).size.height * 0.68,
@@ -62,9 +69,25 @@ class FilterSheet extends ConsumerWidget {
           ),
           const SizedBox(height: 15),
           OutlinedButton(
-            onPressed: () async {},
+            onPressed: () async {
+              final dateRange = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2010),
+                lastDate: DateTime(2030),
+                initialDateRange: DateTimeRange(
+                  start: filterState.dateRange!.start,
+                  end: filterState.dateRange!.end,
+                ),
+              );
+              if (dateRange != null) {
+                filterNotifier.onDateRangeChange(dateRange);
+              }
+            },
             child: Text(
-              'Select date by range',
+              filterState.dateRange != null
+                  ? "${formatDate(filterState.dateRange!.start)}"
+                      " - ${formatDate(filterState.dateRange!.end)}"
+                  : 'Select date by range',
               style: textTheme.headline2?.copyWith(fontWeight: FontWeight.w500),
             ),
           ),
