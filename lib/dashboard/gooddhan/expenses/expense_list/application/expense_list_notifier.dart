@@ -1,3 +1,4 @@
+import 'package:gooddhan/filter/domain/filter.dart';
 import 'package:gooddhan/core/domain/fresh.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/paginated_state.dart';
 import 'package:gooddhan/dashboard/gooddhan/expenses/core/application/paginated_expense_notifier.dart';
@@ -8,13 +9,15 @@ class ListExpenseNotifer extends PaginatedExpensesNotifier {
 
   ListExpenseNotifer(this._repository);
 
-  Future<void> getFirstExpenseListPage() async {
+  Future<void> getFirstExpenseListPage({Filter? filter}) async {
     super.resetPage();
-    await getNextExpenseListPage();
+    await getNextExpenseListPage(filter: filter);
   }
 
-  Future<void> getNextExpenseListPage() async {
-    super.getNextPage((page) => _repository.getExpensesList(page));
+  Future<void> getNextExpenseListPage({Filter? filter}) async {
+    super.getNextPage(
+      (page) => _repository.getExpensesList(page, filter: filter),
+    );
   }
 
   Future<void> createExpense(
@@ -59,7 +62,7 @@ class ListExpenseNotifer extends PaginatedExpensesNotifier {
         return PaginatedState.success(
           Fresh.yes(copy),
           isNextPageAvilabel: false,
-          successType: SuccessType.created,
+          successType: SuccessType.updated,
         );
       },
     );

@@ -6,6 +6,7 @@ import 'package:gooddhan/dashboard/gooddhan/core/domain/expense.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/gooddhan_failure.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/infrastructure/expense_dto.dart';
 import 'package:gooddhan/dashboard/gooddhan/expenses/core/infrastructure/extensions.dart';
+import 'package:gooddhan/filter/domain/filter.dart';
 
 import 'list_expenses_local_service.dart';
 import 'list_cxpenses_remote_service.dart';
@@ -17,10 +18,12 @@ class ListExpensesRepository {
   ListExpensesRepository(this._localService, this._remoteService);
 
   Future<Either<GooddhanFailure, Fresh<List<Expense>>>> getExpensesList(
-    int page,
-  ) async {
+    int page, {
+    Filter? filter,
+  }) async {
     try {
-      final remotePageItem = await _remoteService.getExpensesListPage(page);
+      final remotePageItem =
+          await _remoteService.getExpensesListPage(page, filter: filter);
       return right(
         await remotePageItem.when(
           noConnection: () async {
@@ -90,6 +93,7 @@ class ListExpensesRepository {
     String id,
   ) async {
     try {
+      await _localService.clearData();
       await _remoteService.deleteSingleExpense(id);
       return right(unit);
     } on RestApiException catch (e) {
