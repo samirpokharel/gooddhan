@@ -26,6 +26,8 @@ dependencies:
   google_sign_in: ^5.2.1
   freezed_annotation: ^1.1.0
   flutter_slidable: ^1.2.0
+  #trying for now remove later
+  syncfusion_flutter_charts: ^19.4.41
 
   path_provider: ^2.0.8
   flutter_secure_storage: ^5.0.2
