@@ -8,7 +8,9 @@ import 'package:gooddhan/core/shared/widgets/custom_profile_card.dart';
 import 'package:gooddhan/core/shared/widgets/custom_profile_menu_card.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/presentation/category_picker.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
+import 'package:gooddhan/dashboard/navigation/presentation/application/bottom_nav_bar_notifier.dart';
 import 'package:gooddhan/dashboard/profile/application/profile_notifier.dart';
+import 'package:gooddhan/dashboard/report/presentation/report_page.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -52,17 +54,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               child: Column(
                 children: [
                   ProfileMenuCard(
-                    color: Colors.amberAccent,
-                    icon: AppIcon.user,
-                    onPressed: () {},
-                    title: "Account",
-                  ),
-                  const Divider(),
-                  ProfileMenuCard(
                     color: Theme.of(context).primaryColor,
                     icon: AppIcon.settings,
                     onPressed: () {},
                     title: "Settings",
+                  ),
+                  const Divider(),
+                  ProfileMenuCard(
+                    color: Colors.green,
+                    icon: AppIcon.expences,
+                    onPressed: () {
+                      ref.read(bottomNavProvider.notifier).updateSelectedItem(
+                            BottomNavItem.expenses,
+                          );
+                    },
+                    title: "Expenses",
                   ),
                   const Divider(thickness: .7),
                   ProfileMenuCard(

@@ -10,13 +10,13 @@ import 'application/bottom_nav_bar_notifier.dart';
 final Map<BottomNavItem, List<IconData>> _items = {
   BottomNavItem.home: [AppIcon.homeOutline, AppIcon.home],
   BottomNavItem.expenses: [AppIcon.expencesOutline, AppIcon.expences],
-  BottomNavItem.report: [AppIcon.reportOutline, AppIcon.report],
+  // BottomNavItem.report: [AppIcon.reportOutline, AppIcon.report],
   BottomNavItem.profile: [AppIcon.userOutline, AppIcon.user]
 };
 final Map<BottomNavItem, Widget> _screens = {
-  BottomNavItem.home: Container(),
+  BottomNavItem.home: const ReportPage(),
   BottomNavItem.expenses: const ExpensesPage(),
-  BottomNavItem.report: const ReportPage(),
+  // BottomNavItem.home: Container(),
   BottomNavItem.profile: const ProfilePage(),
 };
 

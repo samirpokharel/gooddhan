@@ -7,12 +7,8 @@ import 'package:gooddhan/dashboard/report/domain/report.dart';
 import 'package:gooddhan/dashboard/report/shared/providers.dart';
 import 'package:gooddhan/filter/presentation/filter_bar.dart';
 
-// import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 String toString(num value) {
   const units = <num, String>{
@@ -46,17 +42,6 @@ class _ReportPageState extends ConsumerState<ReportPage> {
     final reportState = ref.watch(reportNotifierProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Report"),
-        bottom: PreferredSize(
-          child: FilterBar(
-            onApplyFilter: (_) {},
-            onFetchingDate: (_) {},
-            showFilter: false,
-          ),
-          preferredSize: const Size.fromHeight(60),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10.0),

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum BottomNavItem { home, expenses, report, profile }
+enum BottomNavItem { home, expenses, profile }
 
 final bottomNavProvider =
     StateNotifierProvider.autoDispose<NavigationController, BottomNavItem>(
