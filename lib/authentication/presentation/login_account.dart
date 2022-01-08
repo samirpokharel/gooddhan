@@ -4,6 +4,7 @@ import 'package:gooddhan/authentication/application/auth_notifier.dart';
 
 import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
+import 'package:gooddhan/core/shared/toasts.dart';
 
 import 'package:gooddhan/core/shared/widgets/custom_google_button.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
@@ -17,6 +18,27 @@ class LoginAccountPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    ref.listen<AuthState>(
+      authNotifierProvider,
+      (previous, next) {
+        next.maybeMap(
+          orElse: () {},
+          failure: (failure) {
+            failure.failure.when(
+              server: (_, __) => showFlashToast(
+                context,
+                message: __,
+                dismissDuration: const Duration(seconds: 3),
+              ),
+              storage: () => showFlashToast(
+                context,
+                dismissDuration: const Duration(seconds: 3),
+              ),
+            );
+          },
+        );
+      },
+    );
     return Scaffold(
       body: SafeArea(
         child: CustomLoadingWraper(
