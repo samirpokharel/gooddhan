@@ -43,8 +43,11 @@ class Filter with _$Filter {
       queryParma += "sort=createdAt";
     }
     if (selectedCategory.isNotEmpty) {
-      queryParma +=
-          "&category[in]=${selectedCategory.map((e) => e.id).join(",")}";
+      // queryParma +=
+      // "&category[in]=${selectedCategory.map((e) => e.id).join(",")}";
+      String query =
+          selectedCategory.map((e) => "category[in]=${e.id}").join('&');
+      queryParma += "&$query";
     }
     if (dateRange != null) {
       queryParma +=
