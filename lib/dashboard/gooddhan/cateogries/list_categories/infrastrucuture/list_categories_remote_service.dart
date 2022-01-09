@@ -14,10 +14,13 @@ class ListCategoryRemoteService extends CategoriesRemoteService {
     GooddhanHeaderCache headerCache,
   ) : super(dio, connectivity, headerCache);
 
-  Future<RemoteResponse<List<CategoryDTO>>> getCategoryListPage(int page) {
+  Future<RemoteResponse<List<CategoryDTO>>> getCategoryListPage(
+    int page, {
+    String? searchTerm,
+  }) {
     return super.getPage(
       requestUri: Uri.parse(
-        "$baseUrl/categories?page=$page&limit=${PaginationConfig.itermsPerPage}&sort=createdAt",
+        "$baseUrl/categories?page=$page&limit=${PaginationConfig.itermsPerPage}&sort=createdAt${searchTerm != null ? "&categoryName[regex]=$searchTerm&categoryName[options]=i" : ""}",
       ),
       jsonDataSelector: (data) => data["data"] as List<dynamic>,
     );

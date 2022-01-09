@@ -16,10 +16,11 @@ class ListCategoriesRepository {
   ListCategoriesRepository(this._localService, this._remoteService);
 
   Future<Either<GooddhanFailure, Fresh<List<Category>>>> getCategoryList(
-    int page,
-  ) async {
+      int page,
+      {String? searchTerm}) async {
     try {
-      final remotePageItem = await _remoteService.getCategoryListPage(page);
+      final remotePageItem = await _remoteService.getCategoryListPage(page,
+          searchTerm: searchTerm);
       return right(
         await remotePageItem.when(
           noConnection: () async {

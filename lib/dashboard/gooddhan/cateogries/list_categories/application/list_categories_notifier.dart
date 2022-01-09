@@ -8,13 +8,15 @@ class ListCategoryNotifer extends PaginatedCategoryNotifier {
 
   ListCategoryNotifer(this._repository);
 
-  Future<void> getFirstCategoryListPage() async {
+  Future<void> getFirstCategoryListPage({String? searchTerm}) async {
     super.resetPage();
-    await getNextCategoryListPage();
+    await getNextCategoryListPage(searchTerm: searchTerm);
   }
 
-  Future<void> getNextCategoryListPage() async {
-    super.getNextPage((page) => _repository.getCategoryList(page));
+  Future<void> getNextCategoryListPage({String? searchTerm}) async {
+    super.getNextPage(
+      (page) => _repository.getCategoryList(page, searchTerm: searchTerm),
+    );
   }
 
   Future<void> createCategory(String categoryName) async {
@@ -23,9 +25,10 @@ class ListCategoryNotifer extends PaginatedCategoryNotifier {
     state = failureOrCategory.fold(
       (l) => PaginatedState.failed(state.items, l),
       (r) => PaginatedState.success(
-          Fresh.yes([...state.items.entity, r.toDomain()]),
-          isNextPageAvilabel: false,
-          successType: SuccessType.created),
+        Fresh.yes([...state.items.entity, r.toDomain()]),
+        isNextPageAvilabel: false,
+        successType: SuccessType.created,
+      ),
     );
   }
 
@@ -35,14 +38,15 @@ class ListCategoryNotifer extends PaginatedCategoryNotifier {
     state = failureOrCategory.fold(
       (l) => PaginatedState.failed(state.items, l),
       (r) => PaginatedState.success(
-          Fresh.yes(
-            state.items.entity
-              ..removeWhere(
-                (element) => element.id == id,
-              ),
-          ),
-          isNextPageAvilabel: false,
-          successType: SuccessType.deleted),
+        Fresh.yes(
+          state.items.entity
+            ..removeWhere(
+              (element) => element.id == id,
+            ),
+        ),
+        isNextPageAvilabel: false,
+        successType: SuccessType.deleted,
+      ),
     );
   }
 }
