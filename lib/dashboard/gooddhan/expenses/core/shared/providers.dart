@@ -7,6 +7,9 @@ import 'package:gooddhan/dashboard/gooddhan/expenses/expense_list/application/ex
 import 'package:gooddhan/dashboard/gooddhan/expenses/expense_list/infrastructure/list_cxpenses_remote_service.dart';
 import 'package:gooddhan/dashboard/gooddhan/expenses/expense_list/infrastructure/list_expenses_local_service.dart';
 import 'package:gooddhan/dashboard/gooddhan/expenses/expense_list/infrastructure/list_expenses_repository.dart';
+import 'package:gooddhan/dashboard/gooddhan/expenses/search_expense/application/searched_expense_notifer.dart';
+import 'package:gooddhan/dashboard/gooddhan/expenses/search_expense/infrastructure/searched_expense_remote_service.dart';
+import 'package:gooddhan/dashboard/gooddhan/expenses/search_expense/infrastructure/searched_expenses_repository.dart';
 
 // final expenseRemoteServiceProvider = Provider<ExpensesRemoteService>((ref) {
 //   return ExpensesRemoteService(
@@ -42,4 +45,27 @@ final listExpensesNotifierProvider =
     StateNotifierProvider.autoDispose<ListExpenseNotifer, PaginatedState>(
         (ref) {
   return ListExpenseNotifer(ref.watch(listExpensesRepositoryProvider));
+});
+
+final searchedExpenseRemoteServieProvider =
+    Provider<SearchedExpenseRemoteService>((ref) {
+  return SearchedExpenseRemoteService(
+    ref.watch(dioProvider),
+    ref.watch(connectivityProvider),
+    ref.watch(githuHeaderCacheProvider),
+  );
+});
+
+final searchedExpenseRepositoryProvider =
+    Provider<SearchedExpensesRepository>((ref) {
+  return SearchedExpensesRepository(
+    ref.watch(searchedExpenseRemoteServieProvider),
+  );
+});
+
+final searchedExpenseNotifierProvider =
+    StateNotifierProvider<SearchedReposNotifier, PaginatedState>((ref) {
+  return SearchedReposNotifier(
+    ref.watch(searchedExpenseRepositoryProvider),
+  );
 });
