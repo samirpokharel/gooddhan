@@ -62,11 +62,11 @@ Map<String, dynamic> _$$_ExpenseReportOnTimePeroidToJson(
 _$_ReportElement _$$_ReportElementFromJson(Map<String, dynamic> json) =>
     _$_ReportElement(
       id: json['_id'] as String,
-      totalExpense: json['totalExpense'] as num,
-      averageExpenseAmount: json['averageExpenseAmount'] as num,
-      maximumExpenseAmount: json['maximumExpenseAmount'] as num,
-      currency: json['currency'] as String,
-      monthlyIncome: json['monthlyIncome'] as num,
+      totalExpense: json['totalExpense'] as num? ?? 0,
+      averageExpenseAmount: json['averageExpenseAmount'] as num? ?? 0,
+      maximumExpenseAmount: json['maximumExpenseAmount'] as num? ?? 0,
+      currency: json['currency'] as String? ?? "NRS",
+      monthlyIncome: json['monthlyIncome'] as num? ?? 0,
     );
 
 Map<String, dynamic> _$$_ReportElementToJson(_$_ReportElement instance) =>

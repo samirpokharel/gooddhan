@@ -664,11 +664,11 @@ class _$ReportElementTearOff {
 
   _ReportElement call(
       {@JsonKey(name: "_id") required String id,
-      required num totalExpense,
-      required num averageExpenseAmount,
-      required num maximumExpenseAmount,
-      required String currency,
-      required num monthlyIncome}) {
+      num totalExpense = 0,
+      num averageExpenseAmount = 0,
+      num maximumExpenseAmount = 0,
+      String currency = "NRS",
+      num monthlyIncome = 0}) {
     return _ReportElement(
       id: id,
       totalExpense: totalExpense,
@@ -834,11 +834,11 @@ class __$ReportElementCopyWithImpl<$Res>
 class _$_ReportElement implements _ReportElement {
   const _$_ReportElement(
       {@JsonKey(name: "_id") required this.id,
-      required this.totalExpense,
-      required this.averageExpenseAmount,
-      required this.maximumExpenseAmount,
-      required this.currency,
-      required this.monthlyIncome});
+      this.totalExpense = 0,
+      this.averageExpenseAmount = 0,
+      this.maximumExpenseAmount = 0,
+      this.currency = "NRS",
+      this.monthlyIncome = 0});
 
   factory _$_ReportElement.fromJson(Map<String, dynamic> json) =>
       _$$_ReportElementFromJson(json);
@@ -846,14 +846,19 @@ class _$_ReportElement implements _ReportElement {
   @override
   @JsonKey(name: "_id")
   final String id;
+  @JsonKey()
   @override
   final num totalExpense;
+  @JsonKey()
   @override
   final num averageExpenseAmount;
+  @JsonKey()
   @override
   final num maximumExpenseAmount;
+  @JsonKey()
   @override
   final String currency;
+  @JsonKey()
   @override
   final num monthlyIncome;
 
@@ -903,11 +908,11 @@ class _$_ReportElement implements _ReportElement {
 abstract class _ReportElement implements ReportElement {
   const factory _ReportElement(
       {@JsonKey(name: "_id") required String id,
-      required num totalExpense,
-      required num averageExpenseAmount,
-      required num maximumExpenseAmount,
-      required String currency,
-      required num monthlyIncome}) = _$_ReportElement;
+      num totalExpense,
+      num averageExpenseAmount,
+      num maximumExpenseAmount,
+      String currency,
+      num monthlyIncome}) = _$_ReportElement;
 
   factory _ReportElement.fromJson(Map<String, dynamic> json) =
       _$_ReportElement.fromJson;

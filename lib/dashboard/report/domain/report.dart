@@ -43,11 +43,11 @@ abstract class ExpenseReportOnTimePeroid with _$ExpenseReportOnTimePeroid {
 abstract class ReportElement with _$ReportElement {
   const factory ReportElement({
     @JsonKey(name: "_id") required String id,
-    required num totalExpense,
-    required num averageExpenseAmount,
-    required num maximumExpenseAmount,
-    required String currency,
-    required num monthlyIncome,
+    @Default(0) num totalExpense,
+    @Default(0) num averageExpenseAmount,
+    @Default(0) num maximumExpenseAmount,
+    @Default("NRS") String currency,
+    @Default(0) num monthlyIncome,
   }) = _ReportElement;
 
   factory ReportElement.fromJson(Map<String, dynamic> json) =>
