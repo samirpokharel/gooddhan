@@ -9,10 +9,10 @@ final filterNotifierProvider =
 });
 
 class FilterNotifier extends StateNotifier<Filter> {
-  FilterNotifier() : super(Filter.initial());
+  FilterNotifier() : super(const Filter());
 
   void reset() {
-    state = Filter.initial();
+    state = const Filter();
   }
 
   void onDateRangeChange(DateTimeRange dateRange) {

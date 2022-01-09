@@ -22,7 +22,7 @@ class _$FilterTearOff {
       {SortBy sortBy = SortBy.newest,
       FetchingDates fetchingDates = FetchingDates.all,
       List<Category> selectedCategory = const [],
-      required DateTimeRange? dateRange}) {
+      DateTimeRange? dateRange}) {
     return _Filter(
       sortBy: sortBy,
       fetchingDates: fetchingDates,
@@ -149,7 +149,7 @@ class _$_Filter extends _Filter {
       {this.sortBy = SortBy.newest,
       this.fetchingDates = FetchingDates.all,
       this.selectedCategory = const [],
-      required this.dateRange})
+      this.dateRange})
       : super._();
 
   @JsonKey()
@@ -201,7 +201,7 @@ abstract class _Filter extends Filter {
       {SortBy sortBy,
       FetchingDates fetchingDates,
       List<Category> selectedCategory,
-      required DateTimeRange? dateRange}) = _$_Filter;
+      DateTimeRange? dateRange}) = _$_Filter;
   const _Filter._() : super._();
 
   @override

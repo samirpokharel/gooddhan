@@ -14,18 +14,8 @@ class Filter with _$Filter {
     @Default(SortBy.newest) SortBy sortBy,
     @Default(FetchingDates.all) FetchingDates fetchingDates,
     @Default([]) List<Category> selectedCategory,
-    required DateTimeRange? dateRange,
+    DateTimeRange? dateRange,
   }) = _Filter;
-
-  factory Filter.initial() {
-    final _now = DateTime.now();
-    return Filter(
-      dateRange: DateTimeRange(
-        start: _now.subtract(const Duration(days: 6)),
-        end: _now,
-      ),
-    );
-  }
 
   String toQueryParam() {
     String queryParma = "?";
