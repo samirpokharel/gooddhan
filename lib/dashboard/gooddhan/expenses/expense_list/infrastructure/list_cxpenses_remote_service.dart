@@ -9,20 +9,26 @@ import 'package:gooddhan/dashboard/gooddhan/expenses/core/infrastructure/expense
 import 'package:gooddhan/filter/domain/filter.dart';
 
 class ListExpenseRemoteService extends ExpensesRemoteService {
+  final GooddhanHeaderCache _headerCache;
   ListExpenseRemoteService(
     Dio dio,
     Connectivity connectivity,
     GooddhanHeaderCache headerCache,
-  ) : super(dio, connectivity, headerCache);
+  )   : _headerCache = headerCache,
+        super(dio, connectivity, headerCache);
 
   Future<RemoteResponse<List<ExpenseDTO>>> getExpensesListPage(
     int page, {
     Filter? filter,
-  }) {
+  }) async {
+    final requestUri = Uri.parse(
+      "$baseUrl/expenses${filter != null ? filter.toQueryParam() + "&" : "?"}page=$page&limit=${PaginationConfig.itermsPerPage}",
+    );
+    final previousHeader = await _headerCache.getHeaders(requestUri);
+
     return super.getPage(
-      requestUri: Uri.parse(
-        "$baseUrl/expenses${filter != null ? filter.toQueryParam() + "&" : "?"}page=$page&limit=${PaginationConfig.itermsPerPage}",
-      ),
+      requestUri: requestUri,
+      previousHeader: previousHeader,
       jsonDataSelector: (data) => data["data"] as List<dynamic>,
     );
   }

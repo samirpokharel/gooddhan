@@ -20,9 +20,8 @@ abstract class ExpensesRemoteService {
   Future<RemoteResponse<List<ExpenseDTO>>> getPage({
     required Uri requestUri,
     required List<dynamic> Function(dynamic json) jsonDataSelector,
+    GooddhanHeaders? previousHeader,
   }) async {
-    final previousHeader = await _headerCache.getHeaders(requestUri);
-
     try {
       final connectivityResult = await _connectivity.checkConnectivity();
 
