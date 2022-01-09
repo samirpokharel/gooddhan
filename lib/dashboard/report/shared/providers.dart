@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/shared/providers.dart';
 import 'package:gooddhan/dashboard/report/application/report_notifier.dart';
 import 'package:gooddhan/dashboard/report/infrastrucutre/report_remote_service.dart';
@@ -14,5 +15,8 @@ final reportRepositoryProvider = Provider<ReportRepository>((ref) {
 
 final reportNotifierProvider =
     StateNotifierProvider<ReportNotifier, ReportState>((ref) {
-  return ReportNotifier(ref.watch(reportRepositoryProvider));
+  return ReportNotifier(
+    ref.watch(reportRepositoryProvider),
+    // ref.watch(authNotifierProvider.notifier),
+  );
 });
