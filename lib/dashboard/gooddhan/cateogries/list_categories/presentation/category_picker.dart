@@ -121,7 +121,7 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
           title: Row(
             children: [
               Text(
-                "Filter Expenses",
+                "Select Category",
                 style: textTheme.headline2,
               ),
               const Spacer(),
