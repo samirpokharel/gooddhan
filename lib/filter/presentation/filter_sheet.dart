@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/core/presentation/themes/app_icons.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/presentation/category_picker.dart';
 import 'package:gooddhan/filter/application/filter_notifier.dart';
 import 'package:gooddhan/filter/domain/filter.dart';
@@ -22,6 +23,8 @@ class FilterSheet extends ConsumerWidget {
     final filterState = ref.watch(filterNotifierProvider);
 
     DateFormat _standartDateFormat = DateFormat.yMMMd('en_US');
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     String formatDate(DateTime date) {
       return _standartDateFormat.format(date);
@@ -68,28 +71,58 @@ class FilterSheet extends ConsumerWidget {
             style: textTheme.headline2,
           ),
           const SizedBox(height: 15),
-          OutlinedButton(
-            onPressed: () async {
-              final dateRange = await showDateRangePicker(
-                context: context,
-                firstDate: DateTime(2010),
-                lastDate: DateTime(2030),
-                initialDateRange: DateTimeRange(
-                  start: filterState.dateRange!.start,
-                  end: filterState.dateRange!.end,
+          Row(
+            children: [
+              OutlinedButton(
+                onPressed: () async {
+                  final dateRange = await showDateRangePicker(
+                    context: context,
+                    firstDate: DateTime(2010),
+                    lastDate: DateTime(2030),
+                    initialDateRange: DateTimeRange(
+                      start: filterState.dateRange!.start,
+                      end: filterState.dateRange!.end,
+                    ),
+                  );
+                  if (dateRange != null) {
+                    filterNotifier.onDateRangeChange(dateRange);
+                  }
+                },
+                child: Text(
+                  filterState.dateRange != null
+                      ? "${formatDate(filterState.dateRange!.start)}"
+                          " - ${formatDate(filterState.dateRange!.end)}"
+                      : 'Select date by range',
+                  style: textTheme.bodyText1
+                      ?.copyWith(fontWeight: FontWeight.w500),
                 ),
-              );
-              if (dateRange != null) {
-                filterNotifier.onDateRangeChange(dateRange);
-              }
-            },
-            child: Text(
-              filterState.dateRange != null
-                  ? "${formatDate(filterState.dateRange!.start)}"
-                      " - ${formatDate(filterState.dateRange!.end)}"
-                  : 'Select date by range',
-              style: textTheme.headline2?.copyWith(fontWeight: FontWeight.w500),
-            ),
+              ),
+              const SizedBox(width: 10),
+              Container(
+                height: 30,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: isDark ? Colors.grey[800]! : const Color(0xffE9E9E9),
+                    width: 1,
+                  ),
+                ),
+                child: DropdownButton<FetchingDates>(
+                  iconSize: 5,
+                  value: filterState.fetchingDates,
+                  onChanged: (FetchingDates? val) {
+                    if (val != null) {
+                      filterNotifier.updateFetchingDates(val);
+                    }
+                  },
+                  iconEnabledColor: Theme.of(context).primaryColor,
+                  icon: const Icon(AppIcon.arrowDown),
+                  underline: const SizedBox(),
+                  items: _mapFetchingDatesToDropDown(),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           Text(
@@ -154,5 +187,16 @@ class FilterSheet extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  List<DropdownMenuItem<FetchingDates>> _mapFetchingDatesToDropDown() {
+    return FetchingDates.values
+        .map(
+          (e) => DropdownMenuItem(
+            child: Text(e.name),
+            value: e,
+          ),
+        )
+        .toList();
   }
 }
