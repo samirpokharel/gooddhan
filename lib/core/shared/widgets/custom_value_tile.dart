@@ -6,12 +6,14 @@ class CustomValueTile extends StatelessWidget {
   final String? value;
   final Widget? trailing;
   final void Function()? onTap;
+  final Color? color;
 
   const CustomValueTile({
     Key? key,
     required this.title,
     this.trailing,
     this.onTap,
+    this.color,
     this.value,
   }) : super(key: key);
 
@@ -19,18 +21,21 @@ class CustomValueTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        height: 50,
-        padding: const EdgeInsets.all(5),
-        child: Row(
-          children: [
-            Text(
-              title,
-              style: context.headline2?.copyWith(fontWeight: FontWeight.w500),
-            ),
-            const Spacer(),
-            _buildTrailing(context)
-          ],
+      child: Material(
+        color: color,
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          height: 50,
+          child: Row(
+            children: [
+              Text(
+                title,
+                style: context.headline2?.copyWith(fontWeight: FontWeight.w500),
+              ),
+              const Spacer(),
+              _buildTrailing(context)
+            ],
+          ),
         ),
       ),
     );
