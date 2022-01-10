@@ -8,7 +8,7 @@ import 'package:gooddhan/core/shared/widgets/custom_profile_card.dart';
 import 'package:gooddhan/core/shared/widgets/custom_profile_menu_card.dart';
 import 'package:gooddhan/dashboard/navigation/presentation/application/bottom_nav_bar_notifier.dart';
 import 'package:gooddhan/dashboard/navigation/presentation/navigation_page.dart';
-import 'package:gooddhan/dashboard/profile/application/profile_notifier.dart';
+import 'package:gooddhan/dashboard/profile/shared/providers.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
