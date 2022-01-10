@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sameer.gooddhanapp.com">
+      <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
+
    <application
         android:label="gooddhan"
         android:name="${applicationName}"
