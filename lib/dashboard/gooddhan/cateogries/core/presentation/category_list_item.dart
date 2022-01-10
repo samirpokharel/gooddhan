@@ -41,7 +41,7 @@ class CategoryListItem extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {},
-            backgroundColor: Colors.red[100]!,
+            backgroundColor: Colors.red.withOpacity(.2),
             foregroundColor: Colors.red,
             icon: CupertinoIcons.delete,
             label: 'Remove',

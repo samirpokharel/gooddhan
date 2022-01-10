@@ -206,9 +206,8 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
                             Expanded(
                               child: TextFormField(
                                 controller: _expenseAmountController,
-                                style: const TextStyle(
+                                style: context.headline1?.copyWith(
                                   fontSize: 40,
-                                  fontWeight: FontWeight.w900,
                                 ),
                                 validator: (val) =>
                                     ValidationService.notEmpty(val, "Amount"),

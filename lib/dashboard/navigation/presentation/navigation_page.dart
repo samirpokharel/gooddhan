@@ -8,20 +8,20 @@ import 'package:gooddhan/settings/presentation/setting_page.dart';
 
 import 'application/bottom_nav_bar_notifier.dart';
 
-enum BottomNavItem { home, expenses, profile, settings }
+enum BottomNavItem { home, expenses, settings, profile }
 
 final Map<BottomNavItem, List<IconData>> _items = {
   BottomNavItem.home: [AppIcon.homeOutline, AppIcon.home],
   BottomNavItem.expenses: [AppIcon.expencesOutline, AppIcon.expences],
   // BottomNavItem.report: [AppIcon.reportOutline, AppIcon.report],
+  BottomNavItem.settings: [AppIcon.settings, AppIcon.settings],
   BottomNavItem.profile: [AppIcon.userOutline, AppIcon.user],
-  BottomNavItem.settings: [AppIcon.settings, AppIcon.settings]
 };
 final Map<BottomNavItem, Widget> _screens = {
   BottomNavItem.home: const ReportPage(),
   BottomNavItem.expenses: const ExpensesPage(),
-  BottomNavItem.profile: const ProfilePage(),
   BottomNavItem.settings: const SettingPage(),
+  BottomNavItem.profile: const ProfilePage(),
 };
 
 Map<String, BottomNavigationBarItem> _displayBottomNavItem() {
