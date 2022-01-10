@@ -7,6 +7,7 @@ import 'package:gooddhan/authentication/domain/auth_failure.dart';
 import 'package:gooddhan/authentication/infrastructure/User_local_storage.dart';
 import 'package:gooddhan/core/domain/user.dart';
 import 'package:gooddhan/core/shared/constant.dart';
+import 'package:gooddhan/dashboard/gooddhan/expenses/expense_list/infrastructure/list_expenses_local_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'Credential_storage/credential_storage.dart';
@@ -14,6 +15,7 @@ import 'Credential_storage/credential_storage.dart';
 class Authenticator {
   final CredentialStorage _credentialStorage;
   final UserLocalStorage _userLocalStorage;
+  final ListExpensesLocalService _listExpensesLocalService;
   final GoogleSignIn _googleSignIn;
   final Dio _dio;
 
@@ -21,8 +23,10 @@ class Authenticator {
     required CredentialStorage credentialStorage,
     required Dio dio,
     required GoogleSignIn googleSignIn,
+    required ListExpensesLocalService listExpensesLocalService,
     required UserLocalStorage userLocalStorage,
   })  : _credentialStorage = credentialStorage,
+        _listExpensesLocalService = listExpensesLocalService,
         _userLocalStorage = userLocalStorage,
         _dio = dio,
         _googleSignIn = googleSignIn;
@@ -121,6 +125,8 @@ class Authenticator {
 
   Future<Either<AuthFailure, Unit>> signOut() async {
     try {
+      await _googleSignIn.signOut();
+      await _listExpensesLocalService.clearData();
       await _credentialStorage.clear();
       await _userLocalStorage.clear();
       return right(unit);
