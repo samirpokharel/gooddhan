@@ -8,6 +8,7 @@ import 'package:gooddhan/authentication/infrastructure/User_local_storage.dart';
 import 'package:gooddhan/authentication/infrastructure/auth_interceptor.dart';
 import 'package:gooddhan/authentication/infrastructure/authenticator.dart';
 import 'package:gooddhan/core/shared/providers.dart';
+import 'package:gooddhan/dashboard/gooddhan/expenses/core/shared/providers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final flutterSecureStorageProvider = Provider<FlutterSecureStorage>(
@@ -34,6 +35,7 @@ final dioForAuthProvider = Provider<Dio>((ref) {
 final authenticatorProvidr = Provider<Authenticator>(
   (ref) {
     return Authenticator(
+      listExpensesLocalService: ref.watch(listExpenseLocalServiceProvider),
       userLocalStorage: ref.watch(userlocalStorageProvider),
       credentialStorage: ref.watch(credentialStorageProvider),
       googleSignIn: ref.watch(googleSignInProvider),
