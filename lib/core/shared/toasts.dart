@@ -27,11 +27,6 @@ void showFlashToast(
   showFlash(
     context: context,
     builder: (context, _) {
-      if (dismissDuration != null) {
-        Future.delayed(dismissDuration).then(
-          (value) => _.dismiss(),
-        );
-      }
       final color = _colorBaseOnFlavour(flavouer)[0] as MaterialColor;
       final icon = _colorBaseOnFlavour(flavouer)[1] as IconData;
 
@@ -58,5 +53,6 @@ void showFlashToast(
         ),
       );
     },
+    duration: dismissDuration,
   );
 }
