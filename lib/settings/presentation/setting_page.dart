@@ -6,6 +6,8 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tileColor = Theme.of(context).appBarTheme.backgroundColor;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -17,24 +19,23 @@ class SettingPage extends StatelessWidget {
             "User setting",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
             ),
           ),
           const SizedBox(height: 30),
-          const CustomValueTile(
-            color: Colors.white,
+          CustomValueTile(
+            color: tileColor,
             title: "Monthy Income",
             value: "Rs 50000",
           ),
           const SizedBox(height: 20),
-          const CustomValueTile(
-            color: Colors.white,
+          CustomValueTile(
+            color: tileColor,
             title: "Currency",
             value: "NRS",
           ),
           const SizedBox(height: 20),
-          const CustomValueTile(
-            color: Colors.white,
+          CustomValueTile(
+            color: tileColor,
             title: "Display Name",
             value: "sameer pokharel",
           ),
@@ -43,26 +44,25 @@ class SettingPage extends StatelessWidget {
             "General setting",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
             ),
           ),
           const SizedBox(height: 40),
           CustomValueTile(
             onTap: () {},
-            color: Colors.white,
+            color: tileColor,
             title: "Language",
             value: "english",
           ),
           const SizedBox(height: 20),
           CustomValueTile(
             onTap: () {},
-            color: Colors.white,
+            color: tileColor,
             title: "Date",
             value: "english",
           ),
           const SizedBox(height: 20),
           CustomValueTile(
-            color: Colors.white,
+            color: tileColor,
             title: "Dark Mode",
             trailing: Switch(
               value: false,

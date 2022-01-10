@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
+import 'package:gooddhan/core/infrastructure/validation_service.dart';
 import 'package:gooddhan/core/presentation/themes/app_icons.dart';
+import 'package:gooddhan/core/shared/clear_foucs.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/core/shared/widgets/custom_state_button.dart';
@@ -69,6 +72,14 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
 
   void createOrUpdate() async {
     final notifier = ref.watch(listExpensesNotifierProvider.notifier);
+    if (_selectedCategories.isEmpty) {
+      return showFlashToast(
+        context,
+        message: "Please Select Cateogry",
+        flavouer: ToastFlavouer.error,
+        dismissDuration: const Duration(seconds: 3),
+      );
+    }
 
     if (_expenseAmountController.text.isNotEmpty &&
         _selectedCategories.isNotEmpty &&
@@ -87,6 +98,13 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
           _summaryController.text,
         );
       }
+    } else {
+      showFlashToast(
+        context,
+        message: "All fields are required",
+        flavouer: ToastFlavouer.error,
+        dismissDuration: const Duration(seconds: 3),
+      );
     }
   }
 
@@ -117,12 +135,12 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
         orElse: () {},
       );
     });
-    return SafeArea(
-      child: CustomLoadingWraper(
-        isLoading: ref.watch(listExpensesNotifierProvider).maybeWhen(
-              orElse: () => false,
-              loadInProgress: (_, __) => true,
-            ),
+    return CustomLoadingWraper(
+      isLoading: ref.watch(listExpensesNotifierProvider).maybeWhen(
+            orElse: () => false,
+            loadInProgress: (_, __) => true,
+          ),
+      child: ClearFocus(
         child: Scaffold(
           body: Form(
             key: _formKey,
@@ -166,6 +184,8 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _summaryController,
+                        validator: (val) =>
+                            ValidationService.notEmpty(val, "Summary"),
                         decoration: const InputDecoration(hintText: "Summary"),
                       ),
                       const SizedBox(height: 32),
@@ -190,7 +210,14 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
                                   fontSize: 40,
                                   fontWeight: FontWeight.w900,
                                 ),
+                                validator: (val) =>
+                                    ValidationService.notEmpty(val, "Amount"),
                                 keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp('[0-9.,]'),
+                                  ),
+                                ],
                                 decoration: const InputDecoration(
                                   hintText: "0.00",
                                   border: InputBorder.none,
@@ -209,7 +236,11 @@ class _CreateExpensePageState extends ConsumerState<CreateExpensePage> {
                         child: CustomStateButton(
                           buttonStatus: ButtonStatus.idle,
                           text: "Continue",
-                          onPressed: createOrUpdate,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              createOrUpdate();
+                            }
+                          },
                         ),
                       ),
                     ],

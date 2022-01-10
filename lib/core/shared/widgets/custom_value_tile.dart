@@ -24,7 +24,7 @@ class CustomValueTile extends StatelessWidget {
       child: Material(
         color: color,
         child: Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(10),
           height: 50,
           child: Row(
             children: [

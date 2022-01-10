@@ -277,6 +277,7 @@ class ExpenseTimePeroidReport extends StatelessWidget {
       return <SplineSeries<ExpenseReportOnTimePeroid, String>>[
         SplineSeries<ExpenseReportOnTimePeroid, String>(
           // splineType: SplineType.cardinal,
+          name: "expense",
           enableTooltip: true,
           markerSettings: const MarkerSettings(isVisible: true),
           dataSource: reports,
