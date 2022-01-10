@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:gooddhan/dashboard/gooddhan/cateogries/core/presentation/category_tile.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/expense.dart';
+import 'package:gooddhan/settings/shared/providers.dart';
 import 'package:intl/intl.dart';
 
-class ExpenseTile extends StatelessWidget {
+class ExpenseTile extends ConsumerWidget {
   const ExpenseTile({
     Key? key,
     required this.expense,
@@ -13,11 +15,14 @@ class ExpenseTile extends StatelessWidget {
   final Expense expense;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    DateFormat _standartDateFormat = DateFormat.yMMMd('en_US');
     DateFormat _timeFormat = DateFormat("jm");
+
+    String formatDate(DateTime date) {
+      return ref.read(settingNotiferProvider).formatDate(date);
+    }
 
     return Material(
       color: Theme.of(context).appBarTheme.backgroundColor,
@@ -56,7 +61,7 @@ class ExpenseTile extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  _standartDateFormat.format(expense.createdAt),
+                  formatDate(expense.createdAt),
                   style: textTheme.bodyText2?.copyWith(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

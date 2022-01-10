@@ -80,7 +80,7 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage> {
                 children: [
                   IconButton(
                     onPressed: () => AutoRouter.of(context).pop(),
-                    icon: const Icon(Icons.arrow_back_ios),
+                    icon: const Icon(Icons.arrow_back, color: Colors.grey),
                   ),
                   Expanded(
                     child: TextFormField(

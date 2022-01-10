@@ -10,7 +10,6 @@ import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/core/shared/widgets/custom_state_button.dart';
 import 'package:gooddhan/core/shared/widgets/custom_value_tile.dart';
-import 'package:gooddhan/dashboard/gooddhan/cateogries/core/shared/providers.dart';
 import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/presentation/category_picker.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/expense.dart';

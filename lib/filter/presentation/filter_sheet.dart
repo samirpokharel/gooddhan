@@ -5,6 +5,7 @@ import 'package:gooddhan/dashboard/gooddhan/cateogries/list_categories/presentat
 import 'package:gooddhan/filter/application/filter_notifier.dart';
 import 'package:gooddhan/filter/domain/filter.dart';
 import 'package:gooddhan/core/shared/widgets/custom_value_tile.dart';
+import 'package:gooddhan/settings/shared/providers.dart';
 import 'package:intl/intl.dart';
 
 class FilterSheet extends ConsumerWidget {
@@ -22,12 +23,10 @@ class FilterSheet extends ConsumerWidget {
     final filterNotifier = ref.watch(filterNotifierProvider.notifier);
     final filterState = ref.watch(filterNotifierProvider);
 
-    DateFormat _standartDateFormat = DateFormat.yMMMd('en_US');
-
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     String formatDate(DateTime date) {
-      return _standartDateFormat.format(date);
+      return ref.watch(settingNotiferProvider).formatDate(date);
     }
 
     return Container(
@@ -80,8 +79,8 @@ class FilterSheet extends ConsumerWidget {
                     firstDate: DateTime(2010),
                     lastDate: DateTime(2030),
                     initialDateRange: DateTimeRange(
-                      start: filterState.dateRange!.start,
-                      end: filterState.dateRange!.end,
+                      start: filterState.dateRange?.start ?? DateTime.now(),
+                      end: filterState.dateRange?.end ?? DateTime.now(),
                     ),
                   );
                   if (dateRange != null) {
