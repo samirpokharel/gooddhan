@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gooddhan/authentication/application/auth_notifier.dart';
 import 'package:gooddhan/authentication/shared/providers.dart';
 import 'package:gooddhan/core/infrastructure/text_theme_extension.dart';
+import 'package:gooddhan/core/infrastructure/validation_service.dart';
 import 'package:gooddhan/core/shared/clear_foucs.dart';
 import 'package:gooddhan/core/shared/toasts.dart';
 import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
@@ -52,12 +53,29 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
   }
 
   void _createAccount() async {
-    final notifier = ref.read(authNotifierProvider.notifier);
-    return notifier.createAccount(
-      widget.idToken,
-      currency: selectedCurrency!.code,
-      monthlyIncome: _monthlyIncomeController.text,
-    );
+    if (selectedCurrency == null) {
+      return showFlashToast(
+        context,
+        message: "Please Select Currency",
+        flavouer: ToastFlavouer.error,
+        dismissDuration: const Duration(seconds: 3),
+      );
+    }
+    if (selectedCurrency != null && _monthlyIncomeController.text.isNotEmpty) {
+      final notifier = ref.read(authNotifierProvider.notifier);
+      return notifier.createAccount(
+        widget.idToken,
+        currency: selectedCurrency!.code,
+        monthlyIncome: _monthlyIncomeController.text,
+      );
+    } else {
+      return showFlashToast(
+        context,
+        message: "All Field are required",
+        flavouer: ToastFlavouer.error,
+        dismissDuration: const Duration(seconds: 3),
+      );
+    }
   }
 
   @override
@@ -111,7 +129,7 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
                       Text("Create Account", style: context.headline1),
                       const SizedBox(height: 16),
                       Text(
-                        "feel the detail to continue the process",
+                        "Fill the detail to continue the process",
                         style: context.bodyText2,
                         textAlign: TextAlign.center,
                       ),
@@ -139,11 +157,13 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
                             const SizedBox(width: 20),
                             Expanded(
                               child: TextFormField(
-                                validator: (val) {},
+                                validator: (val) => ValidationService.notEmpty(
+                                  val,
+                                  "Monthly Income",
+                                ),
                                 controller: _monthlyIncomeController,
-                                style: const TextStyle(
+                                style: context.headline1?.copyWith(
                                   fontSize: 40,
-                                  fontWeight: FontWeight.w900,
                                 ),
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
@@ -165,9 +185,11 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
                           buttonStatus: ButtonStatus.idle,
                           text: "Continue",
                           onPressed: () async {
-                            if (_monthlyIncomeController.text.isNotEmpty &&
-                                selectedCurrency != null) {
-                              _createAccount();
+                            if (_formKey.currentState!.validate()) {
+                              if (_monthlyIncomeController.text.isNotEmpty &&
+                                  selectedCurrency != null) {
+                                _createAccount();
+                              }
                             }
                           },
                         ),
