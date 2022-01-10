@@ -26,9 +26,17 @@ class _$ProfileStateTearOff {
     return const _Loading();
   }
 
-  _Success success(User user) {
+  _Success success(User user,
+      {ProfileSuccessType profileSuccessType = ProfileSuccessType.fetched}) {
     return _Success(
       user,
+      profileSuccessType: profileSuccessType,
+    );
+  }
+
+  _Failure failed(GooddhanFailure failure) {
+    return _Failure(
+      failure,
     );
   }
 }
@@ -42,21 +50,25 @@ mixin _$ProfileState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(User user) success,
+    required TResult Function(User user, ProfileSuccessType profileSuccessType)
+        success,
+    required TResult Function(GooddhanFailure failure) failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -65,6 +77,7 @@ mixin _$ProfileState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,6 +85,7 @@ mixin _$ProfileState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,6 +93,7 @@ mixin _$ProfileState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -140,7 +155,9 @@ class _$_Initial extends _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(User user) success,
+    required TResult Function(User user, ProfileSuccessType profileSuccessType)
+        success,
+    required TResult Function(GooddhanFailure failure) failed,
   }) {
     return initial();
   }
@@ -150,7 +167,8 @@ class _$_Initial extends _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
   }) {
     return initial?.call();
   }
@@ -160,7 +178,8 @@ class _$_Initial extends _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -175,6 +194,7 @@ class _$_Initial extends _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failed,
   }) {
     return initial(this);
   }
@@ -185,6 +205,7 @@ class _$_Initial extends _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
   }) {
     return initial?.call(this);
   }
@@ -195,6 +216,7 @@ class _$_Initial extends _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -249,7 +271,9 @@ class _$_Loading extends _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(User user) success,
+    required TResult Function(User user, ProfileSuccessType profileSuccessType)
+        success,
+    required TResult Function(GooddhanFailure failure) failed,
   }) {
     return loading();
   }
@@ -259,7 +283,8 @@ class _$_Loading extends _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
   }) {
     return loading?.call();
   }
@@ -269,7 +294,8 @@ class _$_Loading extends _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -284,6 +310,7 @@ class _$_Loading extends _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failed,
   }) {
     return loading(this);
   }
@@ -294,6 +321,7 @@ class _$_Loading extends _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
   }) {
     return loading?.call(this);
   }
@@ -304,6 +332,7 @@ class _$_Loading extends _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -322,7 +351,7 @@ abstract class _Loading extends ProfileState {
 abstract class _$SuccessCopyWith<$Res> {
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
       __$SuccessCopyWithImpl<$Res>;
-  $Res call({User user});
+  $Res call({User user, ProfileSuccessType profileSuccessType});
 
   $UserCopyWith<$Res> get user;
 }
@@ -339,12 +368,17 @@ class __$SuccessCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = freezed,
+    Object? profileSuccessType = freezed,
   }) {
     return _then(_Success(
       user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      profileSuccessType: profileSuccessType == freezed
+          ? _value.profileSuccessType
+          : profileSuccessType // ignore: cast_nullable_to_non_nullable
+              as ProfileSuccessType,
     ));
   }
 
@@ -359,14 +393,19 @@ class __$SuccessCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Success extends _Success {
-  const _$_Success(this.user) : super._();
+  const _$_Success(this.user,
+      {this.profileSuccessType = ProfileSuccessType.fetched})
+      : super._();
 
   @override
   final User user;
+  @JsonKey()
+  @override
+  final ProfileSuccessType profileSuccessType;
 
   @override
   String toString() {
-    return 'ProfileState.success(user: $user)';
+    return 'ProfileState.success(user: $user, profileSuccessType: $profileSuccessType)';
   }
 
   @override
@@ -374,12 +413,16 @@ class _$_Success extends _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Success &&
-            const DeepCollectionEquality().equals(other.user, user));
+            const DeepCollectionEquality().equals(other.user, user) &&
+            const DeepCollectionEquality()
+                .equals(other.profileSuccessType, profileSuccessType));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(user),
+      const DeepCollectionEquality().hash(profileSuccessType));
 
   @JsonKey(ignore: true)
   @override
@@ -391,9 +434,11 @@ class _$_Success extends _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(User user) success,
+    required TResult Function(User user, ProfileSuccessType profileSuccessType)
+        success,
+    required TResult Function(GooddhanFailure failure) failed,
   }) {
-    return success(user);
+    return success(user, profileSuccessType);
   }
 
   @override
@@ -401,9 +446,10 @@ class _$_Success extends _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
   }) {
-    return success?.call(user);
+    return success?.call(user, profileSuccessType);
   }
 
   @override
@@ -411,11 +457,12 @@ class _$_Success extends _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(User user)? success,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(user);
+      return success(user, profileSuccessType);
     }
     return orElse();
   }
@@ -426,6 +473,7 @@ class _$_Success extends _Success {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failed,
   }) {
     return success(this);
   }
@@ -436,6 +484,7 @@ class _$_Success extends _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
   }) {
     return success?.call(this);
   }
@@ -446,6 +495,7 @@ class _$_Success extends _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -456,11 +506,167 @@ class _$_Success extends _Success {
 }
 
 abstract class _Success extends ProfileState {
-  const factory _Success(User user) = _$_Success;
+  const factory _Success(User user, {ProfileSuccessType profileSuccessType}) =
+      _$_Success;
   const _Success._() : super._();
 
   User get user;
+  ProfileSuccessType get profileSuccessType;
   @JsonKey(ignore: true)
   _$SuccessCopyWith<_Success> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$FailureCopyWith<$Res> {
+  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) then) =
+      __$FailureCopyWithImpl<$Res>;
+  $Res call({GooddhanFailure failure});
+
+  $GooddhanFailureCopyWith<$Res> get failure;
+}
+
+/// @nodoc
+class __$FailureCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
+    implements _$FailureCopyWith<$Res> {
+  __$FailureCopyWithImpl(_Failure _value, $Res Function(_Failure) _then)
+      : super(_value, (v) => _then(v as _Failure));
+
+  @override
+  _Failure get _value => super._value as _Failure;
+
+  @override
+  $Res call({
+    Object? failure = freezed,
+  }) {
+    return _then(_Failure(
+      failure == freezed
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as GooddhanFailure,
+    ));
+  }
+
+  @override
+  $GooddhanFailureCopyWith<$Res> get failure {
+    return $GooddhanFailureCopyWith<$Res>(_value.failure, (value) {
+      return _then(_value.copyWith(failure: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_Failure extends _Failure {
+  const _$_Failure(this.failure) : super._();
+
+  @override
+  final GooddhanFailure failure;
+
+  @override
+  String toString() {
+    return 'ProfileState.failed(failure: $failure)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Failure &&
+            const DeepCollectionEquality().equals(other.failure, failure));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
+
+  @JsonKey(ignore: true)
+  @override
+  _$FailureCopyWith<_Failure> get copyWith =>
+      __$FailureCopyWithImpl<_Failure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(User user, ProfileSuccessType profileSuccessType)
+        success,
+    required TResult Function(GooddhanFailure failure) failed,
+  }) {
+    return failed(failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
+  }) {
+    return failed?.call(failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(User user, ProfileSuccessType profileSuccessType)? success,
+    TResult Function(GooddhanFailure failure)? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed(failure);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failed,
+  }) {
+    return failed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
+  }) {
+    return failed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Failure extends ProfileState {
+  const factory _Failure(GooddhanFailure failure) = _$_Failure;
+  const _Failure._() : super._();
+
+  GooddhanFailure get failure;
+  @JsonKey(ignore: true)
+  _$FailureCopyWith<_Failure> get copyWith =>
       throw _privateConstructorUsedError;
 }
