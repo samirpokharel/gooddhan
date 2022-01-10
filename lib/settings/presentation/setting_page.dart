@@ -1,11 +1,19 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gooddhan/core/presentation/routes/app_router.gr.dart';
 import 'package:gooddhan/core/shared/widgets/custom_value_tile.dart';
+import 'package:gooddhan/settings/presentation/update_date_format_page.dart';
+import 'package:gooddhan/settings/shared/providers.dart';
 
-class SettingPage extends StatelessWidget {
+class SettingPage extends ConsumerWidget {
   const SettingPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final state = ref.watch(settingNotiferProvider);
+    final notifier = ref.watch(settingNotiferProvider.notifier);
+
     final tileColor = Theme.of(context).appBarTheme.backgroundColor;
 
     return Scaffold(
@@ -24,20 +32,10 @@ class SettingPage extends StatelessWidget {
           const SizedBox(height: 30),
           CustomValueTile(
             color: tileColor,
-            title: "Monthy Income",
-            value: "Rs 50000",
-          ),
-          const SizedBox(height: 20),
-          CustomValueTile(
-            color: tileColor,
-            title: "Currency",
-            value: "NRS",
-          ),
-          const SizedBox(height: 20),
-          CustomValueTile(
-            color: tileColor,
-            title: "Display Name",
-            value: "sameer pokharel",
+            title: "Update Account",
+            onTap: () {
+              AutoRouter.of(context).push(const UpdateAccountRoute());
+            },
           ),
           const SizedBox(height: 30),
           const Text(
@@ -48,25 +46,37 @@ class SettingPage extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           CustomValueTile(
-            onTap: () {},
+            onTap: () => AutoRouter.of(context).push(
+              UpdateLanguageRoute(
+                initialLanguage: state.savedLanguage,
+              ),
+            ),
             color: tileColor,
             title: "Language",
-            value: "english",
+            value: state.savedLanguage,
           ),
           const SizedBox(height: 20),
           CustomValueTile(
-            onTap: () {},
+            onTap: () {
+              AutoRouter.of(context).push(
+                UpdateDateFormatRoute(
+                  initialDate: state.savedDateFormat,
+                ),
+              );
+            },
             color: tileColor,
             title: "Date",
-            value: "english",
+            value: state.savedDateFormat,
           ),
           const SizedBox(height: 20),
           CustomValueTile(
             color: tileColor,
             title: "Dark Mode",
             trailing: Switch(
-              value: false,
-              onChanged: (val) {},
+              value: state.isDark,
+              onChanged: (val) => notifier.updateTheme(
+                state.isDark ? ThemeMode.light : ThemeMode.dark,
+              ),
             ),
           ),
         ],
