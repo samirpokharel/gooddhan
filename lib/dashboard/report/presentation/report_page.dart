@@ -5,10 +5,10 @@ import 'package:gooddhan/core/shared/widgets/custom_loading_wrapper.dart';
 import 'package:gooddhan/core/shared/widgets/custom_profile_avatar.dart';
 import 'package:gooddhan/currency/domain/currency.dart';
 import 'package:gooddhan/dashboard/profile/application/profile_notifier.dart';
+import 'package:gooddhan/dashboard/profile/shared/providers.dart';
 
 import 'package:gooddhan/dashboard/report/domain/report.dart';
 import 'package:gooddhan/dashboard/report/shared/providers.dart';
-import 'package:gooddhan/filter/presentation/filter_bar.dart';
 
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -69,7 +69,7 @@ class _ReportPageState extends ConsumerState<ReportPage> {
                     const Text("Wellcome"),
                     const SizedBox(height: 5),
                     profileState.maybeWhen(
-                      success: (user) {
+                      success: (user, _) {
                         return Row(
                           children: [
                             Text(
@@ -154,7 +154,7 @@ class HomeLoading extends StatelessWidget {
           const Text("Wellcome"),
           const SizedBox(height: 5),
           profileState.maybeWhen(
-            success: (user) {
+            success: (user, _) {
               return Row(
                 children: [
                   Text(

@@ -6,6 +6,9 @@ import 'package:gooddhan/dashboard/gooddhan/expenses/expense_list/presentation/c
 import 'package:gooddhan/dashboard/gooddhan/expenses/search_expense/presentation/searched_expense_page.dart';
 import 'package:gooddhan/dashboard/navigation/presentation/navigation_page.dart';
 import 'package:gooddhan/settings/presentation/setting_page.dart';
+import 'package:gooddhan/dashboard/profile/presentation/update_account.dart';
+import 'package:gooddhan/settings/presentation/update_date_format_page.dart';
+import 'package:gooddhan/settings/presentation/update_language_page.dart';
 import 'package:gooddhan/splash/presentation/splash_page.dart';
 
 @CustomAutoRouter(
@@ -19,7 +22,10 @@ import 'package:gooddhan/splash/presentation/splash_page.dart';
     CupertinoRoute(page: CategoriesPage, path: "/category"),
     CupertinoRoute(page: CreateExpensePage, path: "/create-expense"),
     CupertinoRoute(page: SearchedExpensePage, path: "/searched-expense"),
-    CupertinoRoute(page: SettingPage, path: "/settings")
+    CupertinoRoute(page: SettingPage, path: "/settings"),
+    CupertinoRoute(page: UpdateAccountPage, path: "/update-account"),
+    CupertinoRoute(page: UpdateLanguagePage, path: "/update-language"),
+    CupertinoRoute(page: UpdateDateFormatPage, path: "/update-date-format")
   ],
   replaceInRouteName: "Page,Route",
 )
