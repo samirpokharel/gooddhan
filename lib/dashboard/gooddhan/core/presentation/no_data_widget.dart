@@ -15,9 +15,8 @@ class NoData extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        const SizedBox(height: 50),
         Image.asset(
           "assets/images/error.png",
           height: 230,

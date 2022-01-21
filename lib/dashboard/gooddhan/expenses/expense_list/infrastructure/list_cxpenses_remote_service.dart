@@ -28,7 +28,7 @@ class ListExpenseRemoteService extends ExpensesRemoteService {
 
     return super.getPage(
       requestUri: requestUri,
-      previousHeader: previousHeader,
+      previousHeader: filter != null ? null : previousHeader,
       jsonDataSelector: (data) => data["data"] as List<dynamic>,
     );
   }

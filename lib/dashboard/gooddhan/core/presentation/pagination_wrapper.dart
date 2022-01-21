@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class PaginationWrapper extends StatelessWidget {
   final Widget child;
   bool canLoadNextPage;
@@ -17,7 +18,6 @@ class PaginationWrapper extends StatelessWidget {
       onNotification: (notifications) {
         final metrics = notifications.metrics;
         final limit = metrics.maxScrollExtent - metrics.viewportDimension / 3;
-
         if (canLoadNextPage && metrics.pixels >= limit) {
           getNextPage();
           canLoadNextPage = false;

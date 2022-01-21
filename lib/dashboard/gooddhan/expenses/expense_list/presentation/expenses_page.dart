@@ -71,52 +71,48 @@ class _CategoriesPageState extends ConsumerState<ExpensesPage> {
                 isLoading: false,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 50),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: PaginatedExpensesListView(
-                            provider: listExpensesNotifierProvider,
-                            paginatedState: state,
-                            paginatedListWidget: PaginatedListView<Expense>(
-                              state: state,
-                              initialItem: (_) => const LoadingListTile(),
-                              succesItem: (expense) => ExpenseListItem(
-                                expense: expense,
-                                onDeleteExpense: () =>
-                                    notifier.deleteExpense(expense.id),
-                                onUpdate: () {
-                                  AutoRouter.of(context).push(
-                                    CreateExpenseRoute(
-                                      isUpdate: true,
-                                      previousExpense: expense,
-                                    ),
-                                  );
-                                },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: PaginatedExpensesListView(
+                      provider: listExpensesNotifierProvider,
+                      paginatedState: state,
+                      paginatedListWidget: PaginatedListView<Expense>(
+                        state: state,
+                        initialItem: (_) => const LoadingListTile(),
+                        succesItem: (expense) => ExpenseListItem(
+                          expense: expense,
+                          onDeleteExpense: () =>
+                              notifier.deleteExpense(expense.id),
+                          onUpdate: () {
+                            AutoRouter.of(context).push(
+                              CreateExpenseRoute(
+                                isUpdate: true,
+                                previousExpense: expense,
                               ),
-                              failedItem: (expense) => ExpenseListItem(
-                                expense: expense,
-                                onDeleteExpense: () =>
-                                    notifier.deleteExpense(expense.id),
-                                onUpdate: () {
-                                  AutoRouter.of(context).push(
-                                    CreateExpenseRoute(
-                                      isUpdate: true,
-                                      previousExpense: expense,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            getNextPage: () {
-                              notifier.getNextExpenseListPage();
-                            },
-                            onRefresh: () {},
-                            noResultMessage: "No Expenses Found",
-                          ),
+                            );
+                          },
                         ),
-                      ],
+                        failedItem: (expense) => ExpenseListItem(
+                          expense: expense,
+                          onDeleteExpense: () =>
+                              notifier.deleteExpense(expense.id),
+                          onUpdate: () {
+                            AutoRouter.of(context).push(
+                              CreateExpenseRoute(
+                                isUpdate: true,
+                                previousExpense: expense,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      getNextPage: () {
+                        notifier.getNextExpenseListPage();
+                      },
+                      onRefresh: () {
+                        notifier.getFirstExpenseListPage();
+                      },
+                      noResultMessage: "No Expenses Found",
                     ),
                   ),
                 ),

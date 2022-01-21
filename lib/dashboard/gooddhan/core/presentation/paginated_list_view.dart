@@ -5,7 +5,7 @@ class PaginatedListView<T> extends StatelessWidget {
   final Widget Function(T item) initialItem;
   final Widget Function(T item) succesItem;
   final Widget Function(T item) failedItem;
-  // final void Function(Category category)? onSelect;
+  final bool srinkWrap;
 
   final dynamic state;
 
@@ -15,20 +15,20 @@ class PaginatedListView<T> extends StatelessWidget {
     required this.succesItem,
     // this.onSelect,
     required this.failedItem,
+    this.srinkWrap = false,
     required this.state,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      primary: false,
-      shrinkWrap: true,
       itemCount: state.map(
         initial: (_) => 0,
         loadInProgress: (_) => _.items.entity.length + _.itemsPerPage,
         success: (_) => _.items.entity.length,
         failed: (_) => _.items.entity.length,
       ),
+      shrinkWrap: srinkWrap,
       itemBuilder: (context, index) {
         return state.map(
           initial: (_) => initialItem(_.items.entity[index]),

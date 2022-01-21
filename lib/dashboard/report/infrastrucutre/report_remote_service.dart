@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gooddhan/core/infrastructure/dio_extension.dart';
 import 'package:gooddhan/core/infrastructure/network_exception.dart';
 import 'package:gooddhan/core/shared/constant.dart';
 import 'package:gooddhan/dashboard/report/domain/report.dart';
@@ -22,9 +23,10 @@ class ReportRemoteService {
           e.response?.statusCode,
           message: e.response?.data["error"],
         );
-      } else {
-        rethrow;
+      } else if (e.isNoConnectionError) {
+        throw RestApiException(null, message: "No internet Connection");
       }
+      rethrow;
     }
   }
 }

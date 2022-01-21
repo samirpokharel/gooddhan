@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:gooddhan/core/shared/toasts.dart';
-import 'package:gooddhan/dashboard/gooddhan/core/domain/category.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/domain/paginated_state.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/no_data_widget.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/paginated_list_view.dart';
@@ -12,7 +11,6 @@ import 'package:gooddhan/dashboard/gooddhan/core/presentation/pagination_wrapper
 
 class PaginatedExpensesListView extends StatefulWidget {
   final void Function() getNextPage;
-  final void Function(Category category)? onSelectCategory;
   final void Function() onRefresh;
   final PaginatedState paginatedState;
   final dynamic provider;
@@ -27,7 +25,6 @@ class PaginatedExpensesListView extends StatefulWidget {
     required this.noResultMessage,
     required this.onRefresh,
     required this.provider,
-    this.onSelectCategory,
     required this.paginatedListWidget,
   }) : super(key: key);
 
@@ -92,16 +89,14 @@ class _PaginatedExpensesListViewState extends State<PaginatedExpensesListView> {
 
         return PaginationWrapper(
           canLoadNextPage: canLoadNextPage,
-          getNextPage: () => widget.getNextPage(),
+          getNextPage: widget.getNextPage,
           child: widget.paginatedState.maybeWhen(
             success: (categories, _, successTyple) => categories.entity.isEmpty,
             orElse: () => false,
           )
-              ? Center(
-                  child: NoData(
-                    errorMessage: widget.noResultMessage,
-                    onRefresh: () => widget.onRefresh(),
-                  ),
+              ? NoData(
+                  errorMessage: widget.noResultMessage,
+                  onRefresh: () => widget.onRefresh(),
                 )
               : widget.paginatedListWidget,
         );

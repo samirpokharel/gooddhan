@@ -18,7 +18,7 @@ class LoadingListTile extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Container(
             height: 14,
-            width: 100,
+            width: MediaQuery.of(context).size.width / 3,
             decoration: BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.circular(2),
@@ -29,7 +29,7 @@ class LoadingListTile extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Container(
             height: 14,
-            width: 250,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.circular(2),

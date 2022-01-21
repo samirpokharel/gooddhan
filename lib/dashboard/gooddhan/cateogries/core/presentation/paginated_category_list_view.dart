@@ -101,6 +101,7 @@ class _PaginatedCategoriesListViewState
                 )
               : PaginatedListView<Category>(
                   state: state,
+                  srinkWrap: true,
                   initialItem: (_) => CategoryItemTile(category: _),
                   succesItem: (_) => CategoryListItem(
                     category: _,
