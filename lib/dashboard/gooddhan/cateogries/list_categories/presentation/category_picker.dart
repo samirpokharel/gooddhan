@@ -137,28 +137,24 @@ class _CategoryPickerState extends ConsumerState<_CategoryPicker> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              Consumer(
-                builder: (context, ref, _) {
-                  final notifier =
-                      ref.watch(listCategoryNotifierProvider.notifier);
-                  return PaginatedCategoriesPickerListView(
-                    paginatedCategoriesNotifierProvider:
-                        listCategoryNotifierProvider,
-                    getNextPage: () => notifier.getNextCategoryListPage(),
-                    selectedCategories: _selectedCategories,
-                    onRefresh: () => notifier.getFirstCategoryListPage(),
-                    noResultMessage: "No category Found",
-                    onSelectCategory: (category) => checkCategory(
-                      category,
-                      widget.selectableType,
-                    ),
-                  );
-                },
-              ),
-            ],
+          child: Consumer(
+            builder: (context, ref, _) {
+              final notifier = ref.watch(
+                listCategoryNotifierProvider.notifier,
+              );
+              return PaginatedCategoriesPickerListView(
+                paginatedCategoriesNotifierProvider:
+                    listCategoryNotifierProvider,
+                getNextPage: () => notifier.getNextCategoryListPage(),
+                selectedCategories: _selectedCategories,
+                onRefresh: () => notifier.getFirstCategoryListPage(),
+                noResultMessage: "No category Found",
+                onSelectCategory: (category) => checkCategory(
+                  category,
+                  widget.selectableType,
+                ),
+              );
+            },
           ),
         ),
         bottomNavigationBar: Container(
@@ -250,6 +246,7 @@ class _PaginatedCategoriesPickerListViewState
                 )
               : PaginatedListView<Category>(
                   state: state,
+                  srinkWrap: true,
                   initialItem: (_) => CategoryItemTile(category: _),
                   succesItem: (category) => GestureDetector(
                     onTap: () => widget.onSelectCategory?.call(category),
