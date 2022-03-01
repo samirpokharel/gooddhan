@@ -38,76 +38,77 @@ class _ReportPageState extends ConsumerState<ReportPage> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: reportState.maybeMap(
-            success: (_) {
-              final report = _.report.report;
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 20),
-                    const Text("Wellcome"),
-                    const SizedBox(height: 5),
-                    profileState.maybeWhen(
-                      orElse: () => const SizedBox(),
-                      success: (user, _) {
-                        return Row(
-                          children: [
-                            Text(
-                              "Hi,${user.displayName.split(" ")[0]}",
-                              style: context.headline1,
-                            ),
-                            const Spacer(),
-                            ProfileAvatar(
-                              radius: 20,
-                              strokeWidth: 1,
-                              gap: 3,
-                              imageUrl: user.photoUrl,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                const Text("Wellcome"),
+                const SizedBox(height: 5),
+                profileState.maybeWhen(
+                  orElse: () => const SizedBox(),
+                  success: (user, _) {
+                    return Row(
                       children: [
-                        Expanded(
-                          child: BuildDashBoardItem(
-                            title: "Total Expense",
-                            value: NumberFormat.compact().format(
-                              report.totalExpense,
-                            ),
-                          ),
+                        Text(
+                          "Hi,${user.displayName.split(" ")[0]}",
+                          style: context.headline1,
                         ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: BuildDashBoardItem(
-                            title: "Monthy Income",
-                            value: NumberFormat.compact().format(
-                              report.monthlyIncome,
-                            ),
-                          ),
-                        )
+                        const Spacer(),
+                        ProfileAvatar(
+                          radius: 20,
+                          strokeWidth: 1,
+                          gap: 3,
+                          imageUrl: user.photoUrl,
+                        ),
                       ],
-                    ),
-                    const SizedBox(height: 20),
-                    OverViewChart(report: _.report.report),
-                    const SizedBox(height: 20),
-                    ExpenseCategoryReport(
-                      expenseCategoryReport: _.report.categoryReport,
-                    ),
-                    const SizedBox(height: 20),
-                    ExpenseTimePeroidReport(report: _.report),
-                  ],
+                    );
+                  },
                 ),
-              );
-            },
-            failed: (_) {
-              return const HomeLoading();
-            },
-            loading: (_) => const HomeLoading(),
-            orElse: () => const SizedBox(),
+                const SizedBox(height: 30),
+                reportState.maybeWhen(
+                  orElse: () => const SizedBox(),
+                  initial: () => const HomeLoading(),
+                  loading: () => const HomeLoading(),
+                  success: (report) {
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: BuildDashBoardItem(
+                                title: "Total Expense",
+                                value: NumberFormat.compact().format(
+                                  report.report.totalExpense,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: BuildDashBoardItem(
+                                title: "Monthy Income",
+                                value: NumberFormat.compact().format(
+                                  report.report.monthlyIncome,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        OverViewChart(report: report.report),
+                        const SizedBox(height: 20),
+                        ExpenseCategoryReport(
+                          expenseCategoryReport: report.categoryReport,
+                        ),
+                        const SizedBox(height: 20),
+                        ExpenseTimePeroidReport(report: report),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
