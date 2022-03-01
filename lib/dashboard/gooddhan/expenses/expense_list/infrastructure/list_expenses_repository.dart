@@ -93,6 +93,7 @@ class ListExpensesRepository {
     String id,
   ) async {
     try {
+      await _localService.clearData();
       await _remoteService.deleteSingleExpense(id);
       return right(unit);
     } on RestApiException catch (e) {
