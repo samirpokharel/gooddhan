@@ -16,11 +16,14 @@ class ReportState with _$ReportState {
 }
 
 class ReportNotifier extends StateNotifier<ReportState> {
+  bool isCalled = false;
   final ReportRepository _reportRepository;
-  ReportNotifier(this._reportRepository) : super(const ReportState.initial());
+  ReportNotifier(this._reportRepository) : super(const ReportState.initial()) {
+    fetchReport();
+    isCalled = true;
+  }
 
   void fetchReport() async {
-    state = const ReportState.loading();
     final failureOrReport = await _reportRepository.fetchReport();
     failureOrReport.fold(
       (l) => state = ReportState.failed(failure: l),
