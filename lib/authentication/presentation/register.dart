@@ -90,7 +90,9 @@ class _AuthCreateAccountState extends ConsumerState<RegisterPage> {
             failure.failure.when(
               server: (_, __) => showFlashToast(
                 context,
-                message: __,
+                message: __!.contains("Dublicate field")
+                    ? "Account already exist,please login"
+                    : "Something went wrong",
                 dismissDuration: const Duration(seconds: 5),
               ),
               storage: () => showFlashToast(
