@@ -10,42 +10,32 @@ class HomeLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
+    Color baseColor = isDark ? Colors.grey.shade800 : Colors.grey.shade300;
 
     return Shimmer.fromColors(
-      baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade400,
+      baseColor: baseColor,
       period: const Duration(milliseconds: 500),
-      highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+      highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade400,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            Container(height: 15, width: 90, color: Colors.grey),
-            const SizedBox(height: 5),
             Row(
               children: [
-                Container(height: 25, width: 200, color: Colors.grey),
-                const Spacer(),
-                const CircleAvatar(radius: 25, backgroundColor: Colors.grey)
-              ],
-            ),
-            const SizedBox(height: 30),
-            Row(
-              children: const [
                 Expanded(
                   child: BuildDashBoardItem(
                     title: "",
                     value: "",
-                    color: Colors.grey,
+                    color: baseColor,
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Expanded(
                   child: BuildDashBoardItem(
                     title: "",
                     value: "",
-                    color: Colors.grey,
+                    color: baseColor,
                   ),
                 )
               ],
@@ -55,7 +45,7 @@ class HomeLoading extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.grey,
+                color: baseColor,
               ),
             ),
             const SizedBox(height: 20),
@@ -63,7 +53,7 @@ class HomeLoading extends StatelessWidget {
               height: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.grey,
+                color: baseColor,
               ),
             ),
             const SizedBox(height: 20),
