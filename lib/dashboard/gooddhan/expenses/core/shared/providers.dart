@@ -42,8 +42,7 @@ final listExpensesRepositoryProvider = Provider<ListExpensesRepository>((ref) {
 });
 
 final listExpensesNotifierProvider =
-    StateNotifierProvider.autoDispose<ListExpenseNotifer, PaginatedState>(
-        (ref) {
+    StateNotifierProvider.autoDispose<ListExpenseNotifer, PaginatedState>((ref) {
   return ListExpenseNotifer(ref.watch(listExpensesRepositoryProvider));
 });
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gooddhan/dashboard/gooddhan/core/infrastructure/pagination_config.dart';
 import 'package:gooddhan/dashboard/gooddhan/core/presentation/loading_list_tile.dart';
 
 class PaginatedListView<T> extends StatelessWidget {
@@ -31,7 +32,7 @@ class PaginatedListView<T> extends StatelessWidget {
       shrinkWrap: srinkWrap,
       itemBuilder: (context, index) {
         return state.map(
-          initial: (_) => initialItem(_.items.entity[index]),
+          initial: (_) => const LoadingListTile(),
           loadInProgress: (_) {
             if (index < _.items.entity.length) {
               return succesItem(_.items.entity[index]);
