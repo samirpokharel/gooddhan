@@ -13,6 +13,7 @@ import 'package:gooddhan/dashboard/gooddhan/core/presentation/paginated_list_vie
 import 'package:gooddhan/dashboard/gooddhan/expenses/core/presentation/expense_list_item.dart';
 import 'package:gooddhan/dashboard/gooddhan/expenses/core/presentation/paginated_expense_list_view.dart';
 import 'package:gooddhan/dashboard/gooddhan/expenses/core/shared/providers.dart';
+import 'package:gooddhan/filter/domain/filter.dart';
 import 'package:gooddhan/filter/presentation/filter_sheet.dart';
 import 'package:gooddhan/search/presentation/search_bar.dart';
 
@@ -39,6 +40,7 @@ class _CategoriesPageState extends ConsumerState<ExpensesPage> {
   Widget build(BuildContext context) {
     final notifier = ref.read(listExpensesNotifierProvider.notifier);
     final state = ref.watch(listExpensesNotifierProvider);
+    print(state);
 
     return RefreshIndicator(
       onRefresh: () async => notifier.getFirstExpenseListPage(),
@@ -110,7 +112,13 @@ class _CategoriesPageState extends ConsumerState<ExpensesPage> {
                         notifier.getNextExpenseListPage();
                       },
                       onRefresh: () {
-                        notifier.getFirstExpenseListPage();
+                        notifier.getFirstExpenseListPage(
+                          filter: const Filter(
+                            sortBy: SortBy.newest,
+                            // fetchingDates: FetchingDates.all,
+                            selectedCategory: [],
+                          ),
+                        );
                       },
                       noResultMessage: "No Expenses Found",
                     ),
