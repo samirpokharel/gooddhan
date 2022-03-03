@@ -28,6 +28,26 @@ flutter pub get
 flutter pub run build_runner watch --delete-conflicting-outputs
 ```
 
+
+## Flutter launcher icon Generator command
+
+```bash
+$ flutter pub run flutter_launcher_icons:main
+```
+
+## Flutter native splash Generator command
+
+```bash
+$ flutter pub run flutter_native_splash:create
+```
+
+## Flutter buid apk command
+
+```bash
+$ flutter build apk
+```
+
+
 ## Design Links
 https://www.figma.com/file/KHuzPzedPOTc3KWxPAFxW8/gooddhan-project?node-id=0%3A1
 
