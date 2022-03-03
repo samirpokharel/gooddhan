@@ -14,11 +14,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "858480744077-as8vbtst1o2a6fbhcevk0h4aktboncrc.apps.googleusercontent.com",
+          "client_id": "858480744077-8bf8jul9jqqa9i6sdv7het6q8s2ai903.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "sameer.gooddhanapp.com",
-            "certificate_hash": "23ce38963aabede93e67595c970b983589225d41"
+            "certificate_hash": "47bd80decf6d22ebd665c90d7011ddc733acf49a"
+          }
+        },
+        {
+          "client_id": "858480744077-d7kbc4h4ifgrq5s3u6vn8rl8riiqcm9v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sameer.gooddhanapp.com",
+            "certificate_hash": "eb79d5ad5ae3f378e75b65fc60b41141ea2684b7"
           }
         },
         {
