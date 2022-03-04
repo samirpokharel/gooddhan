@@ -1,6 +1,14 @@
 # repo_viewer
 
-A new Flutter project.
+> Budget tracking application budget tracking app enables you to monitor how much of your budget has been spent over time.
+application that helps to keep an accurate record of your money inflow and outflow.
+
+#
+
+![image](https://user-images.githubusercontent.com/56714863/156800198-07415027-09ca-4dc1-9a53-374bdc666040.png)
+
+
+## Live applciation: [Play Store Link](play.google.com/store/apps/details?id=sameer.gooddhanapp.com)
 
 ### Cloning Repo
 
